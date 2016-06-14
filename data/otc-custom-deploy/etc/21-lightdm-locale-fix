@@ -1,0 +1,13 @@
+# workaround for session language selection in lightdm greeter
+# we need this only if lightdm is being used
+if pidof lightdm
+then
+	# use Language setting from ~/.dmrc
+	export LANG=`cat "$HOME/.dmrc" | grep '^Language=' | cut -d '=' -f 2- | sed 's/utf8/UTF-8/'`
+
+	# if $LANGUAGE is set, sync it with chosen locale
+	[ -n "$LANGUAGE" ] && export LANGUAGE=`echo $LANG | cut -d '.' -f 1`:`echo -n $LANG | cut -d '.' -f 1 | cut -d '_' -f 1`
+
+	# remove untrustworthy $GDM_LANG
+	[ -n "$GDM_LANG" ] && unset GDM_LANG
+fi

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+/etc/init.d/openthinclient stop
+
+# wait for shutdown
+while lsof -i -n -P | grep 10389 &>/dev/null; do
+	sleep 1
+done
+
+# woraround for proper port release
+killall nc &>/dev/null
+nc -l 0.0.0.0 10386 &
+echo ok | nc 0.0.0.0 10386
+
+/etc/init.d/openthinclient start

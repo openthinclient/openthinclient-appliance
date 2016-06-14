@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=/usr/local/share/openthinclient/icons/openthinclient_manager.png
+Name[en_US]=openthinclient Manager
+Exec=/usr/local/bin/openthinclient-manager
+Comment[en_US]=Start the openthinclient Manager
+Name=openthinclient Manager
+Comment=Start the openthinclient Manager
+Icon=/usr/local/share/openthinclient/icons/openthinclient_manager.png

@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=TeamViewer 9
+Comment=TeamViewer Remote Control Application
+Exec=/opt/teamviewer9/tv_bin/script/teamviewer
+Icon=/opt/teamviewer9/tv_bin/desktop/teamviewer.png
+Type=Application
+Categories=Network;
+#Categories=Network;RemoteAccess;
+

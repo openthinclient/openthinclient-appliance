@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=/usr/local/share/openthinclient/icons/openthinclient_advisor.png
+Name[en_US]=openthinclient Advisor
+Exec=java -jar /opt/openthinclient-advisor/openthinclientAdvisor.jar
+Comment[en_US]=openthinclient Advisor
+Name=openthinclient Advisor
+Comment=openthinclient Advisor
+Icon=/usr/local/share/openthinclient/icons/openthinclient_advisor.png

@@ -1,0 +1,22 @@
+#!/bin/bash
+# openthinclient automatic ldap backup 
+# created for openthinclient VM
+
+# LOGGER="/usr/bin/logger"
+LOGGER=$(which logger)
+
+# to have the passwd
+. /opt/openthinclient/server/default/conf/props/openthinclient.properties
+
+# define backup directory
+BUDIR=/var/backups/openthinclient
+[ ! -d $BUDIR ] && mkdir -p $BUDIR
+
+# generate name of backup file
+FILENAME=$BUDIR/otc-ldapbackup-`date +%d.%m.%y_%H-%M`.ldiff
+
+ldapsearch -p 10389 -h localhost -x -b ou=openthinclient,dc=openthinclient,dc=org -D cn=administrator,ou=users,ou=openthinclient,dc=openthinclient,dc=org -w${ContextSecurityCredentials} > $FILENAME || $LOGGER -p info "Automatic openthinclient LDAP backup failed"
+
+
+# delete backup files older than 100 days
+find $BUDIR  -mtime +100 -exec rm {} \;

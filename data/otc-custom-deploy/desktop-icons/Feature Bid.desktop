@@ -1,0 +1,16 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Feature Bid
+Comment=Vote for openthinclient Features
+GenericName=Feature Bid
+X-GNOME-FullName=Feature Bid
+Exec=iceweasel %u http://features.openthinclient.org/
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=/usr/local/share/openthinclient/icons/openthinclient-features.png
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
+StartupWMClass=Iceweasel
+StartupNotify=true
+Name[en_US]=Feature Bid

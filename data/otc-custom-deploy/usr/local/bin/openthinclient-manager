@@ -1,0 +1,12 @@
+#!/bin/sh
+
+{
+while [ "`netstat -tln | grep 8080`" = "" ]; do
+	echo -n .
+	sleep 1
+done
+} | zenity --progress --pulsate --auto-close --auto-kill --text="Waiting for openthinclient server..."
+
+if [ $? -eq 0 ]; then
+	javaws http://localhost:8080/console/launch.jnlp
+fi

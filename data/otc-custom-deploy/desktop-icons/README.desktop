@@ -1,0 +1,9 @@
+
+[Desktop Entry]
+Version=1.0
+Type=Link
+Name=README
+Comment=README file
+Icon=/usr/local/share/openthinclient/icons/openthinclient_readme.png
+URL=file:///usr/local/share/openthinclient-documentation/README.html
+GenericName=README

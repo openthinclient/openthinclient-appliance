@@ -10,3 +10,14 @@ packer_cache/
 # For built boxes
 *.box
 
+### special stuff
+
+# exclude bat files. currently testing only
+*.bat
+
+# exclude installer files
+data/installer*/*.jar
+data/installer*/*.sh
+
+# exclude teamviewer.deb
+data/teamviewer_linux.deb

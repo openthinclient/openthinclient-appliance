@@ -10,9 +10,9 @@
         "cpus": "1",
         "memory": "1024",
         "disk_size" : "20480",
-        "iso_url": "http://cdimage.debian.org/debian-cd/8.3.0/i386/iso-cd/debian-8.3.0-i386-netinst.iso",
-        "iso_checksum": "37f329724a1c072cbe0ebda211fdeb88",
-        "iso_checksum_type": "md5",
+        "iso_url": "http://cdimage.debian.org/debian-cd/8.5.0/i386/iso-cd/debian-8.5.0-i386-netinst.iso",
+        "iso_checksum": "88993cb9e72cac9ed4d5c0f629c4d6abbd73cd6b632d831da9aaa9bb35ab9ff4",
+        "iso_checksum_type": "sha256",
         "appliance_version": "openthinclient 2.1 Pales",
         "vm_name": "OTC-Appliance-Pales",
         "vm_description": "openthinclient is a Free Open Source Thin Client Solution consisting of a Linux based operating system along with a comprehensive Java based management GUI and server component. It is intended for environments where a medium to large number of Thin Clients must be supported and managed efficiently. Offering flexibility unheard of in the world of proprietary Thin Client Solutions, openthinclient empowers developers and integrators to create advanced Thin Client solutions... for free. www.openthinclient.org",
@@ -41,7 +41,6 @@
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
         "iso_checksum_type": "{{user `iso_checksum_type`}}",
-
 
         "http_directory" : "debian8_32",
         "http_port_min" : 9001,

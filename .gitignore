@@ -1,19 +1,22 @@
 
-
+### vim swap files
 *.swp
 
 
 ### Packer template
 # Cache objects
 packer_cache/
+# output directories
+output*/
 
 # For built boxes
 *.box
 
 ### special stuff
 
-# exclude bat files. currently testing only
+# exclude exe/bat files. currently testing only
 *.bat
+*.exe
 
 # exclude installer files
 data/installer*/*.jar

@@ -1,2 +1,4 @@
-# perform ldap backups for the openthinclient software suite
+# Filename:     openthinclient_ldap_backup
+# Purpose:      perform ldap backups for the openthinclient software suite
+#------------------------------------------------------------------------------
 0 2     *  * *  root /usr/local/sbin/openthinclient-ldapbackup > /dev/null 2>&1

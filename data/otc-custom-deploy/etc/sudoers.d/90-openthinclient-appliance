@@ -1,1 +1,3 @@
-# openthinclient is default user in the appliance# It needs passwordless sudo functionality.openthinclient ALL=(ALL) NOPASSWD:ALL
+# openthinclient is default user in the appliance
+# It needs passwordless sudo functionality.
+openthinclient ALL=(ALL) NOPASSWD:ALL

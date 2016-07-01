@@ -1,4 +1,8 @@
 #!/bin/sh
+# Filename:     openthinclient-manager
+# Purpose:      start the openthinclient manager directly via javaws
+#------------------------------------------------------------------------------
+
 
 {
 while [ "`netstat -tln | grep 8080`" = "" ]; do

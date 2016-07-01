@@ -1,4 +1,6 @@
-# workaround for session language selection in lightdm greeter
+# Filename:     21-lightdm-locale-fix
+# Purpose:      Workaround for session language selection in lightdm greeter
+#------------------------------------------------------------------------------
 # we need this only if lightdm is being used
 if pidof lightdm
 then

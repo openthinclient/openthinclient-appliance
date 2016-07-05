@@ -13,7 +13,8 @@ if [ -f $OPENTHINCLIENT_FULLPATH ]; then
 	mv $OPENTHINCLIENT_FULLPATH /opt
 	# make it executable
 	chmod +x /opt/OPENTHINCLIENT_INSTALLER
+else
+	echo "==> $OPENTHINCLIENT_FULLPATH doesn't exist. Installation not running"
 fi
-
 
 exit 0

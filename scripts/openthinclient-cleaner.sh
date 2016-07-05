@@ -40,13 +40,16 @@ rm -f /opt/openthinclient/server/default/data/jboss.identity
 find /var/backups/openthinclient/ -name "*\.ldiff\.*" -type f | xargs rm
 
 # cleanup teamviewer config
-echo "==> Cleaning up teamviewer global configuration"
 if [ -f "/opt/teamviewer9/config/global.conf" ]; then
+    echo "==> Cleaning up teamviewer global.conf"
     rm /opt/teamviewer9/config/global.conf
 fi
 
-#rm /opt/teamviewer9/config/global.conf
-rm /opt/teamviewer9/config/openthinclient/client.conf
+
+if [ -f "/opt/teamviewer9/config/openthinclient/client.conf" ]; then
+    echo "==> Cleaning up /opt/teamviewer9/config/openthinclient/client.conf"
+    rm /opt/teamviewer9/config/openthinclient/client.conf
+fi
 # /opt/teamviewer9/tv_bin/teamviewerd -d
 
 

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Edit openthinclient package sources
 GenericName=Edit openthinclient package sources
-Comment=Change, remove and upgrade software packages sources
+Comment=Change, remove and upgrade openthinclient software packages sources
 Exec=sudo /usr/local/sbin/openthinclient-edit-sources-lst-lite
 Icon=synaptic
 Terminal=false

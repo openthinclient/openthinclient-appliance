@@ -1,4 +1,7 @@
 #!/bin/bash
+# Filename:     openthinclient-restart
+# Purpose:      restart the openthinclient server via start/stop action
+#------------------------------------------------------------------------------
 
 /etc/init.d/openthinclient stop
 

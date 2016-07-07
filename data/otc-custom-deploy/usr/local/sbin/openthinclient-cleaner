@@ -1,8 +1,12 @@
 #!/bin/bash
+# Filename:     openthinclient-cleaner
+# Purpose:      cleanup the openthinclient appliannce after initial build
+#------------------------------------------------------------------------------
 
-#################
-# openthinclient
-#
+
+#------------------------------------------------------------------------------
+# openthinclient specific cleanup
+
 
 # make sure openthinclient server is stopped
 /etc/init.d/openthinclient stop
@@ -34,9 +38,8 @@ rm /opt/teamviewer9/config/openthinclient/client.conf
 # /opt/teamviewer9/tv_bin/teamviewerd -d
 
 
-##########
-# general
-#
+#------------------------------------------------------------------------------
+# general cleanup
 
 # remove udev network rules to cleanup old interfaces
 rm /etc/udev/rules.d/70-persistent-net.rules
@@ -67,7 +70,7 @@ echo $swapSpace | grep -qv Filename && (
     mkswap -f $swapSpace
 )
 
-# shrink root fs
+# shrink the root fs
 # are we inside a vmware guest-host?
 which vmware-toolbox-cmd &> /dev/null
 if [ $? -eq 0 ]; then

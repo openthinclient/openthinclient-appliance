@@ -13,4 +13,4 @@ Categories=Network;WebBrowser;
 MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
 StartupWMClass=Iceweasel
 StartupNotify=true
-Name[en_US]=professional support & services
+Name[en_US]=professional support and services

@@ -1,4 +1,8 @@
 #! /bin/bash
+# Filename:     zerofree.sh
+# Purpose:      Use zerofree to fill up the disk before shrinking it
+#------------------------------------------------------------------------------
+
 
 deviceToClean=$(mount | grep -w '/'  | awk '{print $1}')
 

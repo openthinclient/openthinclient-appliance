@@ -1,5 +1,7 @@
 #!/bin/bash
-# change openthinclient sources.lst for openthinclient VM
+# Filename:     openthinclient-edit-sources-lst-lite
+# Purpose:      Edit the  sources.list for the openthinclient server in the VM
+# ------------------------------------------------------------------------------
 
 zenity --question --title="openthinclient edit package source" --text="Edit the sources.lst to change the default openthinclient packages\n\ \n\
  Please be careful when editing the entries for \"openthinclient\" \n\
@@ -23,6 +25,7 @@ fi
 #nc -l 0.0.0.0 10386 &
 #echo ok | nc 0.0.0.0 10386
 
+# open the source.list file with the pluma editor
 pluma /opt/openthinclient/server/default/data/nfs/root/etc/sources.list 
 
 zenity --info --title="openthinclient edit package source" --text="Please restart openthinclient to apply the changes.\n\ \n\

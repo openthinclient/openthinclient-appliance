@@ -1,7 +1,11 @@
 #!/bin/bash
-# output openthinclient VM version information
+# Filename:     openthinclient-vm-version
+# Purpose:      provide openthinclient VM version information
+#------------------------------------------------------------------------------
+
 VERSION="/usr/local/share/openthinclient/openthinclient-vm-version"
 
 zenity --text-info --title="openthinclient appliance version" --filename="$VERSION" 
 if [ $? = 1 ];
 then exit 0
+fi

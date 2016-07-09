@@ -133,6 +133,17 @@ chmod 700 /home/openthinclient/.mozilla/
 # Fix mozilla cache dir
 chown openthinclient:openthinclient /home/openthinclient/.cache/ -R
 
+echo "==> Deploying Workaround to fix the german keyboard layout after session login: create autostart dir"
+CONFIG_AUTOSTART_DIR=/home/openthinclient/.config/autostart/
+[ ! -d $CONFIG_AUTOSTART_DIR ] && mkdir -p $CONFIG_AUTOSTART_DIR
+
+echo "==> Deploying Workaround to fix the german keyboard layout after session login: create autostart icon"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/home/openthinclient/config/autostart/keyboard-layout-fix.desktop /home/openthinclient/.config/autostart/keyboard-layout-fix.desktop
+chown openthinclient:openthinclient /home/openthinclient/.config/autostart/keyboard-layout-fix.desktop
+
+echo "==> Deploying Workaround to fix the german keyboard layout after session login: bash script"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-keyboard-layout-fix /usr/local/bin/openthinclient-keyboard-layout-fix
+chmod +x /usr/local/bin/openthinclient-keyboard-layout-fix
 
 echo "==> Deploying openthinclient advisor into /opt/"
 #apt-get install oracle-java8-set-default

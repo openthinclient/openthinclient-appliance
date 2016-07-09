@@ -3,16 +3,20 @@
 # Purpose:      restart the openthinclient server via start/stop action
 #------------------------------------------------------------------------------
 
-/etc/init.d/openthinclient stop
+sudo /etc/init.d/openthinclient stop
 
 # wait for shutdown
 while lsof -i -n -P | grep 10389 &>/dev/null; do
 	sleep 1
 done
 
-# woraround for proper port release
-killall nc &>/dev/null
-nc -l 0.0.0.0 10386 &
-echo ok | nc 0.0.0.0 10386
+# workaround for proper port release
+sudo killall nc &>/dev/null
+sudo nc -l 0.0.0.0 10386 &
+echo ok | sudo nc 0.0.0.0 10386
 
-/etc/init.d/openthinclient start
+sudo /etc/init.d/openthinclient start
+
+sudo /etc/init.d/openthinclient status
+# wait a little to show status
+sleep 1

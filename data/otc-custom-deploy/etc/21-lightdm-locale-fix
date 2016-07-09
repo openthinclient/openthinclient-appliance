@@ -12,4 +12,14 @@ then
 
 	# remove untrustworthy $GDM_LANG
 	[ -n "$GDM_LANG" ] && unset GDM_LANG
+
+    # if the session has the german language we need to set the correct keymap.
+    # Therefore get the lang_code only
+    #LANG_CODE=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
+    export LANG_CODE=`cat "$HOME/.dmrc" | grep '^Language=' | cut -d '=' -f 2- | cut -d_ -f1`
+
+    #if [ $LANG_CODE == "de" ]; then
+    #    setxkbmap de
+    #fi
+
 fi

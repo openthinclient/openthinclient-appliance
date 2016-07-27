@@ -18,6 +18,9 @@ output*/
 *.bat
 *.exe
 
+# exclude logfiles (ovftool)
+*.log
+
 # exclude installer files
 data/installer*/*.jar
 data/installer*/*.sh

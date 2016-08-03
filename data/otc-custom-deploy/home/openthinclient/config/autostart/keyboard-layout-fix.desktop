@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/local/bin/openthinclient-keyboard-layout-fix
+Hidden=false
+X-MATE-Autostart-enabled=true
+Name[de_DE]=German Keyboard Fix
+Name[en_US]=German Keyboard Fix
+Name=German Keyboard Fix
+Comment[de_DE]=Autostart Eintrag Fixup für korrekte deutsche Tastatur
+Comment=Workaround to correctly set the german keyboard layout

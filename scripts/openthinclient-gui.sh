@@ -56,10 +56,16 @@ echo "==> Deploying custom lightdm greeter"
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
 # Fix permissions
 
+echo "==> Deploying custom lightdm.conf"
+cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf
+
 echo "==> Deploying lightdm-dmrc-fix"
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/21-lightdm-locale-fix /etc/X11/Xsession.d/21-lightdm-locale-fix
 chown root:root /etc/X11/Xsession.d/21-lightdm-locale-fix
 
+echo "==> Deploying lightdm fix for default user setting"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-default-user-fix /usr/local/bin/openthinclient-default-user-fix
+chmod +x /usr/local/bin/openthinclient-default-user-fix
 
 echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
@@ -73,7 +79,8 @@ apt-get install -y mate-system-tools
 
 
 # workaround
-/etc/init.d/lightdm start
+#/etc/init.d/lightdm start
+
 
 #xhost
 #export DISPLAY=:0

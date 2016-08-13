@@ -140,6 +140,11 @@ chmod 700 /home/openthinclient/.mozilla/
 # Fix mozilla cache dir
 chown openthinclient:openthinclient /home/openthinclient/.cache/ -R
 
+echo "==> Deploying .java default settings for the openthinclient manager"
+tar xvfz ${OTC_CUSTOM_DEPLOY_PATH}/dotjava.tar.gz -C /home/openthinclient/
+chown openthinclient:openthinclient /home/openthinclient/.java/ -R
+chmod 700 /home/openthinclient/.java/
+
 echo "==> Deploying Workaround to fix the german keyboard layout after session login: create autostart dir"
 CONFIG_AUTOSTART_DIR=/home/openthinclient/.config/autostart/
 [ ! -d $CONFIG_AUTOSTART_DIR ] && mkdir -p $CONFIG_AUTOSTART_DIR
@@ -159,7 +164,6 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/opt/openthinclient-advisor/ /opt/
 
 echo "==> Installing xtightvncviewer with --no-install-recommends"
 apt-get install -y --no-install-recommends xtightvncviewer
-
 
 echo "==> Installing pluma texteditor with --no-install-recommends"
 apt-get install -y --no-install-recommends pluma

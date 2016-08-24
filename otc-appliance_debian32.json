@@ -10,6 +10,7 @@
         "cpus": "1",
         "memory": "1024",
         "disk_size" : "20480",
+        "headless": "True",
         "iso_url": "http://cdimage.debian.org/debian-cd/8.5.0/i386/iso-cd/debian-8.5.0-i386-netinst.iso",
         "iso_checksum": "88993cb9e72cac9ed4d5c0f629c4d6abbd73cd6b632d831da9aaa9bb35ab9ff4",
         "iso_checksum_type": "sha256",
@@ -24,6 +25,8 @@
         "guest_os_type": "Debian",
         "vm_name": "{{ user `vm_name` }}",
         "disk_size": "{{ user `disk_size` }}",
+        "headless": "{{ user `headless` }}",
+
 
         "vboxmanage": [
             ["modifyvm", "{{.Name}}", "--vram", "32"],
@@ -69,9 +72,11 @@
         ]
     },
     {
-    "type": "vmware-iso",
+        "type": "vmware-iso",
         "vm_name": "{{ user `vm_name` }}",
         "disk_size": "{{ user `disk_size` }}",
+        "headless": "{{ user `headless` }}",
+
 
         "vmx_data": {
             "memsize": "{{ user `memory` }}",

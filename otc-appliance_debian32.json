@@ -7,6 +7,7 @@
         "ssh_pass": "openthinclient",
         "hostname": "openthinclient-server",
         "vmware_guest_os_type": "debian8",
+        "virtualbox_guest_os_type": "Debian",
         "cpus": "1",
         "memory": "1024",
         "disk_size" : "20480",
@@ -22,11 +23,10 @@
 
     "builders": [{
         "type": "virtualbox-iso",
-        "guest_os_type": "Debian",
+        "guest_os_type": "{{ user `virtualbox_guest_os_type` }}",
         "vm_name": "{{ user `vm_name` }}",
         "disk_size": "{{ user `disk_size` }}",
         "headless": "{{ user `headless` }}",
-
 
         "vboxmanage": [
             ["modifyvm", "{{.Name}}", "--vram", "32"],
@@ -51,7 +51,7 @@
 
         "ssh_username": "{{user `ssh_name`}}",
         "ssh_password": "{{user `ssh_pass`}}",
-        "ssh_wait_timeout": "120m",
+        "ssh_wait_timeout": "60m",
 
         "output_directory": "output-{{ user `vm_name` }}-virtualbox-iso",
 
@@ -73,10 +73,10 @@
     },
     {
         "type": "vmware-iso",
+        "guest_os_type": "{{ user `vmware_guest_os_type` }}",
         "vm_name": "{{ user `vm_name` }}",
         "disk_size": "{{ user `disk_size` }}",
         "headless": "{{ user `headless` }}",
-
 
         "vmx_data": {
             "memsize": "{{ user `memory` }}",
@@ -96,7 +96,7 @@
 
         "ssh_username": "{{user `ssh_name`}}",
         "ssh_password": "{{user `ssh_pass`}}",
-        "ssh_wait_timeout": "120m",
+        "ssh_wait_timeout": "60m",
 
         "output_directory": "output-{{ user `vm_name` }}-vmware-iso",
         "tools_upload_flavor": "linux",

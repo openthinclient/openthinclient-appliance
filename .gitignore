@@ -21,9 +21,13 @@ output*/
 # exclude logfiles (ovftool)
 *.log
 
-# exclude installer files
+# exclude installer files in data
 data/installer*/*.jar
 data/installer*/*.sh
+
+# exclude installer files
+installer*/*.jar
+installer*/*.sh
 
 # exclude teamviewer.deb
 data/teamviewer_linux.deb

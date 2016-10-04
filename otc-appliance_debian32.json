@@ -124,6 +124,10 @@
         "destination": "/tmp"
     }, {
         "type": "file",
+        "source": "installer",
+        "destination": "/tmp"
+    }, {
+        "type": "file",
         "source": "scripts",
         "destination": "/tmp"
     },

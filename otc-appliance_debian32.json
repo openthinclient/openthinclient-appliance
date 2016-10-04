@@ -124,7 +124,7 @@
         "destination": "/tmp"
     }, {
         "type": "file",
-        "source": "installer",
+        "source": "installers",
         "destination": "/tmp"
     }, {
         "type": "file",

@@ -4,7 +4,7 @@
 #------------------------------------------------------------------------------
 
 OTC_INSTALLER_NAME=otc-manager_unix_2_0_0.sh
-OTC_INSTALLER_FULLPATH=/tmp/installer/${OTC_INSTALLER_NAME}
+OTC_INSTALLER_FULLPATH=/tmp/installers/${OTC_INSTALLER_NAME}
 
 OTC_INSTALLER_VARFILE=/tmp/data/installer/unattended-linux.varfile.txt
 

@@ -3,7 +3,7 @@
 # Purpose:      install new version of the openthinclient software package
 #------------------------------------------------------------------------------
 
-OTC_INSTALLER_NAME=otc-manager_unix_2_0_0.sh
+OTC_INSTALLER_NAME=otc-manager_unix.sh
 OTC_INSTALLER_FULLPATH=/tmp/installers/${OTC_INSTALLER_NAME}
 
 OTC_INSTALLER_VARFILE=/tmp/data/installer/unattended-linux.varfile.txt
@@ -32,8 +32,21 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 	    $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl ls-distributions -v
 	    echo $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl ls-distributions -v
 
-	    echo "==> Running managerctl install with predefined variables"
-	    $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home --admin-password 0pen%TC --home $OTC_INSTALL_HOME > /dev/null 2>&1
+        echo "==> Checking mySQL database server status"
+        mysqlrun=$(sudo service mysql status)
+        if [ $? -ne 0 ]; then
+            echo "==> Running managerctl install with predefined variables and default included H2 database"
+	        $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home \
+	        --admin-password 0pen%TC \
+	        --home $OTC_INSTALL_HOME \
+	        --db MYSQL \
+	        --db-host localhost \
+	        --db-name openthinclient \
+	        --db-user openthinclient \
+	        --db-password openthinclient > /dev/null 2>&1
+        fi
+             echo "==> Running managerctl install with predefined variables and mySQL database backend"
+            $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home --admin-password 0pen%TC --home $OTC_INSTALL_HOME > /dev/null 2>&1
 
         echo "==> Checking service status before start"
         $OPENTHINCLIENT_INSTALL_PATH/bin/service status

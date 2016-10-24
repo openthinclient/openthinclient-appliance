@@ -48,8 +48,6 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
              echo "==> Running managerctl install with predefined variables and mySQL database backend"
             $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home --admin-password 0pen%TC --home $OTC_INSTALL_HOME > /dev/null 2>&1
 
-        echo "==> Checking service status before start"
-        $OPENTHINCLIENT_INSTALL_PATH/bin/service status
         echo "==> Starting the OTC manager service"
         $OPENTHINCLIENT_INSTALL_PATH/bin/service start
         echo "==> Checking service status after start"

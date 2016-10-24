@@ -31,8 +31,11 @@ if ! [ -d $OTCLOCALSHARE ]; then
 fi
 
 echo "==> Copying openthinclient VM information to $OTCLOCALSHARE"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/openthinclient-vm-version $OTCLOCALSHARE
-
+if [ -f ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/openthinclient-vm-version ]; then
+    cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/openthinclient-vm-version $OTCLOCALSHARE
+else
+    echo "==> Copying openthinclient VM information to $OTCLOCALSHARE failed"
+fi
 
 echo "==> Copying custom bin scripts to /usr/local/bin"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-manager /usr/local/bin/openthinclient-manager
@@ -55,8 +58,11 @@ chown root:root /etc/cron.d/openthinclient_ldap_backup
 chmod +x /etc/cron.d/openthinclient_ldap_backup
 
 echo "==> Deploying openthinclient-documentation directory"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-documentation/ /usr/local/share/openthinclient-documentation/
-
+if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-documentation/ ]; then
+    cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-documentation/ /usr/local/share/openthinclient-documentation/
+else
+    echo "==> Deploying openthinclient-documentation directory failed"
+fi
 
 echo "==> Deploying openthinclient grub background image"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/grub_background/desktopB_1920x1200.png /boot/grub/desktopB_1920x1200.png

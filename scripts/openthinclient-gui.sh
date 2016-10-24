@@ -38,7 +38,10 @@ fi
 # setting otc custom deploy variables
 OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
 OTCLOCALSHARE="/usr/local/share/openthinclient/"
-mkdir $OTCLOCALSHARE
+if ! [ -d $OTCLOCALSHARE ]; then
+	echo "==> $OTCLOCALSHARE will be created"
+	mkdir $OTCLOCALSHARE
+fi
 
 echo "==> Creating $OTCLOCALSHARE backgrounds dir"
 mkdir $OTCLOCALSHARE/backgrounds/
@@ -111,7 +114,14 @@ dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share
 
 
 # FIX config dir - Temp workaround
-chown openthinclient:openthinclient /home/openthinclient/.config/ -R
+OTC_HOME_CONFIG_DIR=/home/openthinclient/.config/
+
+if ! [ -d $OTC_HOME_CONFIG_DIR ]; then
+	echo "==> $OTC_HOME_CONFIG_DIR will be created"
+	mkdir $OTC_HOME_CONFIG_DIR
+	chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
+fi
+#chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
 
 #echo "==> Adding openthinclient restart icon to top panel"
 #DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ toplevel-id 'top'

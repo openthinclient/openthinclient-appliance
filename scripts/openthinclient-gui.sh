@@ -143,12 +143,20 @@ fi
 echo "==> Installing iceweasel web browser with --no-install-recommends"
 apt-get install -y --no-install-recommends iceweasel
 
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/mozilla/ /home/openthinclient/
-mv /home/openthinclient/mozilla /home/openthinclient/.mozilla
-chown openthinclient:openthinclient /home/openthinclient/.mozilla/ -R
-chmod 700 /home/openthinclient/.mozilla/
-# Fix mozilla cache dir
-chown openthinclient:openthinclient /home/openthinclient/.cache/ -R
+
+if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/mozilla/ ]; then
+    echo "==> Deploying custom openthinclient mozilla settings failed"
+	chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
+	cp -a ${OTC_CUSTOM_DEPLOY_PATH}/mozilla/ /home/openthinclient/
+    mv /home/openthinclient/mozilla /home/openthinclient/.mozilla
+    chown openthinclient:openthinclient /home/openthinclient/.mozilla/ -R
+    chmod 700 /home/openthinclient/.mozilla/
+    # Fix mozilla cache dir
+    chown openthinclient:openthinclient /home/openthinclient/.cache/ -R
+else
+    echo "==> Deploying custom openthinclient mozilla settings failed"
+fi
+
 
 echo "==> Deploying .java default settings for the openthinclient manager"
 tar xvfz ${OTC_CUSTOM_DEPLOY_PATH}/dotjava.tar.gz -C /home/openthinclient/
@@ -167,9 +175,14 @@ echo "==> Deploying Workaround to fix the german keyboard layout after session l
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-keyboard-layout-fix /usr/local/bin/openthinclient-keyboard-layout-fix
 chmod +x /usr/local/bin/openthinclient-keyboard-layout-fix
 
-echo "==> Deploying openthinclient advisor into /opt/"
-#apt-get install oracle-java8-set-default
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/opt/openthinclient-advisor/ /opt/
+
+
+if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/opt/openthinclient-advisor/ ]; then
+    echo "==> Deploying openthinclient advisor into /opt/"
+    cp -a ${OTC_CUSTOM_DEPLOY_PATH}/opt/openthinclient-advisor/ /opt/
+else
+     echo "==> Deploying openthinclient advisor into /opt/ failed. nothing to deploy"
+fi
 
 
 echo "==> Installing xtightvncviewer with --no-install-recommends"

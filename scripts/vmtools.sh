@@ -6,6 +6,10 @@
 # set a default HOME_DIR environment variable if not set
 HOME_DIR="${HOME_DIR:-/home/openthinclient}";
 
+#env | sort
+#set +u
+echo "$PACKER_BUILDER_TYPE"
+
 case "$PACKER_BUILDER_TYPE" in
 
 virtualbox-iso|virtualbox-ovf)
@@ -54,7 +58,7 @@ qemu)
     ;;
 
 *)
-    echo "Unknown Packer Builder Type >>$PACKER_BUILDER_TYPE<< selected.";
+    echo "Unknown Packer Builder Type >> $PACKER_BUILDER_TYPE << selected.";
     echo "Known are virtualbox-iso|virtualbox-ovf|vmware-iso|vmware-vmx|parallels-iso|parallels-pvm.";
     ;;
 

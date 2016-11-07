@@ -13,31 +13,36 @@ fi
 echo "==> Cleaning up tmp"
 rm -rf /tmp/*
 
+if [ -f "/etc/init.d/openthinclient" ]; then
+    echo "==> Stopping the openthinclient server before cleaning up"
+    /etc/init.d/openthinclient stop
+    echo "==> Making sure the openthinclient server is stopped"
+    /etc/init.d/openthinclient status
+fi
 
-echo "==> Stopping the openthinclient server before cleaning up"
-/etc/init.d/openthinclient stop
 
-echo "==> Making sure the openthinclient server is stopped"
-/etc/init.d/openthinclient status
+if [ -d "/opt/openthinclient/" ]; then
+    # remove lock and log files
+    find /opt/openthinclient/ | grep '\.db\.lock' | xargs -r rm
+    find /opt/openthinclient/ | grep '\.log' | xargs -r rm
 
-# remove lock and log files
-find /opt/openthinclient/ | grep '\.db\.lock' | xargs rm
-find /opt/openthinclient/ | grep '\.log' | xargs rm
+    # remove nfs db
+    rm -rf /opt/openthinclient/server/default/data/nfs-paths.db*
 
-# remove nfs db
-rm /opt/openthinclient/server/default/data/nfs-paths.db*
+    # remove homes
+    rm -rf 	/opt/openthinclient/server/default/data/nfs/home/*
 
-# remove homes
-rm -rf 	/opt/openthinclient/server/default/data/nfs/home/*
-
-# remove jboss stuff
-rm -rf /opt/openthinclient/server/default/data/tx-object-store 
-rm -rf /opt/openthinclient/server/default/data/hypersonic
-rm -rf /opt/openthinclient/server/default/data/xmbean-attrs
-rm -f /opt/openthinclient/server/default/data/jboss.identity
+    # remove jboss stuff
+    rm -rf /opt/openthinclient/server/default/data/tx-object-store
+    rm -rf /opt/openthinclient/server/default/data/hypersonic
+    rm -rf /opt/openthinclient/server/default/data/xmbean-attrs
+    rm -rf /opt/openthinclient/server/default/data/jboss.identity
+fi
 
 # delete ldap backups
-find /var/backups/openthinclient/ -name "*\.ldiff\.*" -type f | xargs rm
+if [ -d "/var/backups/openthinclient/ " ]; then
+    find /var/backups/openthinclient/ -print -name "*\.ldiff\.*" -type f -exec rm -rf {} \;
+fi
 
 # cleanup teamviewer config
 if [ -f "/opt/teamviewer9/config/global.conf" ]; then
@@ -45,13 +50,11 @@ if [ -f "/opt/teamviewer9/config/global.conf" ]; then
     rm /opt/teamviewer9/config/global.conf
 fi
 
-
 if [ -f "/opt/teamviewer9/config/openthinclient/client.conf" ]; then
     echo "==> Cleaning up /opt/teamviewer9/config/openthinclient/client.conf"
     rm /opt/teamviewer9/config/openthinclient/client.conf
 fi
 # /opt/teamviewer9/tv_bin/teamviewerd -d
-
 
 # Cleaning up oracle-jdk8-installer cache dir
 echo "==> Cleaning up /var/cache/oracle-jdk8-installer folder"
@@ -72,9 +75,8 @@ apt-get -y autoremove --purge
 apt-get -y clean
 apt-get -y autoclean
 
-
 # clean history
-echo "==> Clean openthinclient .bash_history file if exists"
+echo "==> Delete openthinclient .bash_history file if exists"
 if [ -f "/home/openthinclient/.bash_history" ]; then
     rm /home/openthinclient/.bash_history
 fi
@@ -85,16 +87,32 @@ if [ -f "/root/.bash_history" ]; then
 	rm /root/.bash_history
 fi
 
+clean_logs() {
+    echo $1
+    echo $2
+    for i in `find ${1} -name ${2} -type f`
+    do
+        >$i
+    	ls -la $i
+    	#rm $i
+    done
+}
+
 # clean logs
-for i in `find /var/log/ -name "*log" -type f`
-do
-	>$i
-done
+#for i in `find /var/log/ -name "*log" -type f`
+#do
+#    >$i
+#	ls -la $i
+#	rm $i
+#done
 
-find /var/log/ -name "*\.log\.*" -type f | xargs rm
-find /var/log/ -name "*\.0" -type f | xargs rm
-find /var/log/ -name "*\.[0-9]*\.gz" -type f | xargs rm
+clean_logs "/var/log/" "*\.log\.*"
+clean_logs "/var/log/" "*\.0"
+clean_logs "/var/log/" "*\.[0-9]*\.gz"
 
+#find /var/log/ -name "*\.log\.*" -type f | xargs rm
+#find /var/log/ -name "*\.0" -type f | xargs rm
+#find /var/log/ -name "*\.[0-9]*\.gz" -type f | xargs rm
 
 echo "==> Disk usage before cleanup"
 echo ${DISK_USAGE_BEFORE_CLEANUP}

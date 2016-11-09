@@ -119,9 +119,9 @@ OTC_HOME_CONFIG_DIR=/home/openthinclient/.config/
 if ! [ -d $OTC_HOME_CONFIG_DIR ]; then
 	echo "==> $OTC_HOME_CONFIG_DIR will be created"
 	mkdir $OTC_HOME_CONFIG_DIR
-	chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
+	# chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
 fi
-#chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
+chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
 
 #echo "==> Adding openthinclient restart icon to top panel"
 #DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ toplevel-id 'top'

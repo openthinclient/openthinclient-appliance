@@ -49,12 +49,12 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
             $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home --admin-password 0pen%TC --home $OTC_INSTALL_HOME > /dev/null 2>&1
 
         echo "==> Starting the OTC manager service"
-        $OPENTHINCLIENT_INSTALL_PATH/bin/service start
+        $OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager start
         echo "==> Checking service status after start"
-        $OPENTHINCLIENT_INSTALL_PATH/bin/service status
+        $OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager status
 
         # symlink the service
-        #ln -s OPENTHINCLIENT_INSTALL_PATH/bin/service /etc/init.d/openthinclient
+        #ln -s OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager /etc/init.d/openthinclient
 
     else
 	    echo "==> $OPENTHINCLIENT_INSTALL_PATH doesn't exist. Installation was not successful"

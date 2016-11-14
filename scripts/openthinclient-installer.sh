@@ -50,6 +50,7 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 
         echo "==> Starting the OTC manager service"
         $OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager start
+        sleep 5
         echo "==> Checking service status after start"
         $OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager status
 

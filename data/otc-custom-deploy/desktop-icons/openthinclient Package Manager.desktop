@@ -1,0 +1,18 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=openthinclient Package Manager
+GenericName=openthinclient Package Manager
+X-GNOME-FullName=openthinclient Package Manager
+Exec=iceweasel %u http://localhost:8080
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon[en_US]=/usr/local/share/openthinclient/icons/openthinclient_manager.png
+Icon=/usr/local/share/openthinclient/icons/openthinclient_manager.png
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
+StartupWMClass=Iceweasel
+StartupNotify=true
+Name[en_US]=openthinclient Package Manager
+Comment[en_US]=Start the openthinclient Package Manager
+Comment=Start the openthinclient Package Manager

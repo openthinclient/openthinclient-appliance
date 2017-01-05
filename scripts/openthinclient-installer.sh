@@ -3,8 +3,11 @@
 # Purpose:      install new version of the openthinclient software package
 #------------------------------------------------------------------------------
 
-OTC_INSTALLER_NAME=otc-manager_unix.sh
-OTC_INSTALLER_FULLPATH=/tmp/installers/${OTC_INSTALLER_NAME}
+
+OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name "*.sh" -type f)
+
+#OTC_INSTALLER_NAME=otc-manager_unix.sh
+#OTC_INSTALLER_FULLPATH=/tmp/installers/${OTC_INSTALLER_NAME}
 
 OTC_INSTALLER_VARFILE=/tmp/data/installer/unattended-linux.varfile.txt
 

@@ -12,8 +12,8 @@
         "memory": "1024",
         "disk_size" : "20480",
         "headless": "True",
-        "iso_url": "http://cdimage.debian.org/debian-cd/8.5.0/i386/iso-cd/debian-8.5.0-i386-netinst.iso",
-        "iso_checksum": "88993cb9e72cac9ed4d5c0f629c4d6abbd73cd6b632d831da9aaa9bb35ab9ff4",
+        "iso_url": "http://cdimage.debian.org/debian-cd/8.6.0/i386/iso-cd/debian-8.6.0-i386-netinst.iso",
+        "iso_checksum": "a9de6e4375eb752edd7c36e0e03cb2c55e8187631589b6dbf137c77452881292",
         "iso_checksum_type": "sha256",
         "appliance_version": "openthinclient 2.1 Pales",
         "vm_name": "OTC-Appliance-Pales",
@@ -141,6 +141,7 @@
     "execute_command": "echo 'openthinclient' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
     "scripts": [
       "scripts/jre-oracle-8.sh",
+      "scripts/mysql.sh",
       "scripts/openthinclient-installer.sh",
       "scripts/openthinclient-installer-legacy.sh",
       "scripts/openthinclient-custom.sh",

@@ -7,7 +7,7 @@
 
 ```shell
 ⁖ packer version
-Packer v0.10.1
+Packer v0.12.1
 ```
 
 ### Requirements
@@ -15,11 +15,10 @@ Packer v0.10.1
 To create a successful build you need to place a openthinclient software installer in
 one of the following folders:
 
-* data/installer
+* installers
 
     This folder should be used for the new installer
     
-
 * data/installer-legacy
 
     This folder will accept the old legacy installer as a jar file
@@ -27,7 +26,7 @@ one of the following folders:
 
 ### Use existing template
 
-To perform a local build simply run, `packer build otc-appliance_debian32.json`
+To perform a build simply run the following commands:
 
 
 #### Check syntax
@@ -36,20 +35,11 @@ To perform a local build simply run, `packer build otc-appliance_debian32.json`
 $ packer validate otc-appliance_debian32.json
 ```
 
-#### Test build
-
-Note, this is a **local** build 
-
-```
-$ packer build otc-appliance_debian32.json
-```
-
 #### build virtualbox only
 
 ```
 $ packer build -only=virtualbox-iso otc-appliance_debian32.json 
 ```
-
 
 #### build vmware only
 
@@ -57,3 +47,8 @@ $ packer build -only=virtualbox-iso otc-appliance_debian32.json
 $ packer build -only=vmware-iso otc-appliance_debian32.json 
 ```
 
+#### build for virtualbox and vmware 
+
+```
+$ packer build otc-appliance_debian32.json
+```

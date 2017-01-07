@@ -15,8 +15,13 @@ case "$PACKER_BUILDER_TYPE" in
 virtualbox-iso|virtualbox-ovf)
 	echo "=> Installing virtualbox tools"
     mkdir -p /tmp/vbox;
-    ver="`cat /home/openthinclient/.vbox_version`";
-    mount -o loop $HOME_DIR/VBoxGuestAdditions_${ver}.iso /tmp/vbox;
+    VBOX_VERSION="`cat /home/openthinclient/.vbox_version`";
+    VBOX_ISO=$HOME_DIR/VBoxGuestAdditions_${VBOX_VERSION}.iso
+    if [ ! -f $VBOX_ISO ] ; then
+    wget -q http://download.virtualbox.org/virtualbox/${VBOX_VERSION}/VBoxGuestAdditions_${VBOX_VERSION}.iso \
+        -O $VBOX_ISO
+    fi
+    mount -o loop $HOME_DIR/VBoxGuestAdditions_${VBOX_VERSION}.iso /tmp/vbox;
     sh /tmp/vbox/VBoxLinuxAdditions.run \
         || echo "VBoxLinuxAdditions.run exited $? and is suppressed." \
             "For more read https://www.virtualbox.org/ticket/12479";

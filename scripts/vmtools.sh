@@ -14,6 +14,7 @@ case "$PACKER_BUILDER_TYPE" in
 
 virtualbox-iso|virtualbox-ovf)
 	echo "=> Installing virtualbox tools"
+	apt-get install -y --no-install-recommends build-essential linux-headers-`uname -r` dkms
     mkdir -p /tmp/vbox;
     VBOX_VERSION="`cat /home/openthinclient/.vbox_version`";
     VBOX_ISO=$HOME_DIR/VBoxGuestAdditions_${VBOX_VERSION}.iso

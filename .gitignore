@@ -31,3 +31,6 @@ installer*/*.sh
 
 # exclude teamviewer.deb
 data/teamviewer_linux.deb
+
+### exclude integration testing cache folder
+.cache

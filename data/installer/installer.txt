@@ -1,3 +1,0 @@
-Please place the new installer shell script in this directory.
-
-For further information please refer to the documentation.

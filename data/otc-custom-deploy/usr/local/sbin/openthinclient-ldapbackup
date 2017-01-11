@@ -6,7 +6,13 @@
 LOGGER=$(which logger)
 
 # to have the password
-. /opt/openthinclient/server/default/conf/props/openthinclient.properties
+
+PWFILE=/opt/openthinclient/server/default/conf/props/openthinclient.properties
+if [ -d $PWFILE ]; then
+    . /opt/openthinclient/server/default/conf/props/openthinclient.properties
+else
+    ContextSecurityCredentials="0pen%TC"
+fi
 
 # define backup directory
 BUDIR=/var/backups/openthinclient

@@ -57,6 +57,8 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
         echo "==> Checking service status after start"
         $OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager status
 
+        echo "==> removing rpcbind package"
+        apt-get remove -y rpcbind
         # symlink the service
         #ln -s OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager /etc/init.d/openthinclient
 

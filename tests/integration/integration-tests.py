@@ -55,3 +55,14 @@ def test_openthinclient_manager_file(File):
     assert managerbin.group == "root"
     assert managerbin.exists == True
 
+
+@pytest.mark.parametrize("filename", [
+    ("/usr/local/bin/openthinclient-manager"),
+    ("/usr/local/bin/openthinclient-vmversion"),
+])
+
+def test_otc_local_bin_files(File, filename):
+    file = File(filename)
+    assert file.user == "openthinclient"
+    assert file.group == "openthinclient"
+    assert file.exists == True

@@ -153,5 +153,14 @@
     ],
     "type": "shell"
     }
-	]
+	],
+    "post-processors": [
+  [
+    {
+      "output": "builds/{{user `hostname`}}.{{.Provider}}.box",
+      "type": "vagrant",
+      "keep_input_artifact": true
+    }
+  ]
+]
 }

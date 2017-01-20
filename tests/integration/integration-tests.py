@@ -1,4 +1,5 @@
 import pytest
+import re
 
 @pytest.mark.parametrize("name,version", [
     ("mysql-server", "5.5"),
@@ -232,3 +233,44 @@ def test_gui_packages_installed(Package, name, version):
 ])
 def test_package_cleanup(Package, name):
     assert Package(name).is_installed == False
+
+
+def test_basic_system_information(SystemInfo):
+    assert SystemInfo.type == "linux"
+    assert SystemInfo.distribution == "debian"
+    assert SystemInfo.codename == "jessie"
+
+
+@pytest.mark.parametrize("executable,expected_output", [
+    ("/usr/bin/java -version", 'java version "1.8.0_111"\nJava(TM) SE Runtime Environment (build 1.8.0_111-b14)\nJava HotSpot(TM) Client VM (build 25.111-b14, mixed mode)\n'),
+
+])
+
+def test_java_version_full_output(executable, expected_output, Command, Sudo):
+    with Sudo():
+        cmd = Command(executable)
+        # output = cmd.stdout
+        assert cmd.stderr == expected_output
+
+
+@pytest.mark.parametrize("executable,expected_output", [
+    ("/usr/bin/java -version", "1.8.0_111"),
+])
+def test_java_version(executable, expected_output, Command, Sudo):
+    with Sudo():
+        cmd = Command(executable)
+        reported_version = re.findall('java version "(.+)"', cmd.stderr)
+        assert reported_version[0] == expected_output
+
+
+
+@pytest.mark.parametrize("sysctl_option,expected_output", [
+    ("kernel.hostname", "openthinclient-server"),
+    ("vm.swappiness", 60),
+
+])
+
+def test_sysctl_values(sysctl_option, expected_output, Sysctl, Sudo):
+    with Sudo():
+        current_value = Sysctl(sysctl_option)
+        assert current_value == expected_output

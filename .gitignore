@@ -8,6 +8,7 @@
 packer_cache/
 # output directories
 output*/
+builds/
 
 # For built boxes
 *.box
@@ -34,3 +35,6 @@ data/teamviewer_linux.deb
 
 ### exclude integration testing cache folder
 .cache
+
+### exclude vagrant files
+.vagrant

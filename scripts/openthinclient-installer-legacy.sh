@@ -23,7 +23,7 @@ if [ -f $OPENTHINCLIENT_FULLPATH ]; then
     chmod -R g+w /opt/openthinclient
 
     echo "==> removing rpcbind package"
-    apt-get remove -y rpcbind
+    apt-get remove -y --purge rpcbind nfs-common
 
     # check, whether it starts automatically
     ln -s /opt/openthinclient/bin/start.sh /etc/init.d/openthinclient

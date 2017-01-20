@@ -58,7 +58,7 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
         $OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager status
 
         echo "==> removing rpcbind package"
-        apt-get remove -y rpcbind
+        apt-get remove -y --purge rpcbind nfs-common
         # symlink the service
         #ln -s OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager /etc/init.d/openthinclient
 

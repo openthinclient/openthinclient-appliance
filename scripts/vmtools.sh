@@ -29,6 +29,7 @@ virtualbox-iso|virtualbox-ovf)
     umount /tmp/vbox;
     rm -rf /tmp/vbox;
     rm -f $HOME_DIR/*.iso;
+    apt-get remove -y build-essential
     ;;
 
 vmware-iso|vmware-vmx)

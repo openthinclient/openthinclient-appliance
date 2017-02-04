@@ -242,8 +242,7 @@ def test_basic_system_information(SystemInfo):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", 'java version "1.8.0_111"\nJava(TM) SE Runtime Environment (build 1.8.0_111-b14)\nJava HotSpot(TM) Client VM (build 25.111-b14, mixed mode)\n'),
-
+    ("/usr/bin/java -version", 'java version "1.8.0_121"\nJava(TM) SE Runtime Environment (build 1.8.0_121-b13)\nJava HotSpot(TM) Client VM (build 25.121-b13, mixed mode)\n'),
 ])
 
 def test_java_version_full_output(executable, expected_output, Command, Sudo):
@@ -254,7 +253,7 @@ def test_java_version_full_output(executable, expected_output, Command, Sudo):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "1.8.0_111"),
+    ("/usr/bin/java -version", "1.8.0_121"),
 ])
 def test_java_version(executable, expected_output, Command, Sudo):
     with Sudo():
@@ -262,7 +261,14 @@ def test_java_version(executable, expected_output, Command, Sudo):
         reported_version = re.findall('java version "(.+)"', cmd.stderr)
         assert reported_version[0] == expected_output
 
-
+@pytest.mark.parametrize("executable,expected_output", [
+    ("/usr/bin/java -version", "1.8.0"),
+])
+def test_java_major_version(executable, expected_output, Command, Sudo):
+    with Sudo():
+        cmd = Command(executable)
+        reported_version = re.findall('java version "(.+)_\d{3}"', cmd.stderr)
+        assert reported_version[0] == expected_output
 
 @pytest.mark.parametrize("sysctl_option,expected_output", [
     ("kernel.hostname", "openthinclient-server"),

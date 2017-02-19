@@ -50,6 +50,13 @@ def test_passwd_file(File):
     assert passwd.group == "root"
     assert passwd.mode == 0o644
 
+def test_openthinclient_user(User):
+    user = User("openthinclient")
+    assert user.name == "openthinclient"
+    assert user.group == "openthinclient"
+    assert user.exists == True
+
+
 def test_openthinclient_manager_file(File):
     managerbin = File("/opt/openthinclient/bin/openthinclient-manager")
     assert managerbin.user == "root"

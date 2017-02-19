@@ -300,3 +300,15 @@ def test_sysctl_values(sysctl_option, expected_output, Sysctl, Sudo):
     with Sudo():
         current_value = Sysctl(sysctl_option)
         assert current_value == expected_output
+
+
+
+@pytest.mark.parametrize("executable,expected_output", [
+    ("dbus-launch gsettings get org.mate.background picture-filename",
+     "'/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'\n"),
+])
+
+def test_mate_desktop_settings(executable, expected_output, Command):
+        cmd = Command(executable)
+        #output = cmd.stdout
+        assert cmd.stdout == expected_output

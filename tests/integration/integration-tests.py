@@ -4,8 +4,34 @@ import re
 @pytest.mark.parametrize("name,version", [
     ("mysql-server", "5.5"),
     ("python", "2.7"),
+    ("vim", "2:7"),
+    ("zerofree", "1.0"),
+    ("openssh-server", "1:6"),
+    ("oracle-java8-installer", "8"),
+    ("oracle-java8-set-default", "8"),
+    ("ntp", "1:4"),
+    ("acpid", "1:2"),
+    ("sudo", "1.8"),
+    ("bzip2", "1.0"),
+    ("rsync", "3.1"),
+    ("ldapscripts", "2.0"),
+    ("htop", "1.0"),
+
 ])
 def test_basic_packages_installed(Package, name, version):
+    assert Package(name).is_installed
+    assert Package(name).version.startswith(version)
+
+
+@pytest.mark.parametrize("name,version", [
+    ("xtightvncviewer", "1.3"),
+    ("dconf-tools", "0.22"),
+    ("xserver-xorg", "1.7"),
+    ("mate-system-tools", "1.8"),
+    ("iceweasel", "45"),
+    ("pluma", "1.8"),
+])
+def test_gui_packages_installed(Package, name, version):
     assert Package(name).is_installed
     assert Package(name).version.startswith(version)
 
@@ -300,7 +326,6 @@ def test_sysctl_values(sysctl_option, expected_output, Sysctl, Sudo):
     with Sudo():
         current_value = Sysctl(sysctl_option)
         assert current_value == expected_output
-
 
 
 @pytest.mark.parametrize("executable,expected_output", [

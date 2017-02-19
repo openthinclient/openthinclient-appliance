@@ -57,6 +57,19 @@ def test_openthinclient_manager_file(File):
     assert managerbin.exists == True
 
 
+def test_openthinclient_install_directory(File):
+    dir = File("/opt/openthinclient/")
+    assert dir.user == "root"
+    assert dir.group == "root"
+    assert dir.is_directory == True
+
+def test_openthinclient_home_directory(File):
+    dir = File("/home/openthinclient/otc-manager-home/")
+    assert dir.user == "root"
+    assert dir.group == "root"
+    assert dir.is_directory == True
+
+
 @pytest.mark.parametrize("filename", [
     ("/usr/local/bin/openthinclient-manager"),
     ("/usr/local/bin/openthinclient-vmversion"),

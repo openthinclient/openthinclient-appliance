@@ -337,3 +337,36 @@ def test_mate_desktop_settings(executable, expected_output, Command):
         cmd = Command(executable)
         #output = cmd.stdout
         assert cmd.stdout == expected_output
+
+
+@pytest.mark.parametrize("executable,expected_output", [
+    ("mysql -uroot -proot -e 'use openthinclient;'", ""),
+])
+def test_if_openthinclient_mysql_db_exists(executable, expected_output, Command, Sudo):
+    with Sudo():
+        #cmd = Command(executable)
+        cmd = Command.run_test(executable)
+        assert cmd.exit_status == 0
+        assert cmd.stderr == expected_output
+
+
+@pytest.mark.parametrize("executable,expected_output", [
+    ("mysql -uroot -proot -sse 'SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = \"openthinclient\")';", "1\n"),
+])
+def test_if_openthinclient_mysql_user_exists(executable, expected_output, Command, Sudo):
+    with Sudo():
+        # cmd = Command(executable)
+        cmd = Command.run_test(executable)
+        assert cmd.exit_status == 0
+        assert cmd.stdout == expected_output
+
+
+@pytest.mark.parametrize("executable,expected_output", [
+    ("mysql -uopenthinclient -popenthinclient -e 'use openthinclient;'", ""),
+])
+def test_if_openthinclient_user_has_access_to_mysql_db(executable, expected_output, Command, Sudo):
+    with Sudo():
+        #cmd = Command(executable)
+        cmd = Command.run_test(executable)
+        assert cmd.exit_status == 0
+        assert cmd.stderr == expected_output

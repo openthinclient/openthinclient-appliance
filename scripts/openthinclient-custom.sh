@@ -12,12 +12,6 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/sudoers.d/90-openthinclient-appliance /etc/s
 chown root:root /etc/sudoers.d/90-openthinclient-appliance
 chmod 0440 /etc/sudoers.d/90-openthinclient-appliance
 
-# FIXME - remove this
-#echo "==> Deploying custom sudoers"
-#cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/sudoers /etc/sudoers
-#chown root:root /etc/sudoers
-#chmod 440 /etc/sudoers
-
 echo "==> Deploying custom otc vimrc "
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/vim/vimrc /etc/vim/vimrc
 
@@ -28,13 +22,6 @@ OTCLOCALSHARE="/usr/local/share/openthinclient/"
 if ! [ -d $OTCLOCALSHARE ]; then
 	echo "==> $OTCLOCALSHARE will be created"
 	mkdir $OTCLOCALSHARE
-fi
-
-echo "==> Copying openthinclient VM information to $OTCLOCALSHARE"
-if [ -f ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/openthinclient-vm-version ]; then
-    cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/openthinclient-vm-version $OTCLOCALSHARE
-else
-    echo "==> Copying openthinclient VM information to $OTCLOCALSHARE failed"
 fi
 
 echo "==> Copying custom bin scripts to /usr/local/bin"
@@ -63,6 +50,28 @@ if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-documentation/ 
 else
     echo "==> Deploying openthinclient-documentation directory failed"
 fi
+
+
+echo "==> Creating openthinclient vm version information"
+VERSION_FILE="/usr/local/share/openthinclient/openthinclient-vm-version"
+touch $VERSION_FILE
+
+echo "==> Populating openthinclient vm version information"
+if [ -f ${VERSION_FILE} ]; then
+    echo "==> Populating already existing openthinclient vm version ${VERSION_FILE}"
+    echo "===================" >>  ${VERSION_FILE}
+    PLATFORM_MSG=$(printf '%s' "$OTC_APPLIANCE_VERSION")
+    BUILT_MSG=$(printf 'built %s' $(date +%Y-%m-%d))
+    printf '%s%-30s%30s\n' " " "${PLATFORM_MSG}" "${BUILT_MSG}" >> ${VERSION_FILE}
+    echo "===================" >>  ${VERSION_FILE}
+    echo "Operating system:" >>  ${VERSION_FILE}
+    lsb_release -d -s >>  ${VERSION_FILE}
+    echo "===================" >>  ${VERSION_FILE}
+    /opt/openthinclient/bin/managerctl ls-distributions -v >>  ${VERSION_FILE}
+else
+    echo "==> Populating openthinclient VM information failed. File not found"
+fi
+
 
 echo "==> Deploying openthinclient grub background image"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/grub_background/desktopB_1920x1200.png /boot/grub/desktopB_1920x1200.png

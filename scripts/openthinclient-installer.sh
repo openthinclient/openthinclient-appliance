@@ -16,6 +16,9 @@ OPENTHINCLIENT_INSTALL_PATH=/opt/openthinclient/
 # location of the home working directory
 OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
 
+# Please uncomment password for openthinclient manager for local testing
+#OTC_DEFAULT_PASS=0pen%TC
+
 
 echo "==> Installing new openthinclient manager"
 if [ -f $OTC_INSTALLER_FULLPATH ]; then
@@ -38,9 +41,9 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
         echo "==> Checking mySQL database server status"
         mysqlrun=$(sudo service mysql status)
         if [ $? -ne 0 ]; then
-            echo "==> Running managerctl install with predefined variables and default included H2 database"
+            echo "==> Running managerctl install with predefined variables and mySQL database backend"
 	        $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home \
-	        --admin-password 0pen%TC \
+	        --admin-password $OTC_DEFAULT_PASS \
 	        --home $OTC_INSTALL_HOME \
 	        --db MYSQL \
 	        --db-host localhost \
@@ -48,8 +51,8 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 	        --db-user openthinclient \
 	        --db-password openthinclient > /dev/null 2>&1
         fi
-             echo "==> Running managerctl install with predefined variables and mySQL database backend"
-            $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home --admin-password 0pen%TC --home $OTC_INSTALL_HOME > /dev/null 2>&1
+            echo "==> Running managerctl install with predefined variables and default included H2 database"
+            $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home --admin-password 0pen%TC --home $OTC_DEFAULT_PASS > /dev/null 2>&1
 
         echo "==> Starting the OTC manager service"
         $OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager start

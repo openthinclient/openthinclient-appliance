@@ -7,8 +7,9 @@ export DEBIAN_FRONTEND="noninteractive"
 
 MYSQL_ROOT_PWD=root
 
-MYSQL_OTC_USER=openthinclient
-MYSQL_OTC_PWD=openthinclient
+# Please uncomment for local testing. mySQL database user and password.
+#MYSQL_OTC_USER=openthinclient
+#MYSQL_OTC_PWD=openthinclient
 
 echo $MYSQL_ROOT_PWD
 echo $MYSQL_OTC_PWD

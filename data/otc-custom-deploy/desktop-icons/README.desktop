@@ -1,8 +1,12 @@
+#!/usr/bin/env xdg-open
 [Desktop Entry]
 Version=1.0
-Type=Link
+Type=Application
+Icon[en_US]=/usr/local/share/openthinclient/icons/openthinclient_readme.png
+Terminal=false
+Name[en_US]=README
+Exec=evince /usr/local/share/openthinclient/documentation/README-openthinclient-VirtualAppliance.pdf
+Comment[en_US]=README file
 Name=README
 Comment=README file
 Icon=/usr/local/share/openthinclient/icons/openthinclient_readme.png
-URL=file:///usr/local/share/openthinclient-documentation/README.html
-GenericName=README

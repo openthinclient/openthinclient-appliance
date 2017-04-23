@@ -264,6 +264,18 @@ def test_otc_background_and_icons(File, filename):
     assert file.group == "openthinclient"
     assert file.exists == True
 
+
+@pytest.mark.parametrize("filename", [
+    ("/usr/local/share/openthinclient/documentation/README.txt"),
+    ("/usr/local/share/openthinclient/documentation/README-openthinclient-VirtualAppliance.pdf"),
+])
+
+def test_otc_documentation(File, filename):
+    file = File(filename)
+    assert file.user == "openthinclient"
+    assert file.group == "openthinclient"
+    assert file.exists == True
+
 @pytest.mark.parametrize("name,version", [
     ("mate-desktop-environment-core", "1.8"),
     ("lightdm", "1.10"),

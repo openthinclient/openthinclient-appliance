@@ -17,7 +17,6 @@ apt-get install -y xserver-xorg
 echo "==> Installing lightdm with --no-install-recommends"
 apt-get install -y --no-install-recommends lightdm
 
-
 echo "==> Installing Teamviewer9 debian package if present"
 TEAMVIEWER_INSTALLER="teamviewer_linux.deb"
 
@@ -79,6 +78,9 @@ apt-get install -y dconf-tools
 
 echo "==> Installing mate-system-tools"
 apt-get install -y mate-system-tools
+
+echo "==> Installing evince PDF viewer"
+apt-get install -y install evince
 
 
 # workaround

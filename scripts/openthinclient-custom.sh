@@ -45,8 +45,8 @@ chown root:root /etc/cron.d/openthinclient_ldap_backup
 chmod +x /etc/cron.d/openthinclient_ldap_backup
 
 echo "==> Deploying openthinclient-documentation directory"
-if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-documentation/ ]; then
-    cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-documentation/ /usr/local/share/openthinclient-documentation/
+if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/documentation/ ]; then
+    cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/documentation/ /usr/local/share/openthinclient/documentation/
 else
     echo "==> Deploying openthinclient-documentation directory failed"
 fi

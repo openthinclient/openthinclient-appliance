@@ -80,7 +80,7 @@ echo "==> Installing mate-system-tools"
 apt-get install -y mate-system-tools
 
 echo "==> Installing evince PDF viewer"
-apt-get install -y install evince
+apt-get install -y evince
 
 
 # workaround

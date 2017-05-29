@@ -27,8 +27,8 @@ Default user credentials for the Appliance
 
 To login into the openthinclient Virtual Appliance you need to enter the following username and password: 
 
-	User: openthinclient
-	Password: openthinclient
+	Username: openthinclient
+	Password: 0pen%TC (The first character is the number zero)
 
 We recommend to change the password after the first successful login to increase the security of the Appliance.
 

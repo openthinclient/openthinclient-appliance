@@ -18,6 +18,12 @@ find /opt/openthinclient/ | grep '\.log' | xargs rm
 # remove nfs db
 rm /opt/openthinclient/server/default/data/nfs-paths.db*
 
+# remove nfs db from manager home
+rm /home/openthinclient/otc-manager-home/nfs/nfs-paths.db*
+
+# remove cache files
+rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
+
 # remove homes
 rm -rf 	/opt/openthinclient/server/default/data/nfs/home/*
 

@@ -29,6 +29,9 @@ if [ -d "/opt/openthinclient/" ]; then
     # remove nfs db
     rm -rf /opt/openthinclient/server/default/data/nfs-paths.db*
 
+    # remove nfs db from manager home
+    rm /home/openthinclient/otc-manager-home/nfs/nfs-paths.db*
+
     # remove homes
     rm -rf 	/opt/openthinclient/server/default/data/nfs/home/*
 
@@ -37,6 +40,11 @@ if [ -d "/opt/openthinclient/" ]; then
     rm -rf /opt/openthinclient/server/default/data/hypersonic
     rm -rf /opt/openthinclient/server/default/data/xmbean-attrs
     rm -rf /opt/openthinclient/server/default/data/jboss.identity
+fi
+
+if [ -d "/home/openthinclient/otc-manager-home/" ]; then
+    # remove cache files
+    rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
 fi
 
 # delete ldap backups

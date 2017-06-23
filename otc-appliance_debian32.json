@@ -56,6 +56,7 @@
         "ssh_username": "{{user `ssh_name`}}",
         "ssh_password": "{{user `ssh_pass`}}",
         "ssh_wait_timeout": "60m",
+        "post_shutdown_delay": "30s",
 
         "output_directory": "output-{{ user `vm_name` }}-virtualbox-iso",
 

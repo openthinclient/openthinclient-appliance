@@ -300,7 +300,7 @@ def test_basic_system_information(SystemInfo):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", 'java version "1.8.0_121"\nJava(TM) SE Runtime Environment (build 1.8.0_121-b13)\nJava HotSpot(TM) Client VM (build 25.121-b13, mixed mode)\n'),
+    ("/usr/bin/java -version", 'java version "1.8.0_131"\nJava(TM) SE Runtime Environment (build 1.8.0_131-b11)\nJava HotSpot(TM) Client VM (build 25.131-b11, mixed mode)\n'),
 ])
 
 def test_java_version_full_output(executable, expected_output, Command, Sudo):
@@ -311,7 +311,7 @@ def test_java_version_full_output(executable, expected_output, Command, Sudo):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "1.8.0_121"),
+    ("/usr/bin/java -version", "1.8.0_131"),
 ])
 def test_java_version(executable, expected_output, Command, Sudo):
     with Sudo():
@@ -382,3 +382,13 @@ def test_if_openthinclient_user_has_access_to_mysql_db(executable, expected_outp
         cmd = Command.run_test(executable)
         assert cmd.exit_status == 0
         assert cmd.stderr == expected_output
+
+@pytest.mark.parametrize("executable,expected_output", [
+    ("ls -A /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/", ""),
+])
+def test_if_openthinclient_package_cache_dir_is_empty(executable, expected_output, Command, Sudo):
+    with Sudo():
+        #cmd = Command(executable)
+        cmd = Command.run_test(executable)
+        assert cmd.exit_status == 0
+        assert cmd.stdout == expected_output

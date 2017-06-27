@@ -76,16 +76,18 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
 echo "==> Installing dconf-tools"
 apt-get install -y dconf-tools
 
-echo "==> Installing mate-system-tools"
-apt-get install -y mate-system-tools
+echo "==> Installing mate-tools and mate-applets"
+apt-get install -y mate-system-tools mate-applets
+
+echo "==> Installing mate-system-monitor"
+apt-get install -y mate-system-monitor --no-install-recommends
 
 echo "==> Installing evince PDF viewer"
 apt-get install -y evince
 
 
 # workaround
-#/etc/init.d/lightdm start
-
+/etc/init.d/lightdm start
 
 #xhost
 #export DISPLAY=:0
@@ -101,18 +103,36 @@ dbus-launch gsettings writable org.mate.background picture-filename
 #DISPLAY=:0 gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'
 dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'
 
-
 # get object-id-list
 #DISPLAY=:0 dbus-launch gsettings get org.mate.panel object-id-list
 #DISPLAY=:0 dbus-launch gsettings get org.mate.panel toplevel-id-list
+#dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list
 
-#echo "==> Adding Start openthinclient Manager icon to top panel"
-#DISPLAY=:0 dbus-launch gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ toplevel-id 'top'
-#DISPLAY=:0 dbus-launch gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ launcher-location '"/home/openthinclient/Desktop/openthinclient Manager.desktop"'
-#DISPLAY=:0 dbus-launch gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ position '210'
-#DISPLAY=:0 dbus-launch gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ panel-right-stick 'false'
-#DISPLAY=:0 dbus-launch gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ object-type '"launcher"'
-#DISPLAY=:0 dbus-launch gsettings set org.mate.panel object-id-list "`gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-manager' ]"
+#echo "==> Adding openthinclient manager icon to top panel"
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ object-type '"launcher"'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ toplevel-id 'top'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ launcher-location '"/home/openthinclient/Desktop/openthinclient Manager.desktop"'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ position '20'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ panel-right-stick 'false'
+##dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-manager' ]"
+#dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-manager' ]"
+#
+#echo "==> Adding openthinclient restart icon to top panel"
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ toplevel-id 'top'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ launcher-location '"/home/openthinclient/Desktop/openthinclient service restart.desktop"'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ position '30'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ panel-right-stick 'false'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ object-type '"launcher"'
+#dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-restart' ]"
+#
+#
+#echo "==> Adding firefox icon to top panel"
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ toplevel-id 'top'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ launcher-location '"/usr/share/applications/firefox-esr.desktop"'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ position '40'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ panel-right-stick 'false'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ object-type '"launcher"'
+#dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'firefox' ]"
 
 
 # FIX config dir - Temp workaround
@@ -125,25 +145,11 @@ if ! [ -d $OTC_HOME_CONFIG_DIR ]; then
 fi
 chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
 
-#echo "==> Adding openthinclient restart icon to top panel"
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ toplevel-id 'top'
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ launcher-location '"/home/openthinclient/Desktop/openthinclient service restart.desktop"'
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ position '250'
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ panel-right-stick 'false'
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ object-type '"launcher"'
-#DISPLAY=:0 gsettings set org.mate.panel object-id-list "`gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-restart' ]"
+echo "==> Installing firefox web browser with --no-install-recommends"
+apt-get install -y --no-install-recommends firefox-esr
 
-
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/mate-session-logout/ object-type '"action"'
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/mate-session-logout/ action-type '"logout"'
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/mate-session-logout/ position '1400'
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/mate-session-logout/ panel-right-stick 'false'
-#DISPLAY=:0 gsettings set org.mate.panel.object:/org/mate/panel/objects/mate-session-logout/ toplevel-id '"top"'
-#DISPLAY=:0 gsettings set org.mate.panel object-id-list "`gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'mate-session-logout' ]"
-
-
-echo "==> Installing iceweasel web browser with --no-install-recommends"
-apt-get install -y --no-install-recommends iceweasel
+echo "==> Installing firefox web browser german language file with --no-install-recommends"
+apt-get install -y --no-install-recommends firefox-esr-l10n-de
 
 
 if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/mozilla/ ]; then
@@ -184,7 +190,6 @@ if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/opt/openthinclient-advisor/ ]; then
 else
      echo "==> Deploying openthinclient advisor into /opt/ failed. nothing to deploy"
 fi
-
 
 echo "==> Installing xtightvncviewer with --no-install-recommends"
 apt-get install -y --no-install-recommends xtightvncviewer

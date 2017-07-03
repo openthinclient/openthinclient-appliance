@@ -152,7 +152,6 @@
       "scripts/jre-oracle-8.sh",
       "scripts/mysql.sh",
       "scripts/openthinclient-installer.sh",
-      "scripts/openthinclient-installer-legacy.sh",
       "scripts/openthinclient-custom.sh",
       "scripts/openthinclient-gui.sh",
       "scripts/vmtools.sh",

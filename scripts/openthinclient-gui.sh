@@ -107,6 +107,23 @@ dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share
 #DISPLAY=:0 dbus-launch gsettings get org.mate.panel object-id-list
 #DISPLAY=:0 dbus-launch gsettings get org.mate.panel toplevel-id-list
 #dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list
+#gsettings get org.mate.panel object-id-list
+#gsettings list-recursively org.mate.panel
+
+echo "==> Reading desktop configuration via dconf"
+dbus-launch dconf dump /
+echo "==> End Reading desktop configuration via dconf"
+
+echo "==> Setting preconfigured desktop configuration via dconf"
+DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-backup.txt"
+
+echo "dbus-launch dconf load < / $DCONF_CONFIG"
+dbus-launch dconf load / < ${DCONF_CONFIG}
+
+#echo "==> Reading desktop configuration via dconf"
+#dbus-launch dconf dump /
+#echo "==> End Reading desktop configuration via dconf"
+
 
 #echo "==> Adding openthinclient manager icon to top panel"
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ object-type '"launcher"'

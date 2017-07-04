@@ -17,22 +17,22 @@ apt-get install -y xserver-xorg
 echo "==> Installing lightdm with --no-install-recommends"
 apt-get install -y --no-install-recommends lightdm
 
-echo "==> Installing Teamviewer9 debian package if present"
-TEAMVIEWER_INSTALLER="teamviewer_linux.deb"
-
-if [ -f /tmp/data/${TEAMVIEWER_INSTALLER} ]; then
-	echo "==> Installing already downloaded Teamviewer9 debian package"
-	dpkg -i /tmp/data/${TEAMVIEWER_INSTALLER}
-else
-    echo "==> Downloading Teamviewer9 debian package from official source"
-    wget -c http://download.teamviewer.com/download/version_9x/teamviewer_linux.deb -P /tmp/data/
-    if [ -f /tmp/data/${TEAMVIEWER_INSTALLER} ]; then
-	    echo "==> Installing Teamviewer debian package"
-	    dpkg -i /tmp/data/${TEAMVIEWER_INSTALLER}
-	 else
-        echo "==> No Teamviewer9 package provided or download failed. Nothing to be installed"
-	 fi
-fi
+# echo "==> Installing Teamviewer9 debian package if present"
+# TEAMVIEWER_INSTALLER="teamviewer_linux.deb"
+#
+# if [ -f /tmp/data/${TEAMVIEWER_INSTALLER} ]; then
+# 	echo "==> Installing already downloaded Teamviewer9 debian package"
+# 	dpkg -i /tmp/data/${TEAMVIEWER_INSTALLER}
+# else
+#     echo "==> Downloading Teamviewer9 debian package from official source"
+#     wget -c http://download.teamviewer.com/download/version_9x/teamviewer_linux.deb -P /tmp/data/
+#     if [ -f /tmp/data/${TEAMVIEWER_INSTALLER} ]; then
+# 	    echo "==> Installing Teamviewer debian package"
+# 	    dpkg -i /tmp/data/${TEAMVIEWER_INSTALLER}
+# 	 else
+#         echo "==> No Teamviewer9 package provided or download failed. Nothing to be installed"
+# 	 fi
+# fi
 
 # setting otc custom deploy variables
 OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy

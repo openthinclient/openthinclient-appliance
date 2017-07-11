@@ -5,7 +5,7 @@
 
 VERSION="/usr/local/share/openthinclient/openthinclient-vm-version"
 
-zenity --text-info --title="openthinclient appliance version" --filename="$VERSION" 
+zenity --text-info --title="openthinclient appliance version" --filename="$VERSION" --width=400 --height=400
 if [ $? = 1 ];
 then exit 0
 fi

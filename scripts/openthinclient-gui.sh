@@ -76,8 +76,8 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
 echo "==> Installing dconf-tools"
 apt-get install -y dconf-tools
 
-echo "==> Installing mate-tools and mate-applets"
-apt-get install -y mate-system-tools mate-applets
+echo "==> Installing mate-tools, mate-applets and mate-themes"
+apt-get install -y mate-system-tools mate-applets mate-themes
 
 echo "==> Installing mate-system-monitor"
 apt-get install -y mate-system-monitor --no-install-recommends

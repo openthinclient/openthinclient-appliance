@@ -32,6 +32,9 @@ if [ -d "/opt/openthinclient/" ]; then
     # remove nfs db from manager home
     rm /home/openthinclient/otc-manager-home/nfs/nfs-paths.db*
 
+    # remove old logfiles from manager home
+    rm -rf /home/openthinclient/otc-manager-home/logs/*
+
     # remove homes
     rm -rf 	/opt/openthinclient/server/default/data/nfs/home/*
 
@@ -45,6 +48,7 @@ fi
 if [ -d "/home/openthinclient/otc-manager-home/" ]; then
     # remove cache files
     rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
+    rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
 fi
 
 # delete ldap backups

@@ -97,12 +97,6 @@ apt-get install -y evince
 #xhost +
 #export DISPLAY=:0.0
 
-echo "==> Setting openthinclient Pales desktop background"
-dbus-launch gsettings writable org.mate.background picture-filename
-
-#DISPLAY=:0 gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'
-dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'
-
 # get object-id-list
 #DISPLAY=:0 dbus-launch gsettings get org.mate.panel object-id-list
 #DISPLAY=:0 dbus-launch gsettings get org.mate.panel toplevel-id-list
@@ -120,9 +114,10 @@ DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-backup.txt"
 echo "dbus-launch dconf load < / $DCONF_CONFIG"
 dbus-launch dconf load / < ${DCONF_CONFIG}
 
-#echo "==> Reading desktop configuration via dconf"
-#dbus-launch dconf dump /
-#echo "==> End Reading desktop configuration via dconf"
+
+echo "==> Setting openthinclient Pales desktop background"
+dbus-launch gsettings writable org.mate.background picture-filename
+dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'
 
 
 #echo "==> Adding openthinclient manager icon to top panel"

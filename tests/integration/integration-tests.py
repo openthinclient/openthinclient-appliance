@@ -1,6 +1,17 @@
 import pytest
 import re
 
+
+# set some default variables
+
+ssh_name = "openthinclient"
+ssh_pass = "0pen%TC"
+otc_manager_database_user = "openthinclient"
+otc_manager_database_pass = "openthinclient"
+
+otc_manager_default_pass = "0pen%TC"
+otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
+
 @pytest.mark.parametrize("name,version", [
     ("mysql-server", "5.5"),
     ("python", "2.7"),
@@ -77,9 +88,9 @@ def test_passwd_file(File):
     assert passwd.mode == 0o644
 
 def test_openthinclient_user(User):
-    user = User("openthinclient")
-    assert user.name == "openthinclient"
-    assert user.group == "openthinclient"
+    user = User(ssh_name)
+    assert user.name == ssh_name
+    assert user.group == ssh_name
     assert user.exists == True
 
 
@@ -172,8 +183,6 @@ def test_lightdm_config_file(File, filename):
     #assert file.user == "root"
     #assert file.group == "root"
     assert file.exists == True
-
-
 
 @pytest.mark.parametrize("filename,content", [
     ("/etc/lightdm/lightdm.conf", "greeter-setup-script=/usr/local/bin/openthinclient-default-user-fix" ),
@@ -375,7 +384,7 @@ def test_if_openthinclient_mysql_user_exists(executable, expected_output, Comman
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("mysql -uopenthinclient -popenthinclient -e 'use openthinclient;'", ""),
+    ("mysql -u" + otc_manager_database_user + " -p" + otc_manager_database_user + " -e 'use openthinclient;'", ""),
 ])
 def test_if_openthinclient_user_has_access_to_mysql_db(executable, expected_output, Command, Sudo):
     with Sudo():
@@ -383,6 +392,7 @@ def test_if_openthinclient_user_has_access_to_mysql_db(executable, expected_outp
         cmd = Command.run_test(executable)
         assert cmd.exit_status == 0
         assert cmd.stderr == expected_output
+
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("ls -A /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/", ""),
@@ -393,3 +403,16 @@ def test_if_openthinclient_package_cache_dir_is_empty(executable, expected_outpu
         cmd = Command.run_test(executable)
         assert cmd.exit_status == 0
         assert cmd.stdout == expected_output
+
+
+@pytest.mark.parametrize("filename", [
+    (otc_manager_install_home + "nfs/root/sfs/base.sfs"),
+    (otc_manager_install_home + "nfs/root/sfs/package/tcos-scripts.sfs"),
+    (otc_manager_install_home + "nfs/root/sfs/package/tcos-libs.sfs"),
+])
+
+def test_if_otc_manager_default_install_packages_exist(File, filename):
+    file = File(filename)
+    assert file.user == "root"
+    assert file.group == "root"
+    assert file.exists == True

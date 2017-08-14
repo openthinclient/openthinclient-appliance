@@ -16,6 +16,44 @@ echo "==> Deploying custom otc vimrc "
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/vim/vimrc /etc/vim/vimrc
 
 
+echo "==> Setting custom bashrc aliases for user"
+USER_ALIASES_FILE=/home/openthinclient/.bash_aliases
+ROOT_ALIASES_FILE=/root/.bash_aliases
+ROOT_BASHRC_FILE=/root/.bashrc
+
+read -r -d '' ALIASES << EOF
+alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
+EOF
+
+echo "${ALIASES}"
+
+echo "==> Setting custom bashrc aliases for user"
+echo "${ALIASES}" > ${USER_ALIASES_FILE}
+
+echo "==> Setting correct permission for ${USER_ALIASES_FILE}"
+chown openthinclient:openthinclient ${USER_ALIASES_FILE}
+
+echo "==> Setting custom bashrc aliases for root"
+echo "${ALIASES}" > ${ROOT_ALIASES_FILE}
+
+
+read -r -d '' ALIASINCLUDE << EOF
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+EOF
+
+echo "==> Including aliases in bashrc for root"
+echo "${ALIASINCLUDE}" > ${ROOT_BASHRC_FILE}
+
 echo "==> Creating openthinclient directory in /usr/local/share"
 OTCLOCALSHARE="/usr/local/share/openthinclient/"
 

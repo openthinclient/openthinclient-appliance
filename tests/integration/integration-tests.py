@@ -162,6 +162,20 @@ def test_sudoers_file(File, filename, content, Command, Sudo):
         assert file.exists == True
 
 
+@pytest.mark.parametrize("filename,content", [
+    ("/home/openthinclient/.bash_aliases", "alias ll='ls -l'"),
+    ("/root/.bash_aliases", "alias ll='ls -l'"),
+    ("/home/openthinclient/.bashrc", ". ~/.bash_aliases"),
+    ("/root/.bashrc", ". ~/.bash_aliases"),
+])
+
+def test_bash_aliases_file(File, filename, content, Sudo):
+    with Sudo():
+        file = File(filename)
+        assert file.contains(content)
+        assert file.exists == True
+
+
 @pytest.mark.parametrize("filename", [
     ("/etc/X11/Xsession.d/21-lightdm-locale-fix"),
 ])

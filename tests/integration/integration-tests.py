@@ -12,6 +12,7 @@ otc_manager_database_pass = "openthinclient"
 otc_manager_default_pass = "0pen%TC"
 otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
+
 @pytest.mark.parametrize("name,version", [
     ("mysql-server", "5.5"),
     ("python", "2.7"),
@@ -29,9 +30,10 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("htop", "1.0"),
 
 ])
-def test_basic_packages_installed(Package, name, version):
-    assert Package(name).is_installed
-    assert Package(name).version.startswith(version)
+def test_basic_packages_installed(host, name, version):
+    pkg = host.package(name)
+    assert pkg.is_installed
+    assert pkg.version.startswith(version)
 
 
 @pytest.mark.parametrize("name,version", [
@@ -42,9 +44,10 @@ def test_basic_packages_installed(Package, name, version):
     ("iceweasel", "45"),
     ("pluma", "1.8"),
 ])
-def test_gui_packages_installed(Package, name, version):
-    assert Package(name).is_installed
-    assert Package(name).version.startswith(version)
+def test_gui_packages_installed(host, name, version):
+    pkg = host.package(name)
+    assert pkg.is_installed
+    assert pkg.version.startswith(version)
 
 
 @pytest.mark.parametrize("user", [
@@ -52,8 +55,8 @@ def test_gui_packages_installed(Package, name, version):
     ("openthinclient"),
 ])
 
-def test_user_in_passwd_file(File, user):
-    passwd = File("/etc/passwd")
+def test_user_in_passwd_file(host, user):
+    passwd = host.file("/etc/passwd")
     assert passwd.contains(user)
 
 
@@ -63,55 +66,54 @@ def test_user_in_passwd_file(File, user):
     ("mysql"),
 ])
 
-def test_service_running(Service, service_name):
-    service = Service(service_name)
+def test_service_running(host, service_name):
+    service = host.service(service_name)
     assert service.is_running
     assert service.is_enabled
 
 
-@pytest.mark.parametrize("proto,host,port", [
+@pytest.mark.parametrize("proto,hostname,port", [
     ("tcp", "127.0.0.1", "3306"),
     ("tcp", "0.0.0.0","22"),
 ])
 
-def test_socket_listening(Socket, proto, host, port):
-    socketoptions = "{0}://{1}:{2}".format(proto, host, port)
-    socket = Socket(socketoptions)
+def test_socket_listening(host, proto, hostname, port):
+    socketoptions = "{0}://{1}:{2}".format(proto, hostname, port)
+    socket = host.socket(socketoptions)
     assert socket.is_listening
 
-
-def test_passwd_file(File):
-    passwd = File("/etc/passwd")
+def test_passwd_file(host):
+    passwd = host.file("/etc/passwd")
     assert passwd.contains("root")
     assert passwd.user == "root"
     assert passwd.group == "root"
     assert passwd.mode == 0o644
 
-def test_openthinclient_user(User):
-    user = User(ssh_name)
+def test_openthinclient_user(host):
+    user = host.user(ssh_name)
     assert user.name == ssh_name
     assert user.group == ssh_name
-    assert user.exists == True
+    assert user.exists is True
 
 
-def test_openthinclient_manager_file(File):
-    managerbin = File("/opt/openthinclient/bin/openthinclient-manager")
+def test_openthinclient_manager_file(host):
+    managerbin = host.file("/opt/openthinclient/bin/openthinclient-manager")
     assert managerbin.user == "root"
     assert managerbin.group == "root"
-    assert managerbin.exists == True
+    assert managerbin.exists is True
 
 
-def test_openthinclient_install_directory(File):
-    dir = File("/opt/openthinclient/")
-    assert dir.user == "root"
-    assert dir.group == "root"
-    assert dir.is_directory == True
+def test_openthinclient_install_directory(host):
+    directory = host.file("/opt/openthinclient/")
+    assert directory.user == "root"
+    assert directory.group == "root"
+    assert directory.is_directory is True
 
-def test_openthinclient_home_directory(File):
-    dir = File("/home/openthinclient/otc-manager-home/")
-    assert dir.user == "root"
-    assert dir.group == "root"
-    assert dir.is_directory == True
+def test_openthinclient_home_directory(host):
+    directory = host.file("/home/openthinclient/otc-manager-home/")
+    assert directory.user == "root"
+    assert directory.group == "root"
+    assert directory.is_directory is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -119,11 +121,12 @@ def test_openthinclient_home_directory(File):
     ("/usr/local/bin/openthinclient-vmversion"),
 ])
 
-def test_otc_usr_local_bin_files(File, filename):
-    file = File(filename)
+
+def test_otc_usr_local_bin_files(host, filename):
+    file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists == True
+    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -135,31 +138,31 @@ def test_otc_usr_local_bin_files(File, filename):
     ("/usr/local/sbin/zerofree.sh"),
 ])
 
-def test_otc_usr_local_sbin_files(File, filename):
-    file = File(filename)
+def test_otc_usr_local_sbin_files(host, filename):
+    file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists == True
+    assert file.exists is True
 
-def test_crond_ldap_backup_file(File):
-    managerbin = File("/etc/cron.d/openthinclient_ldap_backup")
+def test_crond_ldap_backup_file(host):
+    managerbin = host.file("/etc/cron.d/openthinclient_ldap_backup")
     assert managerbin.user == "root"
     assert managerbin.group == "root"
-    assert managerbin.exists == True
+    assert managerbin.exists is True
 
 
 @pytest.mark.parametrize("filename,content", [
     ("/etc/sudoers.d/90-openthinclient-appliance", "openthinclient ALL=(ALL) NOPASSWD:ALL"),
 ])
 
-def test_sudoers_file(File, filename, content, Command, Sudo):
-    file = File(filename)
-    with Sudo():
-        Command.check_output("whoami")
+def test_sudoers_file(host, filename, content):
+    file = host.file(filename)
+    with host.sudo():
+        host.check_output("whoami")
         assert file.contains(content)
         assert file.user == "root"
         assert file.group == "root"
-        assert file.exists == True
+        assert file.exists is True
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -169,22 +172,22 @@ def test_sudoers_file(File, filename, content, Command, Sudo):
     ("/root/.bashrc", ". ~/.bash_aliases"),
 ])
 
-def test_bash_aliases_file(File, filename, content, Sudo):
-    with Sudo():
-        file = File(filename)
+def test_bash_aliases_file(host, filename, content):
+    with host.sudo():
+        file = host.file(filename)
         assert file.contains(content)
-        assert file.exists == True
+        assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
     ("/etc/X11/Xsession.d/21-lightdm-locale-fix"),
 ])
 
-def test_otc_gui_lightdm_locale_fix(File, filename):
-    file = File(filename)
+def test_otc_gui_lightdm_locale_fix(host, filename):
+    file = host.file(filename)
     assert file.user == "root"
     assert file.group == "root"
-    assert file.exists == True
+    assert file.exists is True
     # assert file.mode == 0o744 # FIXME - check if this needs to executable
 
 
@@ -192,11 +195,11 @@ def test_otc_gui_lightdm_locale_fix(File, filename):
     ("/etc/lightdm/lightdm.conf"),
 ])
 
-def test_lightdm_config_file(File, filename):
-    file = File(filename)
+def test_lightdm_config_file(host, filename):
+    file = host.file(filename)
     #assert file.user == "root"
     #assert file.group == "root"
-    assert file.exists == True
+    assert file.exists is True
 
 @pytest.mark.parametrize("filename,content", [
     ("/etc/lightdm/lightdm.conf", "greeter-setup-script=/usr/local/bin/openthinclient-default-user-fix" ),
@@ -205,11 +208,11 @@ def test_lightdm_config_file(File, filename):
     ("/etc/lightdm/lightdm.conf", "greeter-show-manual-login=true"),
 ])
 
-def test_lightdm_config_content(File, filename, content):
-    file = File(filename)
+def test_lightdm_config_content(host, filename, content):
+    file = host.file(filename)
     assert file.contains(content)
     #assert file.group == "root"
-    assert file.exists == True
+    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -218,11 +221,11 @@ def test_lightdm_config_content(File, filename, content):
     ("/etc/lightdm/lightdm-gtk-greeter.conf", "show-clock=true"),
 ])
 
-def test_lightdm_config_content(File, filename, content):
-    file = File(filename)
+def test_lightdm_config_content(host, filename, content):
+    file = host.file(filename)
     assert file.contains(content)
     #assert file.group == "root"
-    assert file.exists == True
+    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -231,37 +234,35 @@ def test_lightdm_config_content(File, filename, content):
     ("/home/openthinclient/.config/autostart/keyboard-layout-fix.desktop"),
 ])
 
-def test_otc_gui_fixes_via_script(File, filename):
-    file = File(filename)
+def test_otc_gui_fixes_via_script(host, filename):
+    file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists == True
+    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
-    ("/home/openthinclient/Desktop/Buy hardware.desktop"),
-    ("/home/openthinclient/Desktop/change password.desktop"),
-    #("/home/openthinclient/Desktop/Edit openthinclient package sources.desktop"),
-    ("/home/openthinclient/Desktop/Feature Bid.desktop"),
-    ("/home/openthinclient/Desktop/livesupport.levigo.de.desktop"),
-    ("/home/openthinclient/Desktop/mate-network-properties.desktop"),
-    ("/home/openthinclient/Desktop/mate-time.desktop"),
-    ("/home/openthinclient/Desktop/openthinclient Manager.desktop"),
-    ("/home/openthinclient/Desktop/openthinclient Package Manager.desktop"),
-    ("/home/openthinclient/Desktop/openthinclient service restart.desktop"),
-    ("/home/openthinclient/Desktop/Oracle-Java-Licence"),
-    ("/home/openthinclient/Desktop/professional support & hardware.desktop"),
-    ("/home/openthinclient/Desktop/README.desktop"),
-    #("/home/openthinclient/Desktop/teamviewer-teamviewer9.desktop"),
-    ("/home/openthinclient/Desktop/Version-Information.desktop"),
-    ("/home/openthinclient/Desktop/VNC Viewer.desktop"),
+    "/home/openthinclient/Desktop/Buy hardware.desktop",
+    "/home/openthinclient/Desktop/change password.desktop",
+    "/home/openthinclient/Desktop/Feature Bid.desktop",
+    "/home/openthinclient/Desktop/livesupport.levigo.de.desktop",
+    "/home/openthinclient/Desktop/mate-network-properties.desktop",
+    "/home/openthinclient/Desktop/mate-time.desktop",
+    "/home/openthinclient/Desktop/openthinclient Manager.desktop",
+    "/home/openthinclient/Desktop/openthinclient Package Manager.desktop",
+    "/home/openthinclient/Desktop/openthinclient service restart.desktop",
+    "/home/openthinclient/Desktop/Oracle-Java-Licence",
+    "/home/openthinclient/Desktop/professional support & hardware.desktop",
+    "/home/openthinclient/Desktop/README.desktop",
+    "/home/openthinclient/Desktop/Version-Information.desktop",
+    "/home/openthinclient/Desktop/VNC Viewer.desktop",
 ])
 
-def test_otc_desktop_icons(File, filename):
-    file = File(filename)
+def test_otc_desktop_icons(host, filename):
+    file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists == True
+    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -281,11 +282,11 @@ def test_otc_desktop_icons(File, filename):
     ("/usr/local/share/openthinclient/icons/openthinclient_shop.png"),
 ])
 
-def test_otc_background_and_icons(File, filename):
-    file = File(filename)
+def test_otc_background_and_icons(host, filename):
+    file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists == True
+    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -293,62 +294,50 @@ def test_otc_background_and_icons(File, filename):
     ("/usr/local/share/openthinclient/documentation/README-openthinclient-VirtualAppliance.pdf"),
 ])
 
-def test_otc_documentation(File, filename):
-    file = File(filename)
+def test_otc_documentation(host, filename):
+    file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists == True
+    assert file.exists is True
 
 @pytest.mark.parametrize("name,version", [
     ("mate-desktop-environment-core", "1.8"),
     ("lightdm", "1.10"),
 ])
 
-def test_gui_packages_installed(Package, name, version):
-    assert Package(name).is_installed
-    assert Package(name).version.startswith(version)
+def test_gui_packages_installed(host, name, version):
+    assert host.package(name).is_installed
+    assert host.package(name).version.startswith(version)
 
 
 @pytest.mark.parametrize("name", [
     ("rpcbind"),
 ])
-def test_package_cleanup(Package, name):
-    assert Package(name).is_installed == False
+def test_package_cleanup(host, name):
+    assert host.package(name).is_installed == False
 
 
-def test_basic_system_information(SystemInfo):
-    assert SystemInfo.type == "linux"
-    assert SystemInfo.distribution == "debian"
-    assert SystemInfo.codename == "jessie"
+def test_basic_system_information(host):
+    assert host.system_info.type == "linux"
+    assert host.system_info.distribution == "debian"
+    assert host.system_info.codename == "jessie"
 
-
-"""
-@pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", 'java version "1.8.0_131"\nJava(TM) SE Runtime Environment (build 1.8.0_131-b11)\nJava HotSpot(TM) Client VM (build 25.131-b11, mixed mode)\n'),
-])
-
-def test_java_version_full_output(executable, expected_output, Command, Sudo):
-    with Sudo():
-        cmd = Command(executable)
-        # output = cmd.stdout
-        assert cmd.stderr == expected_output
-"""
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("/usr/bin/java -version", "1.8.0_144"),
 ])
-def test_java_version(executable, expected_output, Command, Sudo):
-    with Sudo():
-        cmd = Command(executable)
+def test_java_version(executable, expected_output, host):
+    with host.sudo():
+        cmd = host.run(executable)
         reported_version = re.findall('java version "(.+)"', cmd.stderr)
         assert reported_version[0] == expected_output
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("/usr/bin/java -version", "1.8.0"),
 ])
-def test_java_major_version(executable, expected_output, Command, Sudo):
-    with Sudo():
-        cmd = Command(executable)
+def test_java_major_version(executable, expected_output, host):
+    with host.sudo():
+        cmd = host.run(executable)
         reported_version = re.findall('java version "(.+)_\d{3}"', cmd.stderr)
         assert reported_version[0] == expected_output
 
@@ -358,9 +347,9 @@ def test_java_major_version(executable, expected_output, Command, Sudo):
 
 ])
 
-def test_sysctl_values(sysctl_option, expected_output, Sysctl, Sudo):
-    with Sudo():
-        current_value = Sysctl(sysctl_option)
+def test_sysctl_values(sysctl_option, expected_output, host):
+    with host.sudo():
+        current_value = host.sysctl(sysctl_option)
         assert current_value == expected_output
 
 
@@ -369,19 +358,17 @@ def test_sysctl_values(sysctl_option, expected_output, Sysctl, Sudo):
      "'/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'\n"),
 ])
 
-def test_mate_desktop_settings(executable, expected_output, Command):
-        cmd = Command(executable)
-        #output = cmd.stdout
+def test_mate_desktop_settings(executable, expected_output, host):
+        cmd = host.run(executable)
         assert cmd.stdout == expected_output
 
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("mysql -uroot -proot -e 'use openthinclient;'", ""),
 ])
-def test_if_openthinclient_mysql_db_exists(executable, expected_output, Command, Sudo):
-    with Sudo():
-        #cmd = Command(executable)
-        cmd = Command.run_test(executable)
+def test_if_openthinclient_mysql_db_exists(executable, expected_output, host):
+    with host.sudo():
+        cmd = host.run_test(executable)
         assert cmd.exit_status == 0
         assert cmd.stderr == expected_output
 
@@ -389,10 +376,9 @@ def test_if_openthinclient_mysql_db_exists(executable, expected_output, Command,
 @pytest.mark.parametrize("executable,expected_output", [
     ("mysql -uroot -proot -sse 'SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = \"openthinclient\")';", "1\n"),
 ])
-def test_if_openthinclient_mysql_user_exists(executable, expected_output, Command, Sudo):
-    with Sudo():
-        # cmd = Command(executable)
-        cmd = Command.run_test(executable)
+def test_if_openthinclient_mysql_user_exists(executable, expected_output, host):
+    with host.sudo():
+        cmd = host.run_test(executable)
         assert cmd.exit_status == 0
         assert cmd.stdout == expected_output
 
@@ -400,10 +386,9 @@ def test_if_openthinclient_mysql_user_exists(executable, expected_output, Comman
 @pytest.mark.parametrize("executable,expected_output", [
     ("mysql -u" + otc_manager_database_user + " -p" + otc_manager_database_user + " -e 'use openthinclient;'", ""),
 ])
-def test_if_openthinclient_user_has_access_to_mysql_db(executable, expected_output, Command, Sudo):
-    with Sudo():
-        #cmd = Command(executable)
-        cmd = Command.run_test(executable)
+def test_if_openthinclient_user_has_access_to_mysql_db(executable, expected_output, host):
+    with host.sudo():
+        cmd = host.run_test(executable)
         assert cmd.exit_status == 0
         assert cmd.stderr == expected_output
 
@@ -411,10 +396,9 @@ def test_if_openthinclient_user_has_access_to_mysql_db(executable, expected_outp
 @pytest.mark.parametrize("executable,expected_output", [
     ("ls -A /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/", ""),
 ])
-def test_if_openthinclient_package_cache_dir_is_empty(executable, expected_output, Command, Sudo):
-    with Sudo():
-        #cmd = Command(executable)
-        cmd = Command.run_test(executable)
+def test_if_openthinclient_package_cache_dir_is_empty(executable, expected_output, host):
+    with host.sudo():
+        cmd = host.run_test(executable)
         assert cmd.exit_status == 0
         assert cmd.stdout == expected_output
 
@@ -425,8 +409,8 @@ def test_if_openthinclient_package_cache_dir_is_empty(executable, expected_outpu
     (otc_manager_install_home + "nfs/root/sfs/package/tcos-libs.sfs"),
 ])
 
-def test_if_otc_manager_default_install_packages_exist(File, filename):
-    file = File(filename)
+def test_if_otc_manager_default_install_packages_exist(host, filename):
+    file = host.file(filename)
     assert file.user == "root"
     assert file.group == "root"
-    assert file.exists == True
+    assert file.exists is True

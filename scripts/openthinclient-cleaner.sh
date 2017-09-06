@@ -13,11 +13,11 @@ fi
 echo "==> Cleaning up tmp"
 rm -rf /tmp/*
 
-if [ -f "/etc/init.d/openthinclient" ]; then
+if [ -f "/etc/init.d/openthinclient-manager" ]; then
     echo "==> Stopping the openthinclient server before cleaning up"
-    /etc/init.d/openthinclient stop
+    /etc/init.d/openthinclient-manager stop
     echo "==> Making sure the openthinclient server is stopped"
-    /etc/init.d/openthinclient status
+    /etc/init.d/openthinclient-manager status
 fi
 
 

@@ -9,7 +9,8 @@
 
 
 # make sure openthinclient server is stopped
-/etc/init.d/openthinclient stop
+/etc/init.d/openthinclient-manager stop
+/etc/init.d/openthinclient-manager status
 
 # remove lock and log files
 find /opt/openthinclient/ | grep '\.db\.lock' | xargs rm

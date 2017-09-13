@@ -20,35 +20,19 @@ if [ -f "/etc/init.d/openthinclient-manager" ]; then
     /etc/init.d/openthinclient-manager status
 fi
 
-
-if [ -d "/opt/openthinclient/" ]; then
-    # remove lock and log files
-    find /opt/openthinclient/ | grep '\.db\.lock' | xargs -r rm
-    find /opt/openthinclient/ | grep '\.log' | xargs -r rm
-
-    # remove nfs db
-    rm -rf /opt/openthinclient/server/default/data/nfs-paths.db*
-
-    # remove nfs db from manager home
-    rm /home/openthinclient/otc-manager-home/nfs/nfs-paths.db*
-
-    # remove old logfiles from manager home
-    rm -rf /home/openthinclient/otc-manager-home/logs/*
-
-    # remove homes
-    rm -rf 	/opt/openthinclient/server/default/data/nfs/home/*
-
-    # remove jboss stuff
-    rm -rf /opt/openthinclient/server/default/data/tx-object-store
-    rm -rf /opt/openthinclient/server/default/data/hypersonic
-    rm -rf /opt/openthinclient/server/default/data/xmbean-attrs
-    rm -rf /opt/openthinclient/server/default/data/jboss.identity
-fi
-
 if [ -d "/home/openthinclient/otc-manager-home/" ]; then
     # remove cache files
     rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
     rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
+
+    # remove nfs db from manager home
+    rm /home/openthinclient/otc-manager-home/nfs/nfs-paths.db*
+
+    # remove homes
+    rm -rf /home/openthinclient/otc-manager-home/nfs/home/*
+
+    # remove old logfiles from manager home
+    rm -rf /home/openthinclient/otc-manager-home/logs/*
 fi
 
 # delete ldap backups
@@ -122,9 +106,6 @@ clean_logs "/var/log/" "*\.log\.*"
 clean_logs "/var/log/" "*\.0"
 clean_logs "/var/log/" "*\.[0-9]*\.gz"
 
-#find /var/log/ -name "*\.log\.*" -type f | xargs rm
-#find /var/log/ -name "*\.0" -type f | xargs rm
-#find /var/log/ -name "*\.[0-9]*\.gz" -type f | xargs rm
 
 echo "==> Disk usage before cleanup"
 echo ${DISK_USAGE_BEFORE_CLEANUP}

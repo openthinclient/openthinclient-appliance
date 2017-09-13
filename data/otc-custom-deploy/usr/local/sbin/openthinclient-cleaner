@@ -12,48 +12,36 @@
 /etc/init.d/openthinclient-manager stop
 /etc/init.d/openthinclient-manager status
 
-# remove lock and log files
-find /opt/openthinclient/ | grep '\.db\.lock' | xargs rm
-find /opt/openthinclient/ | grep '\.log' | xargs rm
-
-# remove nfs db
-rm /opt/openthinclient/server/default/data/nfs-paths.db*
-
 # remove nfs db from manager home
 rm /home/openthinclient/otc-manager-home/nfs/nfs-paths.db*
 
 # remove cache files
 rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
+rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
 
 # remove homes
 rm -rf 	/opt/openthinclient/server/default/data/nfs/home/*
 
-# remove jboss stuff
-rm -rf /opt/openthinclient/server/default/data/tx-object-store 
-rm -rf /opt/openthinclient/server/default/data/hypersonic
-rm -rf /opt/openthinclient/server/default/data/xmbean-attrs
-rm -f /opt/openthinclient/server/default/data/jboss.identity
+# remove old logfiles from manager home
+rm -rf /home/openthinclient/otc-manager-home/logs/*
 
 # delete ldap backups
 find /var/backups/openthinclient/ -name "*\.ldiff\.*" -type f | xargs rm
-
-# delete teamviewer config
-#rm /opt/teamviewer8/config/global.conf
-
-rm /opt/teamviewer9/config/global.conf
-rm /opt/teamviewer9/config/openthinclient/client.conf
-# /opt/teamviewer9/tv_bin/teamviewerd -d
-
 
 #------------------------------------------------------------------------------
 # general cleanup
 
 # remove udev network rules to cleanup old interfaces
-rm /etc/udev/rules.d/70-persistent-net.rules
+echo "==> remove udev network rules to cleanup old interfaces"
+if [ -f "/etc/udev/rules.d/70-persistent-net.rules" ]; then
+    rm /etc/udev/rules.d/70-persistent-net.rules
+fi
 
 # clean apt-cache
-apt-get clean
-apt-get autoremove
+echo "==> Cleanup apt cache"
+apt-get -y autoremove --purge
+apt-get -y clean
+apt-get -y autoclean
 
 # clean history
 rm /home/openthinclient/.bash_history

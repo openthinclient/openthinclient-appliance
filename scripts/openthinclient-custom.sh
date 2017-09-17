@@ -15,7 +15,6 @@ chmod 0440 /etc/sudoers.d/90-openthinclient-appliance
 echo "==> Deploying custom otc vimrc "
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/vim/vimrc /etc/vim/vimrc
 
-
 echo "==> Setting custom bashrc aliases for user"
 USER_ALIASES_FILE=/home/openthinclient/.bash_aliases
 ROOT_ALIASES_FILE=/root/.bash_aliases

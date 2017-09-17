@@ -15,6 +15,7 @@ function install_open_vm_tools {
     apt-get install -y open-vm-tools open-vm-tools-dkms open-vm-tools-desktop
     # Add /mnt/hgfs if you want shared folders with Vagrant
     # mkdir /mnt/hgfs
+    rm -f $HOME_DIR/*.iso;
 }
 
 function install_vmware_tools {

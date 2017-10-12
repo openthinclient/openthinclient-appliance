@@ -5,9 +5,3 @@ sys.installationDir=/opt/openthinclient
 
 # manager.home is the working directory of the manager
 manager.home=/home/openthinclient/otc-manager-home
-
-
-# service.start defines if the service should start automatically
-# after the installation
-# default value: false
-service.start$Boolean=false

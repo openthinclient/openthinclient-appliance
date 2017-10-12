@@ -5,7 +5,6 @@
 
 
 OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name "*.sh" -type f)
-
 #OTC_INSTALLER_NAME=otc-manager_unix.sh
 #OTC_INSTALLER_FULLPATH=/tmp/installers/${OTC_INSTALLER_NAME}
 
@@ -19,7 +18,6 @@ OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
 # Please uncomment password for openthinclient manager for local testing
 #OTC_DEFAULT_PASS=0pen%TC
 
-
 echo "==> Installing new openthinclient manager"
 if [ -f $OTC_INSTALLER_FULLPATH ]; then
 	echo "==> $OTC_INSTALLER_FULLPATH exists. Continue with installation"
@@ -29,8 +27,8 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 	chmod +x $OTC_INSTALLER_FULLPATH
 
 	echo "==> Starting unattended installation with preconfigured varfile: $OTC_INSTALLER_VARFILE"
-	echo $OTC_INSTALLER_FULLPATH -q -varfile $OTC_INSTALLER_VARFILE
-	$OTC_INSTALLER_FULLPATH -q -varfile $OTC_INSTALLER_VARFILE
+	echo $OTC_INSTALLER_FULLPATH -q -varfile $OTC_INSTALLER_VARFILE -Vservice.start=false
+	$OTC_INSTALLER_FULLPATH -q -varfile $OTC_INSTALLER_VARFILE -Vservice.start=false
 
     echo "==> Checking for existing manager installation to prepare-home"
 	if [ -f $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl ]; then

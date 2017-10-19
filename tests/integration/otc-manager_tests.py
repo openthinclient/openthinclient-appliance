@@ -2,8 +2,6 @@ import pytest
 import re
 
 # set some default variables
-import pytest
-import re
 
 ssh_name = "openthinclient"
 ssh_pass = "0pen%TC"

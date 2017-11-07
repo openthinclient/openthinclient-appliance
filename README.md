@@ -7,22 +7,18 @@
 
 ```shell
 ⁖ packer version
-Packer v0.12.1
+Packer v1.1.0
 ```
 
 ### Requirements
 
 To create a successful build you need to place a openthinclient software installer in
-one of the following folders:
+the following folder:
 
 * installers
 
     This folder should be used for the new installer
     
-* data/installer-legacy
-
-    This folder will accept the old legacy installer as a jar file
-
 
 ### Use existing template
 

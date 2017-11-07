@@ -9,7 +9,7 @@
         "vmware_guest_os_type": "debian8",
         "virtualbox_guest_os_type": "Debian",
         "cpus": "1",
-        "memory": "1024",
+        "memory": "2048",
         "disk_size" : "20480",
         "headless": "True",
         "iso_url": "http://cdimage.debian.org/mirror/cdimage/archive/8.6.0/i386/iso-cd/debian-8.6.0-i386-netinst.iso",
@@ -35,14 +35,14 @@
         "vboxmanage": [
             ["modifyvm", "{{.Name}}", "--vram", "32"],
             ["modifyvm", "{{.Name}}", "--cpus", "1"],
-            ["modifyvm", "{{.Name}}", "--memory", "1024"],
+            ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"],
             ["modifyvm", "{{.Name}}", "--description", "{{ user `vm_description` }}"]
         ],
 
         "vboxmanage_post": [
             ["modifyvm", "{{.Name}}", "--vram", "32"],
             ["modifyvm", "{{.Name}}", "--cpus", "1"],
-            ["modifyvm", "{{.Name}}", "--memory", "1024"]
+            ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"]
         ],
 
         "iso_url": "{{user `iso_url`}}",

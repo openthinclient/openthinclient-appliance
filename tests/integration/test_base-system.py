@@ -73,6 +73,7 @@ def test_service_running(host, service_name):
 @pytest.mark.parametrize("proto,hostname,port", [
     ("tcp", "127.0.0.1", "3306"),
     ("tcp", "0.0.0.0","22"),
+    ("tcp", "::","22"),
 ])
 
 def test_socket_listening(host, proto, hostname, port):

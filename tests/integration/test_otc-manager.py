@@ -93,3 +93,13 @@ def test_if_otc_manager_default_install_packages_exists(host, filename):
     assert file.user == "root"
     assert file.group == "root"
     assert file.exists is True
+
+
+@pytest.mark.parametrize("filename,content", [
+    (otc_manager_install_home + "db.xml", "jdbc:mysql://localhost:3306/openthinclient"),
+])
+
+def test_otc_manager_db_xml_settings(host, filename, content):
+    file = host.file(filename)
+    assert file.contains(content)
+    assert file.exists is True

@@ -96,6 +96,15 @@ def test_if_otc_manager_default_install_packages_exists(host, filename):
     assert file.exists is True
 
 
+@pytest.mark.parametrize("proto,port", [
+    ("tcp", "10389"),
+    ("tcp", "8080"),
+])
+def test_socket_openthinclient_manager_tcp_listening_ipv4_ipv6(host, proto, port):
+    socketoptions = '{0}://{1}'.format(proto, port)
+    socket = host.socket(socketoptions)
+    assert socket.is_listening
+
 @pytest.mark.parametrize("filename,content", [
     (otc_manager_install_home + "db.xml", "jdbc:mysql://localhost:3306/openthinclient"),
 ])

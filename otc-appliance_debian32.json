@@ -20,6 +20,7 @@
         "otc_manager_database_pass": "openthinclient",
         "otc_manager_default_pass": "0pen%TC",
         "otc_manager_install_home:": "/home/openthinclient/otc-manager-home/",
+        "otc_manager_install_path:": "/opt/otc-manager/",
         "vm_name": "OTC-Appliance-Pales",
         "vm_description": "openthinclient is a Free Open Source Thin Client Solution consisting of a Linux based operating system along with a comprehensive Java based management GUI and server component. It is intended for environments where a medium to large number of Thin Clients must be supported and managed efficiently. Offering flexibility unheard of in the world of proprietary Thin Client Solutions, openthinclient empowers developers and integrators to create advanced Thin Client solutions... for free. www.openthinclient.org",
         "vmx_post_connectiontype": "bridged"
@@ -143,6 +144,7 @@
       "MYSQL_OTC_PWD={{user `otc_manager_database_pass`}}",
       "OTC_DEFAULT_PASS={{user `otc_manager_default_pass`}}",
       "OTC_INSTALL_HOME={{user `otc_manager_install_home`}}",
+      "OTC_INSTALL_PATH={{user `otc_manager_install_path`}}",
       "http_proxy={{user `http_proxy`}}",
       "https_proxy={{user `https_proxy`}}",
       "no_proxy={{user `no_proxy`}}"

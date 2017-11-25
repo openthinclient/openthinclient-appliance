@@ -5,13 +5,16 @@
 
 DISK_USAGE_BEFORE_CLEANUP=$(df -h)
 
-echo "==> Cleaning up leftover dhcp leases"
-if [ -d "/var/lib/dhcp" ]; then
-    rm /var/lib/dhcp/*
-fi
+# Please sync these with the unattended linux-varfile
+OTC_INSTALL_PATH=/opt/otc-manager/
+#echo ${OTC_INSTALL_PATH}
+#echo $OTC_INSTALL_PATH
 
-echo "==> Cleaning up tmp"
-rm -rf /tmp/*
+# location of the home working directory
+OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
+
+#------------------------------------------------------------------------------
+# openthinclient specific cleanup
 
 if [ -f "/etc/init.d/openthinclient-manager" ]; then
     echo "==> Stopping the openthinclient server before cleaning up"
@@ -33,6 +36,9 @@ if [ -d "/home/openthinclient/otc-manager-home/" ]; then
 
     # remove old logfiles from manager home
     rm -rf /home/openthinclient/otc-manager-home/logs/*
+
+    # Remove unique server id
+    ${OTC_INSTALL_PATH}bin/managerctl rm-server-id --home ${OTC_INSTALL_HOME}
 fi
 
 # delete ldap backups
@@ -60,6 +66,14 @@ fi
 
 #------------------------------------------------------------------------------
 # general
+
+echo "==> Cleaning up leftover dhcp leases"
+if [ -d "/var/lib/dhcp" ]; then
+    rm /var/lib/dhcp/*
+fi
+
+echo "==> Cleaning up tmp"
+rm -rf /tmp/*
 
 echo "==> remove udev network rules to cleanup old interfaces"
 if [ -f "/etc/udev/rules.d/70-persistent-net.rules" ]; then
@@ -94,17 +108,20 @@ clean_logs() {
     done
 }
 
-# clean logs
-#for i in `find /var/log/ -name "*log" -type f`
-#do
-#    >$i
-#	ls -la $i
-#	rm $i
-#done
 
 clean_logs "/var/log/" "*\.log\.*"
 clean_logs "/var/log/" "*\.0"
 clean_logs "/var/log/" "*\.[0-9]*\.gz"
+
+# clean logs
+for i in `find /var/log/ -name "*log" -type f`
+do
+	>$i
+done
+
+find /var/log/ -name "*\.log\.*" -type f | xargs rm
+find /var/log/ -name "*\.0" -type f | xargs rm
+find /var/log/ -name "*\.[0-9]*\.gz" -type f | xargs rm
 
 
 echo "==> Disk usage before cleanup"

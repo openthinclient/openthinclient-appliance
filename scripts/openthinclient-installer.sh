@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -eux
 # Filename:     openthinclient-installer.sh
 # Purpose:      install new version of the openthinclient software package
 #------------------------------------------------------------------------------
@@ -11,7 +11,10 @@ OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name "*.sh" -type f)
 OTC_INSTALLER_VARFILE=/tmp/data/installer/unattended-linux.varfile.txt
 
 # Please sync these with the unattended linux-varfile
-OPENTHINCLIENT_INSTALL_PATH=/opt/openthinclient/
+OTC_INSTALL_PATH=/opt/otc-manager/
+#echo ${OTC_INSTALL_PATH}
+#echo $OTC_INSTALL_PATH
+
 # location of the home working directory
 OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
 
@@ -31,16 +34,16 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 	$OTC_INSTALLER_FULLPATH -q -varfile $OTC_INSTALLER_VARFILE -Vservice.start=false
 
     echo "==> Checking for existing manager installation to prepare-home"
-	if [ -f $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl ]; then
+	if [ -f ${OTC_INSTALL_PATH}bin/managerctl ]; then
 	    echo "==> Running managerctl to check available distributions"
-	    $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl ls-distributions -v
-	    echo $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl ls-distributions -v
+	    ${OTC_INSTALL_PATH}bin/managerctl ls-distributions -v
+	    echo $OTC_INSTALL_PATH/bin/managerctl ls-distributions -v
 
         echo "==> Checking mySQL database server status"
         mysqlrun=$(sudo service mysql status)
         if [ $? -eq 0 ]; then
             echo "==> Running managerctl install with predefined variables and mySQL database backend"
-	        $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home \
+	        $OTC_INSTALL_PATH/bin/managerctl prepare-home \
 	        --admin-password $OTC_DEFAULT_PASS \
 	        --home $OTC_INSTALL_HOME \
 	        --db MYSQL \
@@ -50,22 +53,22 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 	        --db-password openthinclient > /dev/null 2>&1
         else
             echo "==> Running managerctl install with predefined variables and default included H2 database"
-            $OPENTHINCLIENT_INSTALL_PATH/bin/managerctl prepare-home --admin-password $OTC_DEFAULT_PASS --home $OTC_INSTALL_HOME  > /dev/null 2>&1
+            $OTC_INSTALL_PATH/bin/managerctl prepare-home --admin-password $OTC_DEFAULT_PASS --home $OTC_INSTALL_HOME  > /dev/null 2>&1
         fi
 
         echo "==> Starting the OTC manager service"
-        $OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager start
+        $OTC_INSTALL_PATH/bin/openthinclient-manager start
         sleep 5
         echo "==> Checking service status after start"
-        $OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager status
+        $OTC_INSTALL_PATH/bin/openthinclient-manager status
 
         echo "==> removing rpcbind package"
         apt-get remove -y --purge rpcbind nfs-common
         # symlink the service
-        #ln -s OPENTHINCLIENT_INSTALL_PATH/bin/openthinclient-manager /etc/init.d/openthinclient
+        #ln -s OTC_INSTALL_PATH/bin/openthinclient-manager /etc/init.d/openthinclient
 
     else
-	    echo "==> $OPENTHINCLIENT_INSTALL_PATH doesn't exist. Installation was not successful"
+	    echo "==> $OTC_INSTALL_PATH doesn't exist. Installation was not successful"
     fi
 
 else

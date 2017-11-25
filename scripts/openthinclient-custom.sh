@@ -6,6 +6,8 @@
 # set custom deploy path
 OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
 
+OTC_INSTALL_PATH=/opt/otc-manager/
+
 
 echo "==> Deploying custom sudoers file for openthinclient user"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/sudoers.d/90-openthinclient-appliance /etc/sudoers.d/90-openthinclient-appliance
@@ -104,7 +106,7 @@ if [ -f ${VERSION_FILE} ]; then
     echo "Operating system:" >>  ${VERSION_FILE}
     lsb_release -d -s >>  ${VERSION_FILE}
     echo "===================" >>  ${VERSION_FILE}
-    /opt/openthinclient/bin/managerctl ls-distributions -v >>  ${VERSION_FILE}
+    ${OTC_INSTALL_PATH}bin/managerctl ls-distributions -v >>  ${VERSION_FILE}
 else
     echo "==> Populating openthinclient VM information failed. File not found"
 fi

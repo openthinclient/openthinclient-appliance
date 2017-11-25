@@ -10,6 +10,7 @@ otc_manager_database_pass = "openthinclient"
 
 otc_manager_default_pass = "0pen%TC"
 otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
+otc_manager_install_path = "/opt/otc-manager/"
 
 
 @pytest.mark.parametrize("service_name", [
@@ -23,14 +24,14 @@ def test_openthinclient_manager_service_running(host, service_name):
 
 
 def test_openthinclient_manager_file(host):
-    managerbin = host.file("/opt/openthinclient/bin/openthinclient-manager")
+    managerbin = host.file(otc_manager_install_path + "/bin/openthinclient-manager")
     assert managerbin.user == "root"
     assert managerbin.group == "root"
     assert managerbin.exists is True
 
 
 def test_openthinclient_install_directory(host):
-    directory = host.file("/opt/openthinclient/")
+    directory = host.file(otc_manager_install_path)
     assert directory.user == "root"
     assert directory.group == "root"
     assert directory.is_directory is True

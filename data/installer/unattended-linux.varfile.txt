@@ -1,6 +1,6 @@
 # the program data directory of the manager
 # It contains all needed libraries and executables
-sys.installationDir=/opt/openthinclient
+sys.installationDir=/opt/otc-manager
 
 
 # manager.home is the working directory of the manager

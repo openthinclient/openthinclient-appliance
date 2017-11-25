@@ -1,5 +1,6 @@
 import pytest
 import re
+import time
 
 # set some default variables
 
@@ -101,6 +102,7 @@ def test_if_otc_manager_default_install_packages_exists(host, filename):
     ("tcp", "8080"),
 ])
 def test_socket_openthinclient_manager_tcp_listening_ipv4_ipv6(host, proto, port):
+    time.sleep(25)
     socketoptions = '{0}://{1}'.format(proto, port)
     socket = host.socket(socketoptions)
     assert socket.is_listening

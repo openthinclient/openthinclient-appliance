@@ -1,4 +1,5 @@
 import pytest
+import time
 
 otc_manager_install_path = "/opt/otc-manager/"
 otc_cleaner_script = "/usr/local/sbin/openthinclient-cleaner"
@@ -31,18 +32,24 @@ class Test_OTC_Cleaner(object):
     #         assert service.is_running is False
     #         assert service.is_enabled is True
 
+    @pytest.mark.last
     @pytest.mark.parametrize("proto,port", [
         ("tcp", "10389"),
         ("tcp", "8080"),
     ])
+
+    @pytest.mark.last
     def test_socket_openthinclient_manager_tcp__not_listening_ipv4_ipv6(self, host, proto, port):
+        time.sleep(15)
         socketoptions = '{0}://{1}'.format(proto, port)
         socket = host.socket(socketoptions)
         assert socket.is_listening is False
 
+    @pytest.mark.second_to_last
     @pytest.mark.parametrize("filename,content", [
         (OTC_INSTALL_HOME + ".otc-manager-home.meta", "<server-id>"),
     ])
+    @pytest.mark.second_to_last
     def test_otc_manager_metadata_file_for_server_id(self, host, filename, content):
         file = host.file(filename)
         assert file.contains(content) is False
@@ -116,7 +123,6 @@ class Test_OTC_Cleaner(object):
     #         assert cmd.exit_status == 0
     #         assert cmd.stdout == expected_output
 
-    @pytest.mark.last
     def test_udev_persistent_net_rules_exists(self, host):
         file = host.file("/etc/udev/rules.d/70-persistent-net.rules")
         assert file.exists is False

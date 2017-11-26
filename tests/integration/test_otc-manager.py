@@ -17,7 +17,6 @@ otc_manager_install_path = "/opt/otc-manager/"
 @pytest.mark.parametrize("service_name", [
     ("openthinclient-manager"),
 ])
-
 def test_openthinclient_manager_service_running(host, service_name):
     service = host.service(service_name)
     assert service.is_running
@@ -37,6 +36,7 @@ def test_openthinclient_install_directory(host):
     assert directory.group == "root"
     assert directory.is_directory is True
 
+
 def test_openthinclient_home_directory(host):
     directory = host.file("/home/openthinclient/otc-manager-home/")
     assert directory.user == "root"
@@ -50,6 +50,7 @@ def test_openthinclient_legcacy_install_dir_symlink(host):
     assert directory.group == "root"
     assert directory.is_symlink is True
     assert directory.linked_to == otc_manager_install_path.rstrip("/")
+
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("mysql -uroot -proot -e 'use openthinclient;'", ""),
@@ -96,7 +97,6 @@ def test_if_openthinclient_package_cache_dir_is_empty(executable, expected_outpu
     (otc_manager_install_home + "nfs/root/sfs/package/tcos-scripts.sfs"),
     (otc_manager_install_home + "nfs/root/sfs/package/tcos-libs.sfs"),
 ])
-
 def test_if_otc_manager_default_install_packages_exists(host, filename):
     file = host.file(filename)
     assert file.user == "root"
@@ -109,7 +109,7 @@ def test_if_otc_manager_default_install_packages_exists(host, filename):
     ("tcp", "8080"),
 ])
 def test_socket_openthinclient_manager_tcp_listening_ipv4_ipv6(host, proto, port):
-    time.sleep(25)
+    time.sleep(20)
     socketoptions = '{0}://{1}'.format(proto, port)
     socket = host.socket(socketoptions)
     assert socket.is_listening
@@ -117,8 +117,17 @@ def test_socket_openthinclient_manager_tcp_listening_ipv4_ipv6(host, proto, port
 @pytest.mark.parametrize("filename,content", [
     (otc_manager_install_home + "db.xml", "jdbc:mysql://localhost:3306/openthinclient"),
 ])
-
 def test_otc_manager_db_xml_settings(host, filename, content):
     file = host.file(filename)
     assert file.contains(content)
     assert file.exists is True
+
+
+@pytest.mark.parametrize("filename,content", [
+    (otc_manager_install_home + ".otc-manager-home.meta", "<server-id>"),
+])
+@pytest.mark.second_to_last
+def test_otc_manager_metadata_file_for_server_id_present(host, filename, content):
+    filen = host.file(filename)
+    assert filen.exists is True
+    assert filen.contains(content) is True

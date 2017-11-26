@@ -252,7 +252,7 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/VNC Viewer.desktop",
 ])
 
-def test_otc_desktop_icons(host, filename):
+def test_otc_desktop_icons_present(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
@@ -276,7 +276,7 @@ def test_otc_desktop_icons(host, filename):
     ("/usr/local/share/openthinclient/icons/openthinclient_shop.png"),
 ])
 
-def test_otc_background_and_icons(host, filename):
+def test_otc_background_and_icons_present(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
@@ -288,7 +288,7 @@ def test_otc_background_and_icons(host, filename):
     ("/usr/local/share/openthinclient/documentation/README-openthinclient-VirtualAppliance.pdf"),
 ])
 
-def test_otc_documentation(host, filename):
+def test_otc_documentation_present(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"

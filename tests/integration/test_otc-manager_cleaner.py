@@ -4,57 +4,20 @@ import time
 otc_manager_install_path = "/opt/otc-manager/"
 otc_cleaner_script = "/usr/local/sbin/openthinclient-cleaner"
 
-OTC_INSTALL_HOME="/home/openthinclient/otc-manager-home/"
+OTC_INSTALL_HOME = "/home/openthinclient/otc-manager-home/"
+
 
 @pytest.mark.second_to_last
 class Test_OTC_Cleaner(object):
 
-
-    @pytest.mark.first
     @pytest.mark.parametrize("executable", [
         (otc_cleaner_script),
     ])
-
     @pytest.mark.first
     def test_openthinclient_cleaner(self, executable, host):
         with host.sudo():
             cmd = host.run_test(executable)
             assert cmd.exit_status == 0
-
-    #@pytest.mark.parametrize("service_name", [
-    #    ("openthinclient-manager.service"),
-    #])
-
-    # @pytest.mark.second_to_last
-    # def test_openthinclient_manager_service_is_not_running(self, host, service_name):
-    #     with host.sudo():
-    #         service = host.service(service_name)
-    #         assert service.is_running is False
-    #         assert service.is_enabled is True
-
-    @pytest.mark.last
-    @pytest.mark.parametrize("proto,port", [
-        ("tcp", "10389"),
-        ("tcp", "8080"),
-    ])
-
-    @pytest.mark.last
-    def test_socket_openthinclient_manager_tcp__not_listening_ipv4_ipv6(self, host, proto, port):
-        time.sleep(15)
-        socketoptions = '{0}://{1}'.format(proto, port)
-        socket = host.socket(socketoptions)
-        assert socket.is_listening is False
-
-    @pytest.mark.second_to_last
-    @pytest.mark.parametrize("filename,content", [
-        (OTC_INSTALL_HOME + ".otc-manager-home.meta", "<server-id>"),
-    ])
-    @pytest.mark.second_to_last
-    def test_otc_manager_metadata_file_for_server_id(self, host, filename, content):
-        file = host.file(filename)
-        assert file.contains(content) is False
-        assert file.exists is True
-
 
     @pytest.mark.parametrize("executable,expected_output", [
         ("ls -A " + OTC_INSTALL_HOME + "logs/", ""),
@@ -74,7 +37,6 @@ class Test_OTC_Cleaner(object):
             assert cmd.exit_status == 0
             assert cmd.stdout == expected_output
 
-
     @pytest.mark.parametrize("executable,expected_output", [
         ("ls -A /var/cache/oracle-jdk8-installer/", ""),
     ])
@@ -93,7 +55,6 @@ class Test_OTC_Cleaner(object):
             assert cmd.exit_status == 0
             assert cmd.stdout == expected_output
 
-
     # @pytest.mark.parametrize("executable,expected_output", [
     #     ("ls -A /tmp", ""),
     # ])
@@ -107,12 +68,10 @@ class Test_OTC_Cleaner(object):
         ("/root/.bash_history"),
         ("/home/openthinclient/.bash_history"),
     ])
-
     def test_if_bash_history_files_are_deleted(self, host, filename):
         with host.sudo():
             file = host.file(filename)
             assert file.exists is False
-
 
     # @pytest.mark.parametrize("executable,expected_output", [
     #     ("ls -A /var/log/", ""),
@@ -126,3 +85,32 @@ class Test_OTC_Cleaner(object):
     def test_udev_persistent_net_rules_exists(self, host):
         file = host.file("/etc/udev/rules.d/70-persistent-net.rules")
         assert file.exists is False
+
+    # @pytest.mark.parametrize("service_name", [
+    #    ("openthinclient-manager.service"),
+    # ])
+    # def test_openthinclient_manager_service_is_not_running(self, host, service_name):
+    #     with host.sudo():
+    #         service = host.service(service_name)
+    #         assert service.is_running is False
+    #         assert service.is_enabled is True
+
+    @pytest.mark.parametrize("proto,port", [
+        ("tcp", "10389"),
+        ("tcp", "8080"),
+    ])
+    @pytest.mark.last
+    def test_socket_openthinclient_manager_tcp__not_listening_ipv4_ipv6(self, host, proto, port):
+        time.sleep(15)
+        socketoptions = '{0}://{1}'.format(proto, port)
+        socket = host.socket(socketoptions)
+        assert socket.is_listening is False
+
+    @pytest.mark.parametrize("filename,content", [
+        (OTC_INSTALL_HOME + ".otc-manager-home.meta", "<server-id>"),
+    ])
+    @pytest.mark.second_to_last
+    def test_otc_manager_metadata_file_for_server_id(self, host, filename, content):
+        file = host.file(filename)
+        assert file.contains(content) is False
+        assert file.exists is True

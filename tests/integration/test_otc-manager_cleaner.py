@@ -111,6 +111,7 @@ class Test_OTC_Cleaner(object):
     ])
     @pytest.mark.second_to_last
     def test_otc_manager_metadata_file_for_server_id(self, host, filename, content):
+        time.sleep(20)
         file = host.file(filename)
         assert file.contains(content) is False
         assert file.exists is True

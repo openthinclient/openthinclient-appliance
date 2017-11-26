@@ -25,7 +25,7 @@ def test_openthinclient_manager_service_running(host, service_name):
 
 
 def test_openthinclient_manager_file(host):
-    managerbin = host.file(otc_manager_install_path + "/bin/openthinclient-manager")
+    managerbin = host.file(otc_manager_install_path + "bin/openthinclient-manager")
     assert managerbin.user == "root"
     assert managerbin.group == "root"
     assert managerbin.exists is True
@@ -43,6 +43,13 @@ def test_openthinclient_home_directory(host):
     assert directory.group == "root"
     assert directory.is_directory is True
 
+
+def test_openthinclient_legcacy_install_dir_symlink(host):
+    directory = host.file("/opt/openthinclient")
+    assert directory.user == "root"
+    assert directory.group == "root"
+    assert directory.is_symlink is True
+    assert directory.linked_to == otc_manager_install_path.rstrip("/")
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("mysql -uroot -proot -e 'use openthinclient;'", ""),

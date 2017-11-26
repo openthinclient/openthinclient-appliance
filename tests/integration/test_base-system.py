@@ -115,8 +115,6 @@ def test_otc_usr_local_sbin_files(host, filename):
     ("/usr/local/bin/openthinclient-manager"),
     ("/usr/local/bin/openthinclient-vmversion"),
 ])
-
-
 def test_otc_usr_local_bin_files(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
@@ -132,7 +130,6 @@ def test_otc_usr_local_bin_files(host, filename):
     ("/usr/local/sbin/openthinclient-restart"),
     ("/usr/local/sbin/zerofree.sh"),
 ])
-
 def test_otc_usr_local_sbin_files(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
@@ -149,15 +146,27 @@ def test_crond_ldap_backup_file(host):
 @pytest.mark.parametrize("filename,content", [
     ("/etc/sudoers.d/90-openthinclient-appliance", "openthinclient ALL=(ALL) NOPASSWD:ALL"),
 ])
-
 def test_sudoers_file(host, filename, content):
-    file = host.file(filename)
+    filen = host.file(filename)
     with host.sudo():
         host.check_output("whoami")
-        assert file.contains(content)
-        assert file.user == "root"
-        assert file.group == "root"
-        assert file.exists is True
+        assert filen.contains(content)
+        assert filen.user == "root"
+        assert filen.group == "root"
+        assert filen.exists is True
+
+
+@pytest.mark.parametrize("filename,content", [
+    ("/usr/local/share/openthinclient/openthinclient-vm-version", "Operating system"),
+])
+def test_openthinclient_version_information_file_present(host, filename, content):
+    filen = host.file(filename)
+    with host.sudo():
+        assert filen.contains(content)
+        assert filen.user == "root"
+        assert filen.group == "staff"
+        assert filen.exists is True
+
 
 @pytest.mark.parametrize("filename,content", [
     ("/home/openthinclient/.bash_aliases", "alias ll='ls -l'"),
@@ -165,7 +174,6 @@ def test_sudoers_file(host, filename, content):
     ("/home/openthinclient/.bashrc", ". ~/.bash_aliases"),
     ("/root/.bashrc", ". ~/.bash_aliases"),
 ])
-
 def test_bash_aliases_file(host, filename, content):
     with host.sudo():
         file = host.file(filename)
@@ -176,7 +184,6 @@ def test_bash_aliases_file(host, filename, content):
 @pytest.mark.parametrize("filename", [
     ("/etc/X11/Xsession.d/21-lightdm-locale-fix"),
 ])
-
 def test_otc_gui_lightdm_locale_fix(host, filename):
     file = host.file(filename)
     assert file.user == "root"
@@ -188,7 +195,6 @@ def test_otc_gui_lightdm_locale_fix(host, filename):
 @pytest.mark.parametrize("filename", [
     ("/etc/lightdm/lightdm.conf"),
 ])
-
 def test_lightdm_config_file(host, filename):
     file = host.file(filename)
     #assert file.user == "root"
@@ -201,7 +207,6 @@ def test_lightdm_config_file(host, filename):
     ("/etc/lightdm/lightdm.conf", "greeter-hide-users=false"),
     ("/etc/lightdm/lightdm.conf", "greeter-show-manual-login=true"),
 ])
-
 def test_lightdm_config_content(host, filename, content):
     file = host.file(filename)
     assert file.contains(content)
@@ -214,7 +219,6 @@ def test_lightdm_config_content(host, filename, content):
         "background=/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg" ),
     ("/etc/lightdm/lightdm-gtk-greeter.conf", "show-clock=true"),
 ])
-
 def test_lightdm_config_content(host, filename, content):
     file = host.file(filename)
     assert file.contains(content)
@@ -227,7 +231,6 @@ def test_lightdm_config_content(host, filename, content):
     ("/usr/local/bin/openthinclient-keyboard-layout-fix"),
     ("/home/openthinclient/.config/autostart/keyboard-layout-fix.desktop"),
 ])
-
 def test_otc_gui_fixes_via_script(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
@@ -251,7 +254,6 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/Version-Information.desktop",
     "/home/openthinclient/Desktop/VNC Viewer.desktop",
 ])
-
 def test_otc_desktop_icons_present(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
@@ -275,7 +277,6 @@ def test_otc_desktop_icons_present(host, filename):
     ("/usr/local/share/openthinclient/icons/openthinclient_service_restart.png"),
     ("/usr/local/share/openthinclient/icons/openthinclient_shop.png"),
 ])
-
 def test_otc_background_and_icons_present(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
@@ -287,18 +288,17 @@ def test_otc_background_and_icons_present(host, filename):
     ("/usr/local/share/openthinclient/documentation/README.txt"),
     ("/usr/local/share/openthinclient/documentation/README-openthinclient-VirtualAppliance.pdf"),
 ])
-
 def test_otc_documentation_present(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
     assert file.exists is True
 
+
 @pytest.mark.parametrize("name,version", [
     ("mate-desktop-environment-core", "1.8"),
     ("lightdm", "1.10"),
 ])
-
 def test_gui_packages_installed(host, name, version):
     assert host.package(name).is_installed
     assert host.package(name).version.startswith(version)
@@ -326,6 +326,7 @@ def test_java_version(executable, expected_output, host):
         reported_version = re.findall('java version "(.+)"', cmd.stderr)
         assert reported_version[0] == expected_output
 
+
 @pytest.mark.parametrize("executable,expected_output", [
     ("/usr/bin/java -version", "1.8.0"),
 ])
@@ -335,12 +336,12 @@ def test_java_major_version(executable, expected_output, host):
         reported_version = re.findall('java version "(.+)_\d{3}"', cmd.stderr)
         assert reported_version[0] == expected_output
 
+
 @pytest.mark.parametrize("sysctl_option,expected_output", [
     ("kernel.hostname", "openthinclient-server"),
     ("vm.swappiness", 60),
 
 ])
-
 def test_sysctl_values(sysctl_option, expected_output, host):
     with host.sudo():
         current_value = host.sysctl(sysctl_option)
@@ -351,7 +352,6 @@ def test_sysctl_values(sysctl_option, expected_output, host):
     ("dbus-launch gsettings get org.mate.background picture-filename",
      "'/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'\n"),
 ])
-
 def test_mate_desktop_settings(executable, expected_output, host):
         cmd = host.run(executable)
         assert cmd.stdout == expected_output

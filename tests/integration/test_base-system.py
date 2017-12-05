@@ -15,9 +15,9 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 @pytest.mark.parametrize("name,version", [
     ("mysql-server", "5.5"),
     ("python", "2.7"),
-    ("vim", "2:7"),
+    ("vim", "2:8"),
     ("zerofree", "1.0"),
-    ("openssh-server", "1:6"),
+    ("openssh-server", "1:7"),
     ("oracle-java8-installer", "8"),
     ("oracle-java8-set-default", "8"),
     ("ntp", "1:4"),
@@ -26,7 +26,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("bzip2", "1.0"),
     ("rsync", "3.1"),
     ("ldapscripts", "2.0"),
-    ("htop", "1.0"),
+    ("htop", "2.0"),
 
 ])
 def test_basic_packages_installed(host, name, version):
@@ -296,8 +296,8 @@ def test_otc_documentation_present(host, filename):
 
 
 @pytest.mark.parametrize("name,version", [
-    ("mate-desktop-environment-core", "1.8"),
-    ("lightdm", "1.10"),
+    ("mate-desktop-environment-core", "1.16"),
+    ("lightdm", "1.18"),
 ])
 def test_gui_packages_installed(host, name, version):
     assert host.package(name).is_installed
@@ -314,7 +314,7 @@ def test_package_cleanup(host, name):
 def test_basic_system_information(host):
     assert host.system_info.type == "linux"
     assert host.system_info.distribution == "debian"
-    assert host.system_info.codename == "jessie"
+    assert host.system_info.codename == "stretch"
 
 
 @pytest.mark.parametrize("executable,expected_output", [

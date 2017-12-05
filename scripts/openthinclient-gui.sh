@@ -72,12 +72,18 @@ chmod +x /usr/local/bin/openthinclient-default-user-fix
 echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
 
-
 echo "==> Installing dconf-tools"
 apt-get install -y dconf-tools
 
-echo "==> Installing mate-tools, mate-applets and mate-themes"
-apt-get install -y mate-system-tools mate-applets mate-themes
+echo "==> Installing mate-applets and mate-themes"
+apt-get install -y mate-applets mate-themes
+
+echo "==> Installing mate-utils"
+apt-get install -y mate-utils
+
+
+echo "==> Installing gnome-system-tools"
+apt-get install -y gnome-system-tools
 
 echo "==> Installing mate-system-monitor"
 apt-get install -y mate-system-monitor --no-install-recommends

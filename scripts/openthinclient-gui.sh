@@ -201,14 +201,6 @@ echo "==> Deploying Workaround to fix the german keyboard layout after session l
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-keyboard-layout-fix /usr/local/bin/openthinclient-keyboard-layout-fix
 chmod +x /usr/local/bin/openthinclient-keyboard-layout-fix
 
-
-if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/opt/openthinclient-advisor/ ]; then
-    echo "==> Deploying openthinclient advisor into /opt/"
-    cp -a ${OTC_CUSTOM_DEPLOY_PATH}/opt/openthinclient-advisor/ /opt/
-else
-     echo "==> Deploying openthinclient advisor into /opt/ failed. nothing to deploy"
-fi
-
 echo "==> Installing xtightvncviewer with --no-install-recommends"
 apt-get install -y --no-install-recommends xtightvncviewer
 

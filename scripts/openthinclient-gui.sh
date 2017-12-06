@@ -204,6 +204,9 @@ chmod +x /usr/local/bin/openthinclient-keyboard-layout-fix
 echo "==> Installing xtightvncviewer with --no-install-recommends"
 apt-get install -y --no-install-recommends xtightvncviewer
 
+echo "==> Installing x11vnc with --no-install-recommends"
+apt-get install -y --no-install-recommends x11vnc
+
 echo "==> Installing pluma texteditor with --no-install-recommends"
 apt-get install -y --no-install-recommends pluma
 

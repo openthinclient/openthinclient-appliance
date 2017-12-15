@@ -34,6 +34,14 @@ def test_basic_packages_installed(host, name, version):
     assert pkg.is_installed
     assert pkg.version.startswith(version)
 
+@pytest.mark.parametrize("name,version", [
+    ("x11vnc ", "0.9"),
+])
+
+def test_vnc_packages_installed(host, name, version):
+    pkg = host.package(name)
+    assert pkg.is_installed
+    assert pkg.version.startswith(version)
 
 @pytest.mark.parametrize("name,version", [
     ("xtightvncviewer", "1.3"),

@@ -10,6 +10,9 @@ PACKAGES="fluxbox"
 eval "$UPDATE"
 eval "$INSTALL $PACKAGES"
 
+echo "==> Installing xvfb with --no-install-recommends"
+apt-get install -y --no-install-recommends xvfb
+
 echo "==> Installing x11vnc with --no-install-recommends"
 apt-get install -y --no-install-recommends x11vnc
 

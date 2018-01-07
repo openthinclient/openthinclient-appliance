@@ -260,7 +260,6 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/Oracle-Java-Licence",
     "/home/openthinclient/Desktop/professional support & hardware.desktop",
     "/home/openthinclient/Desktop/README.desktop",
-    "/home/openthinclient/Desktop/Version-Information.desktop",
     "/home/openthinclient/Desktop/VNC Viewer.desktop",
 ])
 def test_otc_desktop_icons_present(host, filename):
@@ -268,6 +267,14 @@ def test_otc_desktop_icons_present(host, filename):
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
     assert file.exists is True
+
+
+@pytest.mark.parametrize("filename", [
+    "/home/openthinclient/Desktop/Version-Information.desktop",
+])
+def test_otc_desktop_icons_not_present(host, filename):
+    file = host.file(filename)
+    assert file.exists is False
 
 
 @pytest.mark.parametrize("filename", [

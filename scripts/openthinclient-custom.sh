@@ -101,7 +101,7 @@ if [ -f ${VERSION_FILE} ]; then
     echo "===================" >>  ${VERSION_FILE}
     PLATFORM_MSG=$(printf '%s' "$OTC_APPLIANCE_VERSION")
     BUILT_MSG=$(printf 'built %s' $(date +%Y-%m-%d))
-    printf '%s%-30s%30s\n' " " "${PLATFORM_MSG}" "${BUILT_MSG}" >> ${VERSION_FILE}
+    printf '%s%-30s%10s\n' " " "${PLATFORM_MSG}" "${BUILT_MSG}" >> ${VERSION_FILE}
     echo "===================" >>  ${VERSION_FILE}
     echo "Operating system:" >>  ${VERSION_FILE}
     lsb_release -d -s >>  ${VERSION_FILE}
@@ -129,9 +129,7 @@ chmod 755 /etc/grub.d/40_otc-shrinker
 echo "==> Installing zerofree package for otc-shrinker script"
 apt-get install -y zerofree
 
-
 echo "==> Updating grub configuration"
 update-grub
-
 
 exit 0

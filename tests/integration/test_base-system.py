@@ -36,6 +36,7 @@ def test_basic_packages_installed(host, name, version):
 
 @pytest.mark.parametrize("name,version", [
     ("x11vnc ", "0.9"),
+    ("fluxbox ", "1.3"),
 ])
 
 def test_vnc_packages_installed(host, name, version):

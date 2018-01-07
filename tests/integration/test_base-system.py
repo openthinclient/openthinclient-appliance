@@ -69,7 +69,7 @@ def test_user_in_passwd_file(host, user):
 
 @pytest.mark.parametrize("service_name", [
     ("lightdm"),
-    ("mysql"),
+    ("mariadb"),
 ])
 
 def test_service_running(host, service_name):

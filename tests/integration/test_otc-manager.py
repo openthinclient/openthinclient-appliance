@@ -114,6 +114,7 @@ def test_socket_openthinclient_manager_tcp_listening_ipv4_ipv6(host, proto, port
     socket = host.socket(socketoptions)
     assert socket.is_listening
 
+
 @pytest.mark.parametrize("filename,content", [
     (otc_manager_install_home + "db.xml", "jdbc:mysql://localhost:3306/openthinclient"),
 ])
@@ -131,3 +132,13 @@ def test_otc_manager_metadata_file_for_server_id_present(host, filename, content
     filen = host.file(filename)
     assert filen.exists is True
     assert filen.contains(content) is True
+
+
+@pytest.mark.parametrize("filename", [
+    (otc_manager_install_home + ".appliance.properties"),
+])
+def test_otc_manager_appliance_properties_exists(host, filename):
+    file = host.file(filename)
+    assert file.user == "openthinclient"
+    assert file.group == "openthinclient"
+    assert file.exists is True

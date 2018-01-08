@@ -56,16 +56,20 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
             $OTC_INSTALL_PATH/bin/managerctl prepare-home --admin-password $OTC_DEFAULT_PASS --home $OTC_INSTALL_HOME  > /dev/null 2>&1
         fi
 
+        echo "==> removing rpcbind package"
+        apt-get remove -y --purge rpcbind nfs-common
+        # symlink the service
+        #ln -s OTC_INSTALL_PATH/bin/openthinclient-manager /etc/init.d/openthinclient
+
+        echo "==> Creating .appliance.properties file to activate noVNC"
+        touch ${OTC_INSTALL_HOME}.appliance.properties
+        chown openthinclient:openthinclient ${OTC_INSTALL_HOME}.appliance.properties
+
         echo "==> Starting the OTC manager service"
         $OTC_INSTALL_PATH/bin/openthinclient-manager start
         sleep 5
         echo "==> Checking service status after start"
         $OTC_INSTALL_PATH/bin/openthinclient-manager status
-
-        echo "==> removing rpcbind package"
-        apt-get remove -y --purge rpcbind nfs-common
-        # symlink the service
-        #ln -s OTC_INSTALL_PATH/bin/openthinclient-manager /etc/init.d/openthinclient
 
         echo "==> Create a symlink between the new install path and the legacy installation dir"
         ln -s "${OTC_INSTALL_PATH%/}" /opt/openthinclient

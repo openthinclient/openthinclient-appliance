@@ -35,16 +35,6 @@ def test_basic_packages_installed(host, name, version):
     assert pkg.version.startswith(version)
 
 @pytest.mark.parametrize("name,version", [
-    ("x11vnc ", "0.9"),
-    ("xvfb ", "2:1"),
-    ("fluxbox ", "1.3"),
-])
-def test_vnc_packages_installed(host, name, version):
-    pkg = host.package(name)
-    assert pkg.is_installed
-    assert pkg.version.startswith(version)
-
-@pytest.mark.parametrize("name,version", [
     ("xtightvncviewer", "1.3"),
     ("dconf-tools", "0.22"),
     ("xserver-xorg", "1.7"),
@@ -62,7 +52,6 @@ def test_gui_packages_installed(host, name, version):
     ("root"),
     ("openthinclient"),
 ])
-
 def test_user_in_passwd_file(host, user):
     passwd = host.file("/etc/passwd")
     assert passwd.contains(user)
@@ -72,7 +61,6 @@ def test_user_in_passwd_file(host, user):
     ("lightdm"),
     ("mariadb"),
 ])
-
 def test_service_running(host, service_name):
     service = host.service(service_name)
     assert service.is_running
@@ -84,7 +72,6 @@ def test_service_running(host, service_name):
     ("tcp", "0.0.0.0","22"),
     ("tcp", "::","22"),
 ])
-
 def test_socket_listening(host, proto, hostname, port):
     socketoptions = "{0}://{1}:{2}".format(proto, hostname, port)
     socket = host.socket(socketoptions)
@@ -112,7 +99,6 @@ def test_openthinclient_user(host):
     ("/usr/local/sbin/openthinclient-restart"),
     ("/usr/local/sbin/zerofree.sh"),
 ])
-
 def test_otc_usr_local_sbin_files(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
@@ -206,8 +192,8 @@ def test_otc_gui_lightdm_locale_fix(host, filename):
 ])
 def test_lightdm_config_file(host, filename):
     file = host.file(filename)
-    #assert file.user == "root"
-    #assert file.group == "root"
+    # assert file.user == "root"
+    # assert file.group == "root"
     assert file.exists is True
 
 @pytest.mark.parametrize("filename,content", [

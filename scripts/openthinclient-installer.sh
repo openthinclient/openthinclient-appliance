@@ -71,6 +71,11 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
         echo "==> Checking service status after start"
         $OTC_INSTALL_PATH/bin/openthinclient-manager status
 
+        echo "==> Fix permissions of ${OTC_INSTALL_HOME}"
+        chown openthinclient:openthinclient ${OTC_INSTALL_HOME} -R
+
+        ls -la ${OTC_INSTALL_HOME}
+
         echo "==> Create a symlink between the new install path and the legacy installation dir"
         ln -s "${OTC_INSTALL_PATH%/}" /opt/openthinclient
         # ln -s /opt/otc-manager /opt/openthinclient

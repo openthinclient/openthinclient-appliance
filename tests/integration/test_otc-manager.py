@@ -39,8 +39,8 @@ def test_openthinclient_install_directory(host):
 
 def test_openthinclient_home_directory(host):
     directory = host.file("/home/openthinclient/otc-manager-home/")
-    assert directory.user == "root"
-    assert directory.group == "root"
+    assert directory.user == "openthinclient"
+    assert directory.group == "openthinclient"
     assert directory.is_directory is True
 
 
@@ -99,8 +99,8 @@ def test_if_openthinclient_package_cache_dir_is_empty(executable, expected_outpu
 ])
 def test_if_otc_manager_default_install_packages_exists(host, filename):
     file = host.file(filename)
-    assert file.user == "root"
-    assert file.group == "root"
+    assert file.user == "openthinclient"
+    assert file.group == "openthinclient"
     assert file.exists is True
 
 

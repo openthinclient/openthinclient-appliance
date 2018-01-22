@@ -34,6 +34,18 @@ background: aspect
 background.pixmap: /usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg
 EOF
 
+echo "==> Including custom fluxbox startup file"
+cat > /home/openthinclient/.fluxbox/startup << EOF
+#fbsetbg -l # sets the last background set, very useful and recommended.
+# In the below commands the ampersand symbol (&) is required on all applications that do not terminate immediately.
+# Failure to provide them will cause Fluxbox not to start.
+/usr/local/bin/openthinclient-manager &
+# exec is for starting Fluxbox itself, do not put an ampersand (&) after this or Fluxbox will exit immediately.
+exec /usr/bin/fluxbox
+# or if you want to keep a log, uncomment the below command and comment out the above command:
+#exec /usr/bin/fluxbox -log ~/.fluxbox/log
+EOF
+
 chown openthinclient:openthinclient /home/openthinclient/.fluxbox/ -R
 
 echo "==> Configure x11vnc service"
@@ -48,7 +60,7 @@ Group=openthinclient
 Environment="UNIXPW_DISABLE_LOCALHOST=1"
 Environment="UNIXPW_DISABLE_SSL=1"
 Type=simple
-ExecStart=/usr/bin/x11vnc -create -env FD_PROG=/usr/bin/fluxbox  -env X11VNC_FINDDISPLAY_ALWAYS_FAILS=1 -env X11VNC_CREATE_GEOM=${1:-1024x768x16} -forever -unixpw openthinclient
+ExecStart=/usr/bin/x11vnc -create -env FD_PROG=/usr/bin/startfluxbox -env X11VNC_FINDDISPLAY_ALWAYS_FAILS=1 -env X11VNC_CREATE_GEOM=${1:-1024x768x16} -forever -unixpw openthinclient
 
 [Install]
 WantedBy=multi-user.target

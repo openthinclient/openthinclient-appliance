@@ -40,6 +40,7 @@ def test_x11vnc_service_file_present(host):
 @pytest.mark.parametrize("filename", [
     "/home/openthinclient/.fluxbox/overlay",
     "/home/openthinclient/.fluxbox/lastwallpaper",
+    "/home/openthinclient/.fluxbox/startup",
 ])
 def test_fluxbox_settings_files_present(host, filename):
     filen = host.file(filename)
@@ -54,5 +55,14 @@ def test_fluxbox_settings_files_present(host, filename):
      "background.pixmap: /usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg"),
 ])
 def test_fluxbox_overlay_file_settings(filename, expected_output, host):
+        filen = host.file(filename)
+        assert filen.contains(expected_output)
+
+
+@pytest.mark.parametrize("filename,expected_output", [
+    ("/home/openthinclient/.fluxbox/startup",
+     "/usr/local/bin/openthinclient-manager &"),
+])
+def test_fluxbox_startup_file_contents(filename, expected_output, host):
         filen = host.file(filename)
         assert filen.contains(expected_output)

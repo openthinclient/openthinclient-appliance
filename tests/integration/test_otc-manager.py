@@ -142,3 +142,18 @@ def test_otc_manager_appliance_properties_exists(host, filename):
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
     assert file.exists is True
+
+
+@pytest.mark.parametrize("filename", [
+    (otc_manager_install_home + "logs/"),
+    (otc_manager_install_home + "nfs/"),
+    (otc_manager_install_home + "nfs/home/"),
+    (otc_manager_install_home + "nfs/root/"),
+    (otc_manager_install_home + "nfs/root/custom"),
+    (otc_manager_install_home + "nfs/root/sfs"),
+])
+def test_otc_manager_home_directories_permissions(host, filename):
+    folder = host.file(filename)
+    assert folder.user == "openthinclient"
+    assert folder.group == "openthinclient"
+    assert folder.exists is True

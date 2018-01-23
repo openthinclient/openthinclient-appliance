@@ -129,7 +129,7 @@ dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share
 #echo "==> Adding openthinclient manager icon to top panel"
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ object-type '"launcher"'
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ toplevel-id 'top'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ launcher-location '"/home/openthinclient/Desktop/openthinclient Manager.desktop"'
+#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ launcher-location '"/home/openthinclient/Desktop/openthinclient Legacy WebStart Manager.desktop"'
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ position '20'
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ panel-right-stick 'false'
 ##dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-manager' ]"

@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=openthinclient Package Manager
-GenericName=openthinclient Package Manager
-X-GNOME-FullName=openthinclient Package Manager
+Name=openthinclient Manager WebConsole
+GenericName=openthinclient Manager WebConsole
+X-GNOME-FullName=openthinclient Manager WebConsole
 Exec=firefox %u http://localhost:8080
 Terminal=false
 X-MultipleArgs=false
@@ -13,6 +13,6 @@ Categories=Network;WebBrowser;
 MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
 StartupWMClass=firefox
 StartupNotify=true
-Name[en_US]=openthinclient Package Manager
-Comment[en_US]=Start the openthinclient Package Manager
-Comment=Start the openthinclient Package Manager
+Name[en_US]=openthinclient Manager WebConsole
+Comment[en_US]=Start the openthinclient Manager WebConsole
+Comment=Start the openthinclient Manager WebConsole

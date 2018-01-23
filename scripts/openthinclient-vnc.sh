@@ -12,12 +12,17 @@ eval "$INSTALL $PACKAGES"
 
 FBOX_LASTWALLPAPER=/home/openthinclient/.fluxbox/lastwallpaper
 
+# set custom deploy path
+OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
+
 echo "==> Installing xvfb with --no-install-recommends"
 apt-get install -y --no-install-recommends xvfb
 
 echo "==> Installing x11vnc with --no-install-recommends"
 apt-get install -y --no-install-recommends x11vnc
 
+
+# fluxbox configuration
 read -r -d '' WALLINCLUDE << EOF
 $full $full|/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg||:22.0
 EOF
@@ -48,6 +53,22 @@ EOF
 
 chown openthinclient:openthinclient /home/openthinclient/.fluxbox/ -R
 
+# openbox configuration
+echo "==> Creating openbox config dir"
+OPENBOX_CONFIG_DIR=/home/openthinclient/.config/openbox/
+[ ! -d $OPENBOX_CONFIG_DIR ] && mkdir -p $OPENBOX_CONFIG_DIR
+
+echo "==> Deploying custom openbox configuration for openthinclient user"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/home/openthinclient/config/openbox/rc.xml /home/openthinclient/.config/openbox/rc.xml
+chown openthinclient:openthinclient /home/openthinclient/.config/openbox/ -R
+
+
+echo "==> Copying custom openthinclient-vnc-start script to /usr/local/bin"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-vnc-starter /usr/local/bin/openthinclient-vnc-starter
+
+echo "==> Setting executable bit for openthinclient-vnc-start scripts in /usr/local/bin"
+chmod +x /usr/local/bin/openthinclient-vnc-starter
+
 echo "==> Configure x11vnc service"
 cat > /etc/systemd/system/x11vnc.service << EOF
 [Unit]
@@ -60,7 +81,7 @@ Group=openthinclient
 Environment="UNIXPW_DISABLE_LOCALHOST=1"
 Environment="UNIXPW_DISABLE_SSL=1"
 Type=simple
-ExecStart=/usr/bin/x11vnc -create -env FD_PROG=/usr/bin/startfluxbox -env X11VNC_FINDDISPLAY_ALWAYS_FAILS=1 -env X11VNC_CREATE_GEOM=${1:-1024x768x16} -forever -unixpw openthinclient
+ExecStart=/usr/bin/x11vnc -create -env FD_PROG=/usr/local/bin/openthinclient-vnc-starter -env X11VNC_FINDDISPLAY_ALWAYS_FAILS=1 -env X11VNC_CREATE_GEOM="1024x768x16" -forever -unixpw openthinclient
 
 [Install]
 WantedBy=multi-user.target

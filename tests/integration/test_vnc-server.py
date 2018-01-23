@@ -39,6 +39,25 @@ def test_x11vnc_service_file_present(host):
 
 
 @pytest.mark.parametrize("filename", [
+    ("/usr/local/bin/openthinclient-vnc-starter"),
+])
+def test_otc_usr_local_bin_vnc_starter(host, filename):
+    file = host.file(filename)
+    assert file.user == "openthinclient"
+    assert file.group == "openthinclient"
+    assert file.exists is True
+
+
+@pytest.mark.parametrize("filename", [
+    "/home/openthinclient/.config/openbox/rc.xml",
+])
+def test_openbox_settings_files_present(host, filename):
+    filen = host.file(filename)
+    assert filen.user == "openthinclient"
+    assert filen.group == "openthinclient"
+    assert filen.exists is True
+
+@pytest.mark.parametrize("filename", [
     "/home/openthinclient/.fluxbox/overlay",
     "/home/openthinclient/.fluxbox/lastwallpaper",
     "/home/openthinclient/.fluxbox/startup",

@@ -5,7 +5,7 @@
 
 INSTALL="apt-get install -y"
 UPDATE="apt-get update"
-PACKAGES="fluxbox"
+PACKAGES="fluxbox openbox"
 
 eval "$UPDATE"
 eval "$INSTALL $PACKAGES"

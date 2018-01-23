@@ -5,6 +5,7 @@ import pytest
     ("x11vnc ", "0.9"),
     ("xvfb ", "2:1"),
     ("fluxbox ", "1.3"),
+    ("openbox", "3.6")
 ])
 def test_vnc_packages_installed(host, name, version):
     pkg = host.package(name)

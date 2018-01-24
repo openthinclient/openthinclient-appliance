@@ -47,6 +47,11 @@ col-9-visible=false
 col-12-width=40
 col-13-width=0
 
+[org/mate/caja/desktop]
+home-icon-visible=false
+computer-icon-visible=false
+trash-icon-visible=false
+
 [org/mate/panel/general]
 object-id-list=['menu-bar', 'notification-area', 'clock', 'show-desktop', 'window-list', 'workspace-switcher', 'otc-manager', 'otc-restart', 'firefox', 'object_0', 'object_1']
 toplevel-id-list=['top', 'bottom']
@@ -152,7 +157,7 @@ position=0
 object-type='applet'
 
 [org/mate/panel/objects/otc-manager]
-launcher-location='/home/openthinclient/Desktop/openthinclient Manager.desktop'
+launcher-location='/home/openthinclient/Desktop/openthinclient Manager WebConsole.desktop'
 toplevel-id='top'
 position=20
 object-type='launcher'

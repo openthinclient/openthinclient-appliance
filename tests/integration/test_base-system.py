@@ -240,7 +240,6 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/livesupport.levigo.de.desktop",
     "/home/openthinclient/Desktop/mate-network-properties.desktop",
     "/home/openthinclient/Desktop/mate-time.desktop",
-    "/home/openthinclient/Desktop/openthinclient Legacy WebStart Manager.desktop",
     "/home/openthinclient/Desktop/openthinclient Manager WebConsole.desktop",
     "/home/openthinclient/Desktop/openthinclient service restart.desktop",
     "/home/openthinclient/Desktop/Oracle-Java-Licence",
@@ -257,6 +256,7 @@ def test_otc_desktop_icons_present(host, filename):
 
 @pytest.mark.parametrize("filename", [
     "/home/openthinclient/Desktop/Version-Information.desktop",
+    "/home/openthinclient/Desktop/openthinclient Legacy WebStart Manager.desktop",
 ])
 def test_otc_desktop_icons_not_present(host, filename):
     file = host.file(filename)

@@ -62,7 +62,7 @@ orientation='bottom'
 screen=0
 y-bottom=0
 size=24
-y=779
+y=808
 
 [org/mate/panel/toplevels/top]
 expand=true
@@ -112,7 +112,7 @@ view-loadavg=true
 [org/mate/panel/objects/object_1]
 applet-iid='CommandAppletFactory::CommandApplet'
 toplevel-id='top'
-position=914
+position=597
 object-type='applet'
 panel-right-stick=false
 
@@ -165,7 +165,7 @@ panel-right-stick=false
 
 [org/mate/terminal/profiles/default]
 background-color='#FFFFFFFFDDDD'
-palette='#2E2E34343636:#CCCC00000000:#4E4E9A9A0606:#C4C4A0A00000:#34346565A4A4:#757550507B7B:#060698209A9A:#D3D3D7D7CFCF:#555557575353:#EFEF29292929:#8A8AE2E23434:#FCFCE9E94F4F:#72729F9FCFCF:#ADAD7F7FA8A8:#3434E2E2E2E2:#EEEEEEEEECEC'
+palette='#2E2D34333635:#CCCC00000000:#4E4E9A990605:#C4C4A09F0000:#34336564A4A4:#7574504F7B7B:#0605981F9A99:#D3D2D7D7CFCF:#555457575353:#EFEF29292929:#8A89E2E13433:#FCFCE9E84F4F:#72729F9FCFCF:#ADAD7F7FA8A7:#3433E2E1E2E1:#EEEEEEEEECEC'
 bold-color='#000000000000'
 foreground-color='#000000000000'
 visible-name='Default'
@@ -196,7 +196,7 @@ slowkeys-enable=false
 picture-filename='/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'
 
 [org/mate/desktop/session]
-session-start=1498645233
+session-start=1516991722
 
 [ca/desrt/dconf-editor]
 window-is-fullscreen=false

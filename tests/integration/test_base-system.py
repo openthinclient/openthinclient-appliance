@@ -34,13 +34,16 @@ def test_basic_packages_installed(host, name, version):
     assert pkg.is_installed
     assert pkg.version.startswith(version)
 
+
 @pytest.mark.parametrize("name,version", [
-    ("xtightvncviewer", "1.3"),
-    ("dconf-tools", "0.22"),
-    ("xserver-xorg", "1.7"),
-    ("mate-system-tools", "1.8"),
-    ("iceweasel", "45"),
-    ("pluma", "1.8"),
+    ("xtightvncviewer", "1:1.3"),
+    ("dconf-tools", "0.26"),
+    ("xserver-xorg", "1:7"),
+    ("gnome-system-tools", "3.0"),
+    ("firefox-esr", "52"),
+    ("pluma", "1.16"),
+    ("mate-desktop-environment-core", "1.16"),
+    ("lightdm", "1.18"),
 ])
 def test_gui_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -239,7 +242,7 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/Feature Bid.desktop",
     "/home/openthinclient/Desktop/livesupport.levigo.de.desktop",
     "/home/openthinclient/Desktop/mate-network-properties.desktop",
-    "/home/openthinclient/Desktop/mate-time.desktop",
+    "/home/openthinclient/Desktop/time.desktop",
     "/home/openthinclient/Desktop/openthinclient Manager WebConsole.desktop",
     "/home/openthinclient/Desktop/openthinclient service restart.desktop",
     "/home/openthinclient/Desktop/Oracle-Java-Licence",
@@ -295,15 +298,6 @@ def test_otc_documentation_present(host, filename):
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
     assert file.exists is True
-
-
-@pytest.mark.parametrize("name,version", [
-    ("mate-desktop-environment-core", "1.16"),
-    ("lightdm", "1.18"),
-])
-def test_gui_packages_installed(host, name, version):
-    assert host.package(name).is_installed
-    assert host.package(name).version.startswith(version)
 
 
 @pytest.mark.parametrize("name", [

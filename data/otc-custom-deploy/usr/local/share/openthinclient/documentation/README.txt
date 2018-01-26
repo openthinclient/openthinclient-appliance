@@ -36,18 +36,10 @@ The login manager provides a language selector at the top right corner. Please c
 Currently supported is "English - USA" (The default) and "German - Germany"
 
 
-Default password of the openthinclient Manager
+Default password of the openthinclient Manager WebConsole
 ----------------------------------------------
 
 The password of the preinstalled openthinclient Software Suite is preconfigured with the following credentials:
-
-	Username: administrator
-	Password  0pen%TC (The first character is the number zero)
-
-Default password of the openthinclient Package Manager
-----------------------------------------------
-
-The password of the preinstalled openthinclient Package Manager is preconfigured with the following credentials:
 
 	Username: administrator
 	Password  0pen%TC (The first character is the number zero)

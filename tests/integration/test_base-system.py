@@ -170,6 +170,27 @@ def test_openthinclient_version_information_file_present(host, filename, content
 
 
 @pytest.mark.parametrize("filename,content", [
+    ("/etc/network/interfaces", "auto eth0"),
+    ("/etc/network/interfaces", "iface eth0 inet dhcp"),
+])
+def test_for_eth0_in_etc_network_interfaces_file(host, filename, content):
+    filen = host.file(filename)
+    with host.sudo():
+        assert filen.contains(content)
+        assert filen.user == "root"
+        assert filen.group == "root"
+        assert filen.exists is True
+
+
+def test_udev_rule_eth0_rules_file_workaround(host):
+    directory = host.file("/etc/udev/rules.d/80-net-setup-link.rules")
+    assert directory.user == "root"
+    assert directory.group == "root"
+    assert directory.is_symlink is True
+    assert directory.linked_to == "/dev/null"
+
+
+@pytest.mark.parametrize("filename,content", [
     ("/home/openthinclient/.bash_aliases", "alias ll='ls -l'"),
     ("/root/.bash_aliases", "alias ll='ls -l'"),
     ("/home/openthinclient/.bashrc", ". ~/.bash_aliases"),
@@ -194,7 +215,7 @@ def test_otc_gui_lightdm_locale_fix(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
-    ("/etc/lightdm/lightdm.conf"),
+    "/etc/lightdm/lightdm.conf",
 ])
 def test_lightdm_config_file(host, filename):
     file = host.file(filename)
@@ -234,10 +255,10 @@ def test_lightdm_config_content(host, filename, content):
     "/home/openthinclient/.config/autostart/keyboard-layout-fix.desktop",
 ])
 def test_otc_gui_fixes_via_script(host, filename):
-    file = host.file(filename)
-    assert file.user == "openthinclient"
-    assert file.group == "openthinclient"
-    assert file.exists is True
+    filen = host.file(filename)
+    assert filen.user == "openthinclient"
+    assert filen.group == "openthinclient"
+    assert filen.exists is True
 
 
 @pytest.mark.parametrize("filename", [

@@ -81,7 +81,7 @@ Group=openthinclient
 Environment="UNIXPW_DISABLE_LOCALHOST=1"
 Environment="UNIXPW_DISABLE_SSL=1"
 Type=simple
-ExecStart=/usr/bin/x11vnc -create -env FD_PROG=/usr/local/bin/openthinclient-vnc-starter -env X11VNC_FINDDISPLAY_ALWAYS_FAILS=1 -env X11VNC_CREATE_GEOM="1350x800x16" -forever -shared -unixpw openthinclient
+ExecStart=/usr/bin/x11vnc -create -env FD_PROG=/usr/local/bin/openthinclient-vnc-starter -env X11VNC_FINDDISPLAY_ALWAYS_FAILS=1 -env X11VNC_CREATE_GEOM="1100x780x16" -forever -shared -unixpw openthinclient
 
 [Install]
 WantedBy=multi-user.target

@@ -269,7 +269,6 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/openthinclient Manager WebConsole.desktop",
     "/home/openthinclient/Desktop/openthinclient service restart.desktop",
     "/home/openthinclient/Desktop/Oracle-Java-Licence",
-    "/home/openthinclient/Desktop/professional support & hardware.desktop",
     "/home/openthinclient/Desktop/README.desktop",
     "/home/openthinclient/Desktop/VNC Viewer.desktop",
 ])
@@ -285,6 +284,7 @@ def test_otc_desktop_icons_present(host, filename):
     "/home/openthinclient/Desktop/openthinclient Legacy WebStart Manager.desktop",
     "/home/openthinclient/Desktop/Feature Bid.desktop",
     "/home/openthinclient/Desktop/Buy hardware.desktop",
+    "/home/openthinclient/Desktop/professional support & hardware.desktop",
 ])
 def test_otc_desktop_icons_not_present(host, filename):
     file = host.file(filename)

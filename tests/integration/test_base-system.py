@@ -27,6 +27,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("rsync", "3.1"),
     ("ldapscripts", "2.0"),
     ("htop", "2.0"),
+    ("mc", "3:4"),
 
 ])
 def test_basic_packages_installed(host, name, version):

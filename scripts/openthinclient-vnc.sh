@@ -70,6 +70,14 @@ echo "==> Setting executable bit for openthinclient-vnc-start scripts in /usr/lo
 chmod +x /usr/local/bin/openthinclient-vnc-starter
 chmod +x /usr/local/bin/openthinclient-vnc-xvfb
 
+echo "==> Copying custom 11vnc binary script to /usr/bin"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/x11vnc /usr/bin/x11vnc
+
+echo "==> Setting executable bit and correct permissions for custom x11vnc in /usr/bin"
+chmod +x /usr/bin/x11vnc
+chmod root:staff /usr/bin/x11vnc
+
+
 echo "==> Configure x11vnc service"
 cat > /etc/systemd/system/xvfb.service << EOF
 [Unit]

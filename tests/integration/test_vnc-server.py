@@ -88,3 +88,12 @@ def test_fluxbox_overlay_file_settings(filename, expected_output, host):
 def test_fluxbox_startup_file_contents(filename, expected_output, host):
         filen = host.file(filename)
         assert filen.contains(expected_output)
+
+
+@pytest.mark.parametrize("filename,content", [
+    ("/usr/bin/x11vnc --version", "x11vnc: 0.9.15 lastmod: 2018-02-04"),
+])
+def test_x11_vnc_version(host, filename, content):
+    with host.sudo():
+        test = host.check_output(filename)
+        assert test == content

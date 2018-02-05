@@ -15,6 +15,7 @@ def test_vnc_packages_installed(host, name, version):
 
 @pytest.mark.parametrize("service_name", [
     ("x11vnc"),
+    ("xvfb"),
 ])
 def test_service_running(host, service_name):
     service = host.service(service_name)
@@ -40,6 +41,7 @@ def test_x11vnc_service_file_present(host):
 
 @pytest.mark.parametrize("filename", [
     ("/usr/local/bin/openthinclient-vnc-starter"),
+    ("/usr/local/bin/openthinclient-vnc-xvfb"),
 ])
 def test_otc_usr_local_bin_vnc_starter(host, filename):
     file = host.file(filename)

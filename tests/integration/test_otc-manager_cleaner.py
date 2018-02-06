@@ -83,8 +83,8 @@ class Test_OTC_Cleaner(object):
     #         assert cmd.stdout == expected_output
 
     def test_udev_persistent_net_rules_exists(self, host):
-        file = host.file("/etc/udev/rules.d/70-persistent-net.rules")
-        assert file.exists is False
+        filen = host.file("/etc/udev/rules.d/70-persistent-net.rules")
+        assert filen.exists is False
 
     # @pytest.mark.parametrize("service_name", [
     #    ("openthinclient-manager.service"),
@@ -100,7 +100,7 @@ class Test_OTC_Cleaner(object):
         ("tcp", "8080"),
     ])
     @pytest.mark.last
-    def test_socket_openthinclient_manager_tcp__not_listening_ipv4_ipv6(self, host, proto, port):
+    def test_socket_openthinclient_manager_tcp_not_listening_ipv4_ipv6(self, host, proto, port):
         time.sleep(15)
         socketoptions = '{0}://{1}'.format(proto, port)
         socket = host.socket(socketoptions)
@@ -112,6 +112,6 @@ class Test_OTC_Cleaner(object):
     @pytest.mark.second_to_last
     def test_otc_manager_metadata_file_for_server_id(self, host, filename, content):
         time.sleep(20)
-        file = host.file(filename)
-        assert file.contains(content) is False
-        assert file.exists is True
+        filen = host.file(filename)
+        assert filen.contains(content) is False
+        assert filen.exists is True

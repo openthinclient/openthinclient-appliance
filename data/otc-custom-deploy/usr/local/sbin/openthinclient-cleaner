@@ -12,6 +12,8 @@ OTC_INSTALL_HOME="/home/openthinclient/otc-manager-home/"
 # openthinclient specific cleanup
 
 if [ -f "/etc/init.d/openthinclient-manager" ]; then
+    echo "==> Stopping the xvfb server to disconect the openthinclient WebStart"
+    service xvfb stop
     echo "==> Stopping the openthinclient server before cleaning up"
     /etc/init.d/openthinclient-manager stop
 
@@ -124,7 +126,7 @@ find /var/log/ -name "*\.0" -type f | xargs rm
 find /var/log/ -name "*\.[0-9]*\.gz" -type f | xargs rm
 
 echo "==> Disk usage before cleanup"
-echo ${DISK_USAGE_BEFORE_CLEANUP}
+echo "${DISK_USAGE_BEFORE_CLEANUP}"
 
 echo "==> Disk usage after cleanup"
 df -h

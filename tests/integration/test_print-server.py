@@ -5,6 +5,7 @@ import pytest
     ("cups-client"),
     ("cups-bsd"),
     ("cups-pdf"),
+    ("cups-browsed"),
     ("printer-driver-hpijs"),
 ])
 def test_packages_installed(host, name):

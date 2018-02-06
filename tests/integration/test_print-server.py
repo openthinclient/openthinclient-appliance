@@ -37,7 +37,8 @@ def test_service_running(host, service_name):
 ])
 def test_cupsd_config_content(host, filename, content):
     with host.sudo():
-        filename = host.file(filename)
-        assert filename.contains(content)
-        assert filename.group == "lp"
-        assert filename.exists is True
+        filen = host.file(filename)
+        assert filen.contains(content)
+        assert filen.user == "root"
+        assert filen.group == "lp"
+        assert filen.exists is True

@@ -2,6 +2,8 @@
 # Filename:     print-server.sh
 # Purpose:      install print server for openthinclient usage
 #------------------------------------------------------------------------------
+# set custom deploy path
+OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
 
 echo "==> Installing cups packages"
 sudo apt-get -y install cups cups-client cups-bsd
@@ -12,12 +14,16 @@ sudo apt-get -y install printer-driver-gutenprint printer-driver-hpijs
 echo "==> Installing cups pdf printer package"
 sudo apt-get -y install cups-pdf
 
-echo "==> Make sure that cups is started before config changes are made"
-service cups start
+echo "==> Stopping cups service before config changes are applied"
+sudo service cups stop
+sleep 2
 
-echo "==> Enabling cups local print sharing"
-sudo cupsctl --share-printers
+echo "==> Check that cups is stopped before config changes are made"
+sudo service cups status
 
-echo "==> Enabling cups remote administration"
-sudo cupsctl --remote-admin
-service cups restart
+echo "==> Copying custom cups configuration file"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/cups/cupsd.conf /etc/cups/cupsd.conf
+
+echo "==> Setting correct permissions for custom cupsd.conf configuration"
+chown root:lp /etc/cups/cupsd.conf
+

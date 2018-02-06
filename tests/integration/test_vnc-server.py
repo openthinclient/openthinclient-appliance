@@ -33,10 +33,17 @@ def test_vnc_server_listening(host, proto, hostname, port):
 
 
 def test_x11vnc_service_file_present(host):
-    managerbin = host.file("/etc/systemd/system/x11vnc.service")
-    assert managerbin.user == "root"
-    assert managerbin.group == "root"
-    assert managerbin.exists is True
+    filename = host.file("/etc/systemd/system/x11vnc.service")
+    assert filename.user == "root"
+    assert filename.group == "root"
+    assert filename.exists is True
+
+
+def test_xvfb_service_file_present(host):
+    filename = host.file("/etc/systemd/system/xvfb.service")
+    assert filename.user == "root"
+    assert filename.group == "root"
+    assert filename.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -44,10 +51,10 @@ def test_x11vnc_service_file_present(host):
     ("/usr/local/bin/openthinclient-vnc-xvfb"),
 ])
 def test_otc_usr_local_bin_vnc_starter(host, filename):
-    file = host.file(filename)
-    assert file.user == "openthinclient"
-    assert file.group == "openthinclient"
-    assert file.exists is True
+    filen = host.file(filename)
+    assert filen.user == "openthinclient"
+    assert filen.group == "openthinclient"
+    assert filen.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -58,6 +65,7 @@ def test_openbox_settings_files_present(host, filename):
     assert filen.user == "openthinclient"
     assert filen.group == "openthinclient"
     assert filen.exists is True
+
 
 @pytest.mark.parametrize("filename", [
     "/home/openthinclient/.fluxbox/overlay",
@@ -97,3 +105,13 @@ def test_x11_vnc_version(host, filename, content):
     with host.sudo():
         test = host.check_output(filename)
         assert test == content
+
+
+@pytest.mark.parametrize("filename", [
+    "/usr/bin/x11vnc",
+])
+def test_x11_vnc_permissions(host, filename):
+    filen = host.file(filename)
+    assert filen.user == "root"
+    assert filen.group == "staff"
+    assert filen.exists is True

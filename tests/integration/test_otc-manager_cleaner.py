@@ -95,6 +95,14 @@ class Test_OTC_Cleaner(object):
     #         assert service.is_running is False
     #         assert service.is_enabled is True
 
+    @pytest.mark.parametrize("service_name", [
+        ("openthinclient-manager"),
+    ])
+    def test_openthinclient_manager_service_not_running(host, service_name):
+        service = host.service(service_name)
+        assert service.is_running is False
+        assert service.is_enabled
+
     @pytest.mark.parametrize("proto,port", [
         ("tcp", "10389"),
         ("tcp", "8080"),

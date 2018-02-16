@@ -86,19 +86,11 @@ class Test_OTC_Cleaner(object):
         filen = host.file("/etc/udev/rules.d/70-persistent-net.rules")
         assert filen.exists is False
 
-    # @pytest.mark.parametrize("service_name", [
-    #    ("openthinclient-manager.service"),
-    # ])
-    # def test_openthinclient_manager_service_is_not_running(self, host, service_name):
-    #     with host.sudo():
-    #         service = host.service(service_name)
-    #         assert service.is_running is False
-    #         assert service.is_enabled is True
 
     @pytest.mark.parametrize("service_name", [
         ("openthinclient-manager"),
     ])
-    def test_openthinclient_manager_service_not_running(host, service_name):
+    def test_openthinclient_manager_service_not_running(self, host, service_name):
         service = host.service(service_name)
         assert service.is_running is False
         assert service.is_enabled

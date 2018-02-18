@@ -28,7 +28,12 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("ldapscripts", "2.0"),
     ("htop", "2.0"),
     ("mc", "3:4"),
-
+    ("vim", ""),
+    ("screen", "4.5"),
+    ("tcpdump", "4.9"),
+    ("emacs", "46.1"),
+    ("net-tools", "1.60"),
+    ("dirmngr", "2.1"),
 ])
 def test_basic_packages_installed(host, name, version):
     pkg = host.package(name)

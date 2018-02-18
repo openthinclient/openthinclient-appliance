@@ -55,40 +55,33 @@ class Test_OTC_Cleaner(object):
             assert cmd.exit_status == 0
             assert cmd.stdout == expected_output
 
-    # @pytest.mark.parametrize("executable,expected_output", [
-    #     ("ls -A /tmp", ""),
-    # ])
-    # def test_tmp_folder_empty(self, executable, expected_output, host):
-    #     with host.sudo():
-    #         cmd = host.run_test(executable)
-    #         assert cmd.exit_status == 0
-    #         assert cmd.stdout == expected_output
-
     @pytest.mark.parametrize("filename", [
-        ("/root/.bash_history"),
-        ("/home/openthinclient/.bash_history"),
+        "/root/.bash_history",
+        "/home/openthinclient/.bash_history",
     ])
     def test_if_bash_history_files_are_deleted(self, host, filename):
         with host.sudo():
-            file = host.file(filename)
-            assert file.exists is False
+            file_name = host.file(filename)
+            assert file_name.exists is False
 
-    # @pytest.mark.parametrize("executable,expected_output", [
-    #     ("ls -A /var/log/", ""),
-    # ])
-    # def test_var_log_directory_is_empty(self, executable, expected_output, host):
-    #     with host.sudo():
-    #         cmd = host.run_test(executable)
-    #         assert cmd.exit_status == 0
-    #         assert cmd.stdout == expected_output
+    @pytest.mark.parametrize("filename", [
+        "/var/log/apt/eipp.log.xz",
+        "/var/log/lightdm/lightdm.log.old"
+        "/var/log/lightdm/seat0-greeter.log.old",
+        "/var/log/lightdm/x-0.log.old",
+        "/var/log/Xorg.0.log.old",
+    ])
+    def test_if_var_log_files_are_deleted(self, host, filename):
+        with host.sudo():
+            logfile = host.file(filename)
+            assert logfile.exists is False
 
     def test_udev_persistent_net_rules_exists(self, host):
         filen = host.file("/etc/udev/rules.d/70-persistent-net.rules")
         assert filen.exists is False
 
-
     @pytest.mark.parametrize("service_name", [
-        ("openthinclient-manager"),
+        "openthinclient-manager",
     ])
     def test_openthinclient_manager_service_not_running(self, host, service_name):
         time.sleep(20)

@@ -15,6 +15,7 @@ if [ -f "/etc/init.d/openthinclient-manager" ]; then
     echo "==> Stopping the xvfb server to disconect the openthinclient WebStart"
     service xvfb stop
     echo "==> Stopping the openthinclient server before cleaning up"
+    service openthinclient-manager stop
     /etc/init.d/openthinclient-manager stop
 
     # wait for shutdown
@@ -23,6 +24,7 @@ if [ -f "/etc/init.d/openthinclient-manager" ]; then
 	    echo "Waiting for shutdown...."
     done
     echo "==> Making sure the openthinclient server is stopped"
+    service openthinclient-manager status
     /etc/init.d/openthinclient-manager status
 fi
 

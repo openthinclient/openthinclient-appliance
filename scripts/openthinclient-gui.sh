@@ -17,22 +17,8 @@ apt-get install -y xserver-xorg
 echo "==> Installing lightdm with --no-install-recommends"
 apt-get install -y --no-install-recommends lightdm
 
-# echo "==> Installing Teamviewer9 debian package if present"
-# TEAMVIEWER_INSTALLER="teamviewer_linux.deb"
-#
-# if [ -f /tmp/data/${TEAMVIEWER_INSTALLER} ]; then
-# 	echo "==> Installing already downloaded Teamviewer9 debian package"
-# 	dpkg -i /tmp/data/${TEAMVIEWER_INSTALLER}
-# else
-#     echo "==> Downloading Teamviewer9 debian package from official source"
-#     wget -c http://download.teamviewer.com/download/version_9x/teamviewer_linux.deb -P /tmp/data/
-#     if [ -f /tmp/data/${TEAMVIEWER_INSTALLER} ]; then
-# 	    echo "==> Installing Teamviewer debian package"
-# 	    dpkg -i /tmp/data/${TEAMVIEWER_INSTALLER}
-# 	 else
-#         echo "==> No Teamviewer9 package provided or download failed. Nothing to be installed"
-# 	 fi
-# fi
+echo "==> Installing network-manager and network-manager-gnome with --no-install-recommends"
+apt-get install -y network-manager network-manager-gnome --no-install-recommends
 
 # setting otc custom deploy variables
 OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
@@ -53,10 +39,8 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/backgrounds/ $OTC
 
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/icons/ $OTCLOCALSHARE/
 
-
 echo "==> Deploying custom lightdm greeter"
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
-# Fix permissions
 
 echo "==> Deploying custom lightdm.conf"
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf
@@ -80,7 +64,6 @@ apt-get install -y mate-applets mate-themes
 
 echo "==> Installing mate-utils"
 apt-get install -y mate-utils
-
 
 echo "==> Installing gnome-system-tools"
 apt-get install -y gnome-system-tools

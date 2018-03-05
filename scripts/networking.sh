@@ -12,10 +12,10 @@ echo '# This file describes the network interfaces available on your system
 source /etc/network/interfaces.d/*
 
 # The loopback network interface
-auto lo
-iface lo inet loopback
+#auto lo
+#iface lo inet loopback
 
 # The primary network interface
-auto eth0
-iface eth0 inet dhcp
-pre-up sleep 2' > /etc/network/interfaces
+#auto eth0
+#iface eth0 inet dhcp
+#pre-up sleep 2' > /etc/network/interfaces

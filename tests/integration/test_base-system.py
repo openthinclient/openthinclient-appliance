@@ -34,6 +34,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("emacs", "46.1"),
     ("net-tools", "1.60"),
     ("dirmngr", "2.1"),
+    ("network-manager", "1.6"),
 ])
 def test_basic_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -50,6 +51,7 @@ def test_basic_packages_installed(host, name, version):
     ("pluma", "1.16"),
     ("mate-desktop-environment-core", "1.16"),
     ("lightdm", "1.18"),
+    ("network-manager-gnome", "1.4"),
 ])
 def test_gui_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -251,7 +253,6 @@ def test_lightdm_config_content(host, filename, content):
 def test_lightdm_config_content(host, filename, content):
     file = host.file(filename)
     assert file.contains(content)
-    # assert file.group == "root"
     assert file.exists is True
 
 

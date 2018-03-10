@@ -50,7 +50,7 @@
         "iso_checksum": "{{user `iso_checksum`}}",
         "iso_checksum_type": "{{user `iso_checksum_type`}}",
 
-        "http_directory" : "debian8_32",
+        "http_directory" : "debian9_32",
         "http_port_min" : 9001,
         "http_port_max" : 9001,
 
@@ -96,7 +96,7 @@
         "iso_checksum": "{{user `iso_checksum`}}",
         "iso_checksum_type": "{{user `iso_checksum_type`}}",
         
-        "http_directory" : "debian8_32",
+        "http_directory" : "debian9_32",
         "http_port_min" : 9001,
         "http_port_max" : 9001,
 

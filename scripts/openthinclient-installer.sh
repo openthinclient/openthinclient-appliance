@@ -60,14 +60,12 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 
         echo "==> removing rpcbind package"
         apt-get remove -y --purge rpcbind nfs-common
-        # symlink the service
-        #ln -s OTC_INSTALL_PATH/bin/openthinclient-manager /etc/init.d/openthinclient
 
         echo "==> Creating .appliance.properties file to activate noVNC"
         touch ${OTC_INSTALL_HOME}.appliance.properties
         chown openthinclient:openthinclient ${OTC_INSTALL_HOME}.appliance.properties
 
-        echo "==> Deploying custom ldiff settings for import in oenthinclient manager"
+        echo "==> Deploying custom ldiff settings for import in openthinclient manager"
         if [ -f ${OTC_INSTALLER_LDIF_FILES} ]; then
             echo "==> OTC_INSTALLER_LDIF_FILES has content. Continue with deployment"
 	        for file in $OTC_INSTALLER_LDIF_FILES; do cp $file /home/openthinclient/; done
@@ -88,7 +86,6 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 
         echo "==> Create a symlink between the new install path and the legacy installation dir"
         ln -s "${OTC_INSTALL_PATH%/}" /opt/openthinclient
-        # ln -s /opt/otc-manager /opt/openthinclient
 
     else
 	    echo "==> $OTC_INSTALL_PATH doesn't exist. Installation was not successful"

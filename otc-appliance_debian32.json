@@ -59,7 +59,7 @@
         "ssh_wait_timeout": "60m",
         "post_shutdown_delay": "30s",
 
-        "output_directory": "output-{{ user `vm_name` }}-virtualbox-iso",
+        "output_directory": "builds/output-{{ user `vm_name` }}-virtualbox-iso",
 
         "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
 
@@ -104,7 +104,7 @@
         "ssh_password": "{{user `ssh_pass`}}",
         "ssh_wait_timeout": "60m",
 
-        "output_directory": "output-{{ user `vm_name` }}-vmware-iso",
+        "output_directory": "builds/output-{{ user `vm_name` }}-vmware-iso",
 
         "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
        

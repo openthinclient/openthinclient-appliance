@@ -383,3 +383,17 @@ def test_sysctl_values(sysctl_option, expected_output, host):
 def test_mate_desktop_settings(executable, expected_output, host):
     cmd = host.run(executable)
     assert cmd.stdout == expected_output
+
+
+@pytest.mark.parametrize("executable,expected_output", [
+    ("df / | tail -1 | awk '{print $5}'",
+     '50%'),
+])
+def test_free_diskspace(executable, expected_output, host):
+    cmd = host.run(executable)
+    avail = int(cmd.stdout.replace('%', ''))
+    max = int(expected_output.replace('%', ''))
+    use_limit_reached = False
+    if avail > max:
+        use_limit_reached = True
+    assert use_limit_reached is True

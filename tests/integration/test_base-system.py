@@ -393,7 +393,7 @@ def test_free_diskspace(executable, expected_output, host):
     cmd = host.run(executable)
     avail = int(cmd.stdout.replace('%', ''))
     max = int(expected_output.replace('%', ''))
-    use_limit_reached = False
+    use_limit_not_reached = False
     if avail > max:
-        use_limit_reached = True
-    assert use_limit_reached is True
+        use_limit_not_reached = True
+    assert use_limit_not_reached is True

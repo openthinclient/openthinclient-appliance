@@ -4,7 +4,9 @@ import pytest
 @pytest.mark.parametrize("name,version", [
     ("x11vnc ", "0.9"),
     ("xvfb ", "2:1"),
-    ("openbox", "3.6")
+    ("openbox", "3.6"),
+    ("python-pip", "9.0"),
+    ("python-wheel", "0.29")
 ])
 def test_vnc_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -15,6 +17,7 @@ def test_vnc_packages_installed(host, name, version):
 @pytest.mark.parametrize("service_name", [
     "x11vnc",
     "xvfb",
+    "websockify"
 ])
 def test_service_running(host, service_name):
     service = host.service(service_name)
@@ -24,6 +27,7 @@ def test_service_running(host, service_name):
 
 @pytest.mark.parametrize("proto,hostname,port", [
     ("tcp", "0.0.0.0", "5900"),
+    ("tcp", "127.0.0.1", "5910"),
 ])
 def test_vnc_server_listening(host, proto, hostname, port):
     socket_options = "{0}://{1}:{2}".format(proto, hostname, port)
@@ -43,6 +47,31 @@ def test_xvfb_service_file_present(host):
     assert filename.user == "root"
     assert filename.group == "root"
     assert filename.exists is True
+
+
+def test_websockify_service_file_present(host):
+    filename = host.file("/etc/systemd/system/websockify.service")
+    assert filename.user == "root"
+    assert filename.group == "root"
+    assert filename.exists is True
+
+
+def test_websockify_binary_file_present(host):
+    filename = host.file("/usr/local/bin/websockify")
+    assert filename.user == "root"
+    assert filename.group == "staff"
+    assert filename.exists is True
+
+
+@pytest.mark.parametrize("filename", [
+    "/usr/local/share/websockify/include/",
+    "/usr/local/lib/python2.7/dist-packages/websockify/",
+])
+def test_websockify_python_package_deps(host, filename):
+    filen = host.file(filename)
+    assert filen.user == "root"
+    assert filen.group == "staff"
+    assert filen.exists is True
 
 
 @pytest.mark.parametrize("filename", [

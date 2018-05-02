@@ -45,8 +45,34 @@ echo "==> Setting executable bit and correct permissions for custom x11vnc in /u
 chmod +x /usr/bin/x11vnc
 chown root:staff /usr/bin/x11vnc
 
+echo "==> Installing python-pip and python-wheel for python package handling"
+apt-get install -y python-pip python-wheel --no-install-recommends
 
-echo "==> Configure x11vnc service"
+echo "==> Copying websockify-0.8.0.tar.gz wheel to /usr/bin"
+pip install ${OTC_CUSTOM_DEPLOY_PATH}/websockify-0.8.0.tar.gz
+
+echo "==> Configure websockify service"
+cat > /etc/systemd/system/websockify.service << EOF
+[Unit]
+Description=Start websockify at startup.
+After=multi-user.target
+
+[Service]
+User=openthinclient
+Group=openthinclient
+Type=simple
+ExecStart=/usr/local/bin/websockify 5900 --token-plugin OTCTokenPlugin
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl enable websockify.service
+sudo systemctl daemon-reload
+
+echo "==> Configure xvfb service"
 cat > /etc/systemd/system/xvfb.service << EOF
 [Unit]
 Description=Start xvfb at startup.
@@ -77,11 +103,8 @@ After=multi-user.target
 [Service]
 User=openthinclient
 Group=openthinclient
-Environment="UNIXPW_DISABLE_LOCALHOST=1"
-Environment="UNIXPW_DISABLE_SSL=1"
 Type=simple
-# ExecStart=/usr/bin/x11vnc -create -env FD_PROG=/usr/local/bin/openthinclient-vnc-starter -env X11VNC_FINDDISPLAY_ALWAYS_FAILS=1 -env FD_GEOM="1100x780x16" -env X11VNC_CREATE_GEOM="1100x780x16" -forever -shared -unixpw openthinclient
-ExecStart=/usr/bin/x11vnc -display :2 -env FD_GEOM="1100x780x16" -forever -shared -unixpw
+ExecStart=/usr/bin/x11vnc -display :2 -env FD_GEOM="1100x780x16" -forever -shared -rfbport 5910 -localhost
 Restart=on-failure
 RestartSec=5
 

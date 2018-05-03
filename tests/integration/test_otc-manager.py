@@ -145,6 +145,19 @@ def test_otc_manager_appliance_properties_exists(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
+    (otc_manager_install_home + "tftp.xml"),
+    (otc_manager_install_home + "package-manager.xml"),
+    (otc_manager_install_home + "directory/service.xml"),
+    (otc_manager_install_home + "nfs/service.xml"),
+])
+def test_otc_manager_service_files_exists(host, filename):
+    file = host.file(filename)
+    assert file.user == "openthinclient"
+    assert file.group == "openthinclient"
+    assert file.exists is True
+
+
+@pytest.mark.parametrize("filename", [
     (otc_manager_install_home + "logs/"),
     (otc_manager_install_home + "nfs/"),
     (otc_manager_install_home + "nfs/home/"),

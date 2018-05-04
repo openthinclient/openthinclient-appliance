@@ -262,13 +262,13 @@
   </keybind>
 
   <!-- Keybindings for running applications -->
-  <keybind key="W-e">
+  <keybind key="C-A-x">
     <action name="Execute">
       <startupnotify>
         <enabled>true</enabled>
-        <name>Konqueror</name>
+        <name>Mate-Terminal</name>
       </startupnotify>
-      <command>kfmclient openProfile filemanagement</command>
+      <command>mate-terminal</command>
     </action>
   </keybind>
   <!-- Launch scrot when Print is pressed -->

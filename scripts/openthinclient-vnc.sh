@@ -98,12 +98,13 @@ echo "==> Configure x11vnc service"
 cat > /etc/systemd/system/x11vnc.service << EOF
 [Unit]
 Description=Start x11vnc at startup.
-After=multi-user.target
+After=multi-user.target xvfb.service
 
 [Service]
 User=openthinclient
 Group=openthinclient
 Type=simple
+ExecStartPre=/bin/sleep 1
 ExecStart=/usr/bin/x11vnc -display :2 -env FD_GEOM="1100x780x16" -forever -shared -rfbport 5910 -localhost
 Restart=on-failure
 RestartSec=5

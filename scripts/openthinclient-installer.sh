@@ -48,11 +48,12 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 	        $OTC_INSTALL_PATH/bin/managerctl prepare-home \
 	        --admin-password $OTC_DEFAULT_PASS \
 	        --home $OTC_INSTALL_HOME \
+	        --dist-source http://archive.openthinclient.org/openthinclient/distributions-appliance.xml \
 	        --db MYSQL \
 	        --db-host localhost \
 	        --db-name openthinclient \
 	        --db-user openthinclient \
-	        --db-password openthinclient > /dev/null 2>&1
+	        --db-password openthinclient #> /dev/null 2>&1
         else
             echo "==> Running managerctl install with predefined variables and default included H2 database"
             $OTC_INSTALL_PATH/bin/managerctl prepare-home --admin-password $OTC_DEFAULT_PASS --home $OTC_INSTALL_HOME  > /dev/null 2>&1

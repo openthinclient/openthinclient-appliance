@@ -59,4 +59,4 @@ class Test_OTCManager_Uninstall(object):
         directory = host.file(otc_manager_install_path)
         assert directory.user == "root"
         assert directory.group == "root"
-        assert directory.is_directory is True
+        assert directory.is_directory is False

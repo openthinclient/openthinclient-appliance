@@ -57,6 +57,4 @@ class Test_OTCManager_Uninstall(object):
     @pytest.mark.last
     def test_openthinclient_install_directory_after_uninstall(self, host):
         directory = host.file(otc_manager_install_path)
-        assert directory.user == "root"
-        assert directory.group == "root"
         assert directory.is_directory is False

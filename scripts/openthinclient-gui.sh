@@ -74,6 +74,9 @@ apt-get install -y mate-system-monitor --no-install-recommends
 echo "==> Installing evince PDF viewer"
 apt-get install -y evince
 
+echo "==> Installing arandr"
+apt-get install -y arandr
+
 
 # workaround
 /etc/init.d/lightdm start

@@ -22,6 +22,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("oracle-java8-set-default", "8"),
     ("ntp", "1:4"),
     ("acpid", "1:2"),
+    ("aptitude", "0.8"),
     ("sudo", "1.8"),
     ("bzip2", "1.0"),
     ("rsync", "3.1"),
@@ -52,6 +53,7 @@ def test_basic_packages_installed(host, name, version):
     ("mate-desktop-environment-core", "1.16"),
     ("lightdm", "1.18"),
     ("network-manager-gnome", "1.4"),
+    ("arandr", "0.1"),
 ])
 def test_gui_packages_installed(host, name, version):
     pkg = host.package(name)

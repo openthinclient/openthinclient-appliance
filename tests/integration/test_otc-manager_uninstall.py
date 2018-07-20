@@ -56,5 +56,10 @@ class Test_OTCManager_Uninstall(object):
 
     @pytest.mark.last
     def test_openthinclient_install_directory_after_uninstall(self, host):
+        dir_content = host.run("ls -ld $(find " + otc_manager_install_path + " )")
+        print("Contents of: " + otc_manager_install_path)
+        print(dir_content.stdout)
+
         directory = host.file(otc_manager_install_path)
         assert directory.is_directory is False
+

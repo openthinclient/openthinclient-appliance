@@ -12,8 +12,8 @@
         "memory": "2048",
         "disk_size" : "20480",
         "headless": "True",
-        "iso_url": "http://cdimage.debian.org/mirror/cdimage/archive/9.2.0/i386/iso-cd/debian-9.2.0-i386-netinst.iso",
-        "iso_checksum": "c038d9a004f45d5d9272e24733b70af303a6e2f32192f684df7014877ba22d99",
+        "iso_url": "http://cdimage.debian.org/mirror/cdimage/archive/9.4.0/i386/iso-cd/debian-9.4.0-i386-netinst.iso",
+        "iso_checksum": "f1da6c11c7e0ca4399a703e32c330261258bb4ba05f81d7a6f67402d182c8bf8",
         "iso_checksum_type": "sha256",
         "appliance_version": "openthinclient 2.1 Pales",
         "otc_manager_database_user": "openthinclient",
@@ -39,7 +39,6 @@
             ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"],
             ["modifyvm", "{{.Name}}", "--description", "{{ user `vm_description` }}"]
         ],
-
         "vboxmanage_post": [
             ["modifyvm", "{{.Name}}", "--vram", "32"],
             ["modifyvm", "{{.Name}}", "--cpus", "1"],

@@ -48,7 +48,7 @@ def test_basic_packages_installed(host, name, version):
     ("dconf-tools", "0.26"),
     ("xserver-xorg", "1:7"),
     ("gnome-system-tools", "3.0"),
-    ("firefox-esr", "52"),
+    ("firefox-esr", "60"),
     ("pluma", "1.16"),
     ("mate-desktop-environment-core", "1.16"),
     ("lightdm", "1.18"),

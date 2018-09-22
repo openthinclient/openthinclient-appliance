@@ -2,8 +2,8 @@ import pytest
 
 
 @pytest.mark.parametrize("name,version", [
-    ("x11vnc ", "0.9"),
-    ("xvfb ", "2:1"),
+    ("x11vnc", "0.9"),
+    ("xvfb", "2:1"),
     ("openbox", "3.6"),
     ("python-pip", "9.0"),
     ("python-wheel", "0.29")

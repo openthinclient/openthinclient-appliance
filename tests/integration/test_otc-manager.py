@@ -92,6 +92,16 @@ def test_if_openthinclient_package_cache_dir_is_empty(executable, expected_outpu
         assert cmd.stdout == expected_output
 
 
+@pytest.mark.parametrize("executable,expected_output", [
+    ('find /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/ -name "*.deb" -exec ls -A {} \;', ''),
+])
+def test_if_openthinclient_package_cache_dir_contains_deb_files(executable, expected_output, host):
+    with host.sudo():
+        cmd = host.run_test(executable)
+        assert cmd.exit_status == 0
+        assert cmd.stdout == expected_output
+
+
 @pytest.mark.parametrize("filename", [
     (otc_manager_install_home + "nfs/root/sfs/base.sfs"),
     (otc_manager_install_home + "nfs/root/sfs/package/tcos-scripts.sfs"),

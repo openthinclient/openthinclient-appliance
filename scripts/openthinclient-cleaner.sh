@@ -30,9 +30,14 @@ if [ -f "/etc/init.d/openthinclient-manager" ]; then
 fi
 
 if [ -d "/home/openthinclient/otc-manager-home/" ]; then
+
+    # remove all downloaded openthinclient dpkg packages
+    find  /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/ -name "*.deb" -exec rm {} \;
+
     # remove cache files
-    rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
-    rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
+    # rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
+    # rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
+    # rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/3/*
 
     # remove nfs db from manager home
     rm /home/openthinclient/otc-manager-home/nfs/nfs-paths.db*

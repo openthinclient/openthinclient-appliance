@@ -83,16 +83,6 @@ def test_if_openthinclient_user_has_access_to_mysql_db(executable, expected_outp
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("ls -A /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/", ""),
-])
-def test_if_openthinclient_package_cache_dir_is_empty(executable, expected_output, host):
-    with host.sudo():
-        cmd = host.run_test(executable)
-        assert cmd.exit_status == 0
-        assert cmd.stdout == expected_output
-
-
-@pytest.mark.parametrize("executable,expected_output", [
     ('find /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/ -name "*.deb" -exec ls -A {} \;', ''),
 ])
 def test_if_openthinclient_package_cache_dir_contains_deb_files(executable, expected_output, host):

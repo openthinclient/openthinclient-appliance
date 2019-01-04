@@ -1,0 +1,177 @@
+{
+    "variables": {
+        "http_proxy": "{{env `http_proxy`}}",
+        "https_proxy": "{{env `https_proxy`}}",
+        "no_proxy": "{{env `no_proxy`}}",
+        "ssh_name": "openthinclient",
+        "ssh_pass": "0pen%TC",
+        "hostname": "openthinclient-server",
+        "vmware_guest_os_type": "debian8-64",
+        "virtualbox_guest_os_type": "Debian_64",
+        "cpus": "1",
+        "memory": "2048",
+        "disk_size" : "20480",
+        "headless": "True",
+        "iso_url": "http://cdimage.debian.org/mirror/cdimage/archive/9.5.0/amd64/iso-cd/debian-9.5.0-amd64-netinst.iso",
+        "iso_checksum": "1f97a4b8dee7c3def5cd8215ff01b9edef27c901b28fa8b1ef4f022eff7c36c2",
+        "iso_checksum_type": "sha256",
+        "appliance_version": "openthinclient 2018.1",
+        "otc_manager_database_user": "openthinclient",
+        "otc_manager_database_pass": "openthinclient",
+        "otc_manager_default_pass": "0pen%TC",
+        "otc_manager_install_home:": "/home/openthinclient/otc-manager-home/",
+        "otc_manager_install_path:": "/opt/otc-manager/",
+        "vm_name": "OTC-Appliance-2018.1",
+        "vm_description": "openthinclient is a Free Open Source Thin Client Solution consisting of a Linux based operating system along with a comprehensive Java based management GUI and server component. It is intended for environments where a medium to large number of Thin Clients must be supported and managed efficiently. Offering flexibility unheard of in the world of proprietary Thin Client Solutions, openthinclient empowers developers and integrators to create advanced Thin Client solutions... for free. www.openthinclient.org",
+        "vmx_post_connectiontype": "bridged"
+    },
+
+    "builders": [{
+        "type": "virtualbox-iso",
+        "guest_os_type": "{{ user `virtualbox_guest_os_type` }}",
+        "vm_name": "{{ user `vm_name` }}",
+        "disk_size": "{{ user `disk_size` }}",
+        "headless": "{{ user `headless` }}",
+
+        "vboxmanage": [
+            ["modifyvm", "{{.Name}}", "--vram", "32"],
+            ["modifyvm", "{{.Name}}", "--cpus", "1"],
+            ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"],
+            ["modifyvm", "{{.Name}}", "--description", "{{ user `vm_description` }}"]
+        ],
+        "vboxmanage_post": [
+            ["modifyvm", "{{.Name}}", "--vram", "32"],
+            ["modifyvm", "{{.Name}}", "--cpus", "1"],
+            ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"]
+        ],
+
+        "iso_url": "{{user `iso_url`}}",
+        "iso_checksum": "{{user `iso_checksum`}}",
+        "iso_checksum_type": "{{user `iso_checksum_type`}}",
+
+        "http_directory" : "debian9_64",
+        "http_port_min" : 9001,
+        "http_port_max" : 9001,
+
+        "ssh_username": "{{user `ssh_name`}}",
+        "ssh_password": "{{user `ssh_pass`}}",
+        "ssh_wait_timeout": "60m",
+        "post_shutdown_delay": "30s",
+
+        "output_directory": "builds/output-{{ user `vm_name` }}-virtualbox-iso",
+
+        "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
+
+        "boot_command" : [
+            "<esc><wait>",
+            "install <wait>",
+            "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+            "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+            "keyboard-configuration/xkb-keymap=us <wait>",
+            "netcfg/get_hostname={{user `hostname`}} <wait>",
+            "netcfg/get_domain={{user `hostname`}} <wait>",
+            "fb=false debconf/frontend=noninteractive ",
+            "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+            "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+            "<enter><wait>"
+        ]
+    },
+    {
+        "type": "vmware-iso",
+        "guest_os_type": "{{ user `vmware_guest_os_type` }}",
+        "vm_name": "{{ user `vm_name` }}",
+        "disk_size": "{{ user `disk_size` }}",
+        "headless": "{{ user `headless` }}",
+
+        "vmx_data": {
+            "memsize": "{{ user `memory` }}",
+            "numvcpus": "{{ user `cpus` }}",
+            "annotation": "{{ user `vm_description` }}"
+        },
+        "vmx_data_post": {
+            "ethernet0.connectiontype": "{{ user `vmx_post_connectiontype` }}"
+        },
+        "iso_url": "{{user `iso_url`}}",
+        "iso_checksum": "{{user `iso_checksum`}}",
+        "iso_checksum_type": "{{user `iso_checksum_type`}}",
+        
+        "http_directory" : "debian9_64",
+        "http_port_min" : 9001,
+        "http_port_max" : 9001,
+
+        "ssh_username": "{{user `ssh_name`}}",
+        "ssh_password": "{{user `ssh_pass`}}",
+        "ssh_wait_timeout": "60m",
+
+        "output_directory": "builds/output-{{ user `vm_name` }}-vmware-iso",
+
+        "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
+       
+        "boot_command" : [
+            "<esc><wait>",
+            "install <wait>",
+            "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+            "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+            "keyboard-configuration/xkb-keymap=us <wait>",
+            "netcfg/get_hostname={{user `hostname`}} <wait>",
+            "netcfg/get_domain={{user `hostname`}} <wait>",
+            "fb=false debconf/frontend=noninteractive ",
+            "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+            "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+            "<enter><wait>"
+        ]
+    }
+    ],
+    "provisioners": [{
+        "type": "file",
+        "source": "data",
+        "destination": "/tmp"
+    }, {
+        "type": "file",
+        "source": "installers",
+        "destination": "/tmp"
+    }, {
+        "type": "file",
+        "source": "scripts",
+        "destination": "/tmp"
+    },
+    {
+    "environment_vars": [
+      "OTC_APPLIANCE_VERSION={{user `appliance_version`}}",
+      "MYSQL_OTC_USER={{user `otc_manager_database_user`}}",
+      "MYSQL_OTC_PWD={{user `otc_manager_database_pass`}}",
+      "OTC_DEFAULT_PASS={{user `otc_manager_default_pass`}}",
+      "OTC_INSTALL_HOME={{user `otc_manager_install_home`}}",
+      "OTC_INSTALL_PATH={{user `otc_manager_install_path`}}",
+      "http_proxy={{user `http_proxy`}}",
+      "https_proxy={{user `https_proxy`}}",
+      "no_proxy={{user `no_proxy`}}"
+    ],
+    "execute_command": "echo {{user `ssh_pass`}} | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+    "scripts": [
+      "scripts/networking.sh",
+      "scripts/jre-oracle-8.sh",
+      "scripts/mysql.sh",
+      "scripts/openthinclient-installer.sh",
+      "scripts/openthinclient-custom.sh",
+      "scripts/openthinclient-gui.sh",
+      "scripts/openthinclient-vnc.sh",
+      "scripts/vmtools.sh",
+      "scripts/motd.sh",
+      "scripts/print-server.sh",
+      "scripts/openthinclient-cleaner.sh",
+      "scripts/minimize.sh"
+    ],
+    "type": "shell"
+    }
+	],
+    "post-processors": [
+  [
+    {
+      "output": "builds/{{user `hostname`}}.{{.Provider}}.box",
+      "type": "vagrant",
+      "keep_input_artifact": true
+    }
+  ]
+]
+}

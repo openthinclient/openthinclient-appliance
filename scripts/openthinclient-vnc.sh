@@ -38,8 +38,14 @@ echo "==> Setting executable bit for openthinclient-vnc-start scripts in /usr/lo
 chmod +x /usr/local/bin/openthinclient-vnc-starter
 chmod +x /usr/local/bin/openthinclient-vnc-xvfb
 
-echo "==> Copying custom 11vnc binary script to /usr/bin"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/x11vnc /usr/bin/x11vnc
+SYSARCH=`uname -m`
+if [ $SYSARCH == x86_64 ]; then
+  cp -a ${OTC_CUSTOM_DEPLOY_PATH}/vnc/x11vnc_64 /usr/bin/x11vnc
+  echo "==> Copying custom x11vnc 64bit binary script to /usr/bin"
+else
+  cp -a ${OTC_CUSTOM_DEPLOY_PATH}/vnc/x11vnc_32 /usr/bin/x11vnc
+  echo "==> Copying custom x11vnc 32bit binary script to /usr/bin"
+fi
 
 echo "==> Setting executable bit and correct permissions for custom x11vnc in /usr/bin"
 chmod +x /usr/bin/x11vnc

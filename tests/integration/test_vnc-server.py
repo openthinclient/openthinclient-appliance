@@ -95,13 +95,17 @@ def test_openbox_settings_files_present(host, filename):
     assert filen.exists is True
 
 
-@pytest.mark.parametrize("filename,content", [
-    ("/usr/bin/x11vnc --version", "x11vnc: 0.9.15 lastmod: 2018-02-04"),
+@pytest.mark.parametrize("filename, content32, content64", [
+    ("/usr/bin/x11vnc --version", "x11vnc: 0.9.15 lastmod: 2018-02-04", "x11vnc: 0.9.13 lastmod: 2011-08-10"),
 ])
-def test_x11_vnc_version(host, filename, content):
+def test_x11_vnc_version(host, filename, content32, content64):
     with host.sudo():
         test = host.check_output(filename)
-        assert test == content
+        sys_arch = host.check_output('uname -m')
+        if sys_arch == 'x86_64':
+            assert test == content64
+        else:
+            assert test == content32
 
 
 @pytest.mark.parametrize("filename", [

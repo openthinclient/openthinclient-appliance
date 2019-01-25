@@ -15,7 +15,7 @@
         "iso_url": "http://cdimage.debian.org/mirror/cdimage/archive/9.5.0/amd64/iso-cd/debian-9.5.0-amd64-netinst.iso",
         "iso_checksum": "1f97a4b8dee7c3def5cd8215ff01b9edef27c901b28fa8b1ef4f022eff7c36c2",
         "iso_checksum_type": "sha256",
-        "appliance_version": "openthinclient 2018.1",
+        "appliance_version": "openthinclient 2018.1.1",
         "otc_manager_database_user": "openthinclient",
         "otc_manager_database_pass": "openthinclient",
         "otc_manager_default_pass": "0pen%TC",
@@ -104,6 +104,45 @@
         "ssh_wait_timeout": "60m",
 
         "output_directory": "builds/output-{{ user `vm_name` }}-vmware-iso",
+
+        "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
+
+        "boot_command" : [
+            "<esc><wait>",
+            "install <wait>",
+            "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+            "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+            "keyboard-configuration/xkb-keymap=us <wait>",
+            "netcfg/get_hostname={{user `hostname`}} <wait>",
+            "netcfg/get_domain={{user `hostname`}} <wait>",
+            "fb=false debconf/frontend=noninteractive ",
+            "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+            "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+            "<enter><wait>"
+        ]
+    },
+    {
+        "type": "hyperv-iso",
+        "vm_name": "{{ user `vm_name` }}",
+        "ram_size": "{{ user `memory` }}",
+        "disk_size": "{{ user `disk_size` }}",
+        "headless": "{{ user `headless` }}",
+        "generation": 1,
+        "enable_secure_boot": false,
+
+        "iso_url": "{{user `iso_url`}}",
+        "iso_checksum": "{{user `iso_checksum`}}",
+        "iso_checksum_type": "{{user `iso_checksum_type`}}",
+
+        "http_directory" : "debian9_64",
+        "http_port_min" : 9001,
+        "http_port_max" : 9001,
+
+        "ssh_username": "{{user `ssh_name`}}",
+        "ssh_password": "{{user `ssh_pass`}}",
+        "ssh_timeout": "60m",
+
+        "output_directory": "builds/output-{{ user `vm_name` }}-hyperv-iso",
 
         "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
        

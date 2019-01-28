@@ -10,7 +10,6 @@ PACKAGES="mate-desktop-environment-core"
 eval "$UPDATE"
 eval "$INSTALL $PACKAGES"
 
-
 echo "==> Installing xserver-xorg"
 apt-get install -y xserver-xorg
 

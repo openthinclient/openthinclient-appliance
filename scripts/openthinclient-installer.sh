@@ -12,7 +12,7 @@ OTC_INSTALLER_VARFILE=/tmp/data/installer/unattended-linux.varfile.txt
 
 OTC_INSTALLER_LDIF_FILES=$(find /tmp/data/ldif -name "*.ldif" -type f)
 
-# Please sync these with the unattended linux-varfile
+# Please sync the following settings with the unattended linux-varfile
 OTC_INSTALL_PATH=/opt/otc-manager/
 #echo ${OTC_INSTALL_PATH}
 #echo $OTC_INSTALL_PATH

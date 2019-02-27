@@ -57,18 +57,6 @@ if [ -d "/var/backups/openthinclient/ " ]; then
     find /var/backups/openthinclient/ -print -name "*\.ldiff\.*" -type f -exec rm -rf {} \;
 fi
 
-# cleanup teamviewer config
-if [ -f "/opt/teamviewer9/config/global.conf" ]; then
-    echo "==> Cleaning up teamviewer global.conf"
-    rm /opt/teamviewer9/config/global.conf
-fi
-
-if [ -f "/opt/teamviewer9/config/openthinclient/client.conf" ]; then
-    echo "==> Cleaning up /opt/teamviewer9/config/openthinclient/client.conf"
-    rm /opt/teamviewer9/config/openthinclient/client.conf
-fi
-# /opt/teamviewer9/tv_bin/teamviewerd -d
-
 # Cleaning up oracle-jdk8-installer cache dir
 echo "==> Cleaning up /var/cache/oracle-jdk8-installer folder"
 if [ -d "/var/cache/oracle-jdk8-installer/" ]; then

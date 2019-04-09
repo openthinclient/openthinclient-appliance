@@ -35,9 +35,8 @@ if [ -d "/home/openthinclient/otc-manager-home/" ]; then
     find  /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/ -name "*.deb" -exec rm {} \;
 
     # remove cache files
-    # rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
-    # rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
-    # rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/3/*
+    rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
+    rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
 
     # remove nfs db from manager home
     rm /home/openthinclient/otc-manager-home/nfs/nfs-paths.db*
@@ -56,18 +55,6 @@ fi
 if [ -d "/var/backups/openthinclient/ " ]; then
     find /var/backups/openthinclient/ -print -name "*\.ldiff\.*" -type f -exec rm -rf {} \;
 fi
-
-# cleanup teamviewer config
-if [ -f "/opt/teamviewer9/config/global.conf" ]; then
-    echo "==> Cleaning up teamviewer global.conf"
-    rm /opt/teamviewer9/config/global.conf
-fi
-
-if [ -f "/opt/teamviewer9/config/openthinclient/client.conf" ]; then
-    echo "==> Cleaning up /opt/teamviewer9/config/openthinclient/client.conf"
-    rm /opt/teamviewer9/config/openthinclient/client.conf
-fi
-# /opt/teamviewer9/tv_bin/teamviewerd -d
 
 # Cleaning up oracle-jdk8-installer cache dir
 echo "==> Cleaning up /var/cache/oracle-jdk8-installer folder"
@@ -119,7 +106,6 @@ clean_logs() {
     done
 }
 
-
 clean_logs "/var/log/" "*\.log\.*"
 clean_logs "/var/log/" "*\.0"
 clean_logs "/var/log/" "*\.[0-9]*\.gz"
@@ -133,7 +119,6 @@ done
 find /var/log/ -name "*\.log\.*" -type f | xargs rm
 find /var/log/ -name "*\.0" -type f | xargs rm
 find /var/log/ -name "*\.[0-9]*\.gz" -type f | xargs rm
-
 
 echo "==> Disk usage before cleanup"
 echo ${DISK_USAGE_BEFORE_CLEANUP}

@@ -75,10 +75,10 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
         fi
 
         echo "==> Starting the OTC manager service"
-        $OTC_INSTALL_PATH/bin/openthinclient-manager start
+        ${OTC_INSTALL_PATH}/bin/openthinclient-manager start
         sleep 5
         echo "==> Checking service status after start"
-        $OTC_INSTALL_PATH/bin/openthinclient-manager status
+        ${OTC_INSTALL_PATH}/bin/openthinclient-manager status
 
         echo "==> Fix permissions of ${OTC_INSTALL_HOME}"
         chown openthinclient:openthinclient ${OTC_INSTALL_HOME} -R

@@ -29,6 +29,10 @@ if [ -f "/etc/init.d/openthinclient-manager" ]; then
 fi
 
 if [ -d "/home/openthinclient/otc-manager-home/" ]; then
+
+    # remove all downloaded openthinclient dpkg packages
+    find  /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/ -name "*.deb" -exec rm {} \;
+
     # remove cache files
     rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
     rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
@@ -146,18 +150,3 @@ else
 	#reboot -f
     #fi
 fi
-
-#which vmware-toolbox-cmd &> /dev/null
-#if [ $? -eq 0 ]; then
-#    echo "It seems we're inside an VMware-Guest. Will now use vmware-tools to shrink harddisc."
-#    vmware-toolbox-cmd disk shrink /boot
-#else
-#    echo "No VMware tools could be found. I guess we're inside some other type of virtual host."
-#    echo "Do you want to reboot the system and fill your unused harddisc space with zeros?"
-#    echo "You'll need to do so if you want to shrink your HD. [y/N]"
-#    read goon
-#    if [ "$goon" = "y" ]; then
-#	grub-reboot shrink-disc-$(uname -r)
-#	reboot -f
-#    fi
-#fi

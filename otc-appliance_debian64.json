@@ -89,7 +89,9 @@
             "annotation": "{{ user `vm_description` }}"
         },
         "vmx_data_post": {
-            "ethernet0.connectiontype": "{{ user `vmx_post_connectiontype` }}"
+            "ethernet0.connectiontype": "{{ user `vmx_post_connectiontype` }}",
+            "svga.autodetect": "TRUE",
+            "svga.vramSize": "134217728"
         },
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",

@@ -18,8 +18,6 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("vim", "2:8"),
     ("zerofree", "1.0"),
     ("openssh-server", "1:7"),
-    ("oracle-java8-installer", "8"),
-    ("oracle-java8-set-default", "8"),
     ("ntp", "1:4"),
     ("acpid", "1:2"),
     ("aptitude", "0.8"),
@@ -348,7 +346,7 @@ def test_basic_system_information(host):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "1.8.0_201"),
+    ("/usr/bin/java -version", "1.8.0_212"),
 ])
 def test_java_version(executable, expected_output, host):
     with host.sudo():

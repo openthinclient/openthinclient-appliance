@@ -3,17 +3,18 @@
 # Purpose:      install oracle java jre version 8
 #------------------------------------------------------------------------------
 
-INSTALL="apt-get install -y --force-yes --no-install-recommends"
-UPDATE="apt-get update"
-PACKAGES="oracle-java8-installer oracle-java8-set-default"
+SYSARCH=`uname -m`
+if [ $SYSARCH == x86_64 ]; then
+wget -c http://develop.openthinclient.com/java/jdk-8u212-linux-x64.tar.gz -O /tmp/java_linux.tar.gz
+else
+wget -c http://develop.openthinclient.com/java/jdk-8u212-linux-i586.tar.gz -O /tmp/java_linux.tar.gz
+fi
 
-echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main"> /etc/apt/sources.list.d/webupd8team-java.list
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
+mkdir /opt/jdk
+tar -zxf /tmp/java_linux.tar.gz -C /opt/jdk
 
-echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_212/bin/java 100
+update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_212/bin/javac 100
 
-eval "$UPDATE"
-
-eval "$INSTALL $PACKAGES"
 
 exit 0

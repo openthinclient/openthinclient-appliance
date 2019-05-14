@@ -38,15 +38,6 @@ class Test_OTC_Cleaner(object):
             assert cmd.stdout == expected_output
 
     @pytest.mark.parametrize("executable,expected_output", [
-        ("ls -A /var/cache/oracle-jdk8-installer/", ""),
-    ])
-    def test_oracle_java_cache_dir_emtpy(self, executable, expected_output, host):
-        with host.sudo():
-            cmd = host.run_test(executable)
-            assert cmd.exit_status == 0
-            assert cmd.stdout == expected_output
-
-    @pytest.mark.parametrize("executable,expected_output", [
         ("ls -A /var/lib/dhcp/", ""),
     ])
     def test_var_lib_dhcp_leases_files_deleted(self, executable, expected_output, host):

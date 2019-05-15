@@ -15,13 +15,13 @@
         "iso_url": "http://cdimage.debian.org/mirror/cdimage/archive/9.7.0/i386/iso-cd/debian-9.7.0-i386-netinst.iso",
         "iso_checksum": "4a3b89d64cf40ffcac4a2c1ae6b672111ee30228ef7455200b4b663a96b04fbe",
         "iso_checksum_type": "sha256",
-        "appliance_version": "openthinclient 2018.1.1",
+        "appliance_version": "openthinclient 2019.1",
         "otc_manager_database_user": "openthinclient",
         "otc_manager_database_pass": "openthinclient",
         "otc_manager_default_pass": "0pen%TC",
         "otc_manager_install_home:": "/home/openthinclient/otc-manager-home/",
         "otc_manager_install_path:": "/opt/otc-manager/",
-        "vm_name": "OTC-Appliance-2018.1.1",
+        "vm_name": "OTC-Appliance-2019.1",
         "vm_description": "openthinclient is a Free Open Source Thin Client Solution consisting of a Linux based operating system along with a comprehensive Java based management GUI and server component. It is intended for environments where a medium to large number of Thin Clients must be supported and managed efficiently. Offering flexibility unheard of in the world of proprietary Thin Client Solutions, openthinclient empowers developers and integrators to create advanced Thin Client solutions... for free. www.openthinclient.org",
         "vmx_post_connectiontype": "bridged"
     },
@@ -89,7 +89,9 @@
             "annotation": "{{ user `vm_description` }}"
         },
         "vmx_data_post": {
-            "ethernet0.connectiontype": "{{ user `vmx_post_connectiontype` }}"
+            "ethernet0.connectiontype": "{{ user `vmx_post_connectiontype` }}",
+            "svga.autodetect": "TRUE",
+            "svga.vramSize": "134217728"
         },
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",

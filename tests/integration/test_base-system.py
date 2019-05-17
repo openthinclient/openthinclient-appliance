@@ -272,6 +272,7 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/change password.desktop",
     "/home/openthinclient/Desktop/livesupport.levigo.de.desktop",
     "/home/openthinclient/Desktop/mate-network-properties.desktop",
+    "/home/openthinclient/Desktop/nm-connection-editor.desktop",
     "/home/openthinclient/Desktop/time.desktop",
     "/home/openthinclient/Desktop/openthinclient Manager WebConsole.desktop",
     "/home/openthinclient/Desktop/openthinclient service restart.desktop",

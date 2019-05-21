@@ -347,7 +347,7 @@ def test_basic_system_information(host):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "1.8.0_212"),
+    ("/usr/bin/java -version", "1.8.0_202"),
 ])
 def test_java_version(executable, expected_output, host):
     with host.sudo():

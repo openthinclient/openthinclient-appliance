@@ -43,11 +43,11 @@ if [ -d "/home/openthinclient/otc-manager-home/" ]; then
     # remove homes
     rm -rf /home/openthinclient/otc-manager-home/nfs/home/*
 
-    # remove old logfiles from manager home
-    rm -rf /home/openthinclient/otc-manager-home/logs/*
-
     # Remove unique server id
     ${OTC_INSTALL_PATH}bin/managerctl rm-server-id --home ${OTC_INSTALL_HOME}
+
+    # remove old logfiles from manager home
+    rm -rf /home/openthinclient/otc-manager-home/logs/*
 fi
 
 # delete ldap backups

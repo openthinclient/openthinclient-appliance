@@ -247,7 +247,7 @@ def test_lightdm_config_content(host, filename, content):
 
 @pytest.mark.parametrize("filename,content", [
     ("/etc/lightdm/lightdm-gtk-greeter.conf",
-     "background=/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg"),
+     "background=/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg"),
     ("/etc/lightdm/lightdm-gtk-greeter.conf", "show-clock=true"),
 ])
 def test_lightdm_config_content(host, filename, content):
@@ -300,7 +300,7 @@ def test_otc_desktop_icons_not_present(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
-    "/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg",
+    "/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg",
     "/usr/local/share/openthinclient/backgrounds/desktopB_1920x1200.png",
     "/usr/local/share/openthinclient/backgrounds/OTC_VM_1280x1024.png",
     "/usr/local/share/openthinclient/icons/openthinclient_advisor.png",
@@ -379,7 +379,7 @@ def test_sysctl_values(sysctl_option, expected_output, host):
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("dbus-launch gsettings get org.mate.background picture-filename",
-     "'/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'\n"),
+     "'/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg'\n"),
 ])
 def test_mate_desktop_settings(executable, expected_output, host):
     cmd = host.run(executable)

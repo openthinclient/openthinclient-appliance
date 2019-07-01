@@ -108,7 +108,7 @@ dbus-launch dconf load / < ${DCONF_CONFIG}
 
 echo "==> Setting openthinclient Pales desktop background"
 dbus-launch gsettings writable org.mate.background picture-filename
-dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg'
+dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/2019_1_beta_magenta_2560x1440.jpg'
 
 
 #echo "==> Adding openthinclient manager icon to top panel"

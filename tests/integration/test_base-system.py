@@ -301,6 +301,7 @@ def test_otc_desktop_icons_not_present(host, filename):
 
 @pytest.mark.parametrize("filename", [
     "/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg",
+    "/usr/local/share/openthinclient/backgrounds/2019_1_beta_magenta_2560x1440.jpg",
     "/usr/local/share/openthinclient/backgrounds/desktopB_1920x1200.png",
     "/usr/local/share/openthinclient/backgrounds/OTC_VM_1280x1024.png",
     "/usr/local/share/openthinclient/icons/openthinclient_advisor.png",

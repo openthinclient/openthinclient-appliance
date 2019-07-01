@@ -157,7 +157,6 @@
       "scripts/openthinclient-installer.sh",
       "scripts/openthinclient-custom.sh",
       "scripts/openthinclient-gui.sh",
-      "scripts/openthinclient-vnc.sh",
       "scripts/vmtools.sh",
       "scripts/motd.sh",
       "scripts/print-server.sh",

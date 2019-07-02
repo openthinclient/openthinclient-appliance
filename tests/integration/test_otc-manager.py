@@ -142,6 +142,13 @@ def test_otc_manager_appliance_properties_exists(host, filename):
     assert file.group == "openthinclient"
     assert file.exists is True
 
+@pytest.mark.parametrize("filename", [
+    (otc_manager_install_home + ".installation.txt"),
+])
+def test_otc_manager_appliance_installation_flag_file_not_preset(host, filename):
+    file = host.file(filename)
+    assert file.exists is False
+
 
 @pytest.mark.parametrize("filename", [
     (otc_manager_install_home + "tftp.xml"),

@@ -134,13 +134,14 @@ def test_otc_manager_metadata_file_for_server_id_present(host, filename, content
 
 
 @pytest.mark.parametrize("filename,content", [
-    (otc_manager_install_home + ".otc-manager-home.meta", "<acknowledged-privacy-notice-version>"),
+    (otc_manager_install_home + ".otc-manager-home.meta",
+     "<acknowledged-privacy-notice-version>0</acknowledged-privacy-notice-version>"),
 ])
 @pytest.mark.second_to_last
 def test_otc_manager_metadata_file_for_privacy_notice_present(host, filename, content):
     filen = host.file(filename)
     assert filen.exists is True
-    assert filen.contains(content) is False
+    assert filen.contains(content) is True
 
 
 @pytest.mark.parametrize("filename", [

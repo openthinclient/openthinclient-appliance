@@ -380,7 +380,7 @@ def test_sysctl_values(sysctl_option, expected_output, host):
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("dbus-launch gsettings get org.mate.background picture-filename",
-     "'/usr/local/share/openthinclient/backgrounds/2019_1_beta_magenta_2560x1440.jpg'\n"),
+     "'/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg'\n"),
 ])
 def test_mate_desktop_settings(executable, expected_output, host):
     cmd = host.run(executable)

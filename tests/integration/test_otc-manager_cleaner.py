@@ -100,3 +100,13 @@ class Test_OTC_Cleaner(object):
         filen = host.file(filename)
         assert filen.contains(content) is False
         assert filen.exists is True
+
+    @pytest.mark.parametrize("filename,content", [
+        (OTC_INSTALL_HOME + "directory/service.xml", "<accessControlEnabled>false</accessControlEnabled>"),
+    ])
+    @pytest.mark.second_to_last
+    def test_otc_manager_access_control_enabled_false(self, host, filename, content):
+        time.sleep(20)
+        filen = host.file(filename)
+        assert filen.contains(content) is True
+        assert filen.exists is True

@@ -44,6 +44,12 @@ if [ -d "/home/openthinclient/otc-manager-home/" ]; then
     # remove homes
     rm -rf /home/openthinclient/otc-manager-home/nfs/home/*
 
+    # Remove unique server id
+    ${OTC_INSTALL_PATH}bin/managerctl rm-server-id --home ${OTC_INSTALL_HOME}
+
+    # disable accessControlEnabledto to generate custom password on next restart
+    sed -i 's#<accessControlEnabled>true</accessControlEnabled>#<accessControlEnabled>false</accessControlEnabled>#' ${OTC_INSTALL_HOME}directory/service.xml
+
     # remove old logfiles from manager home
     rm -rf /home/openthinclient/otc-manager-home/logs/*
 

@@ -12,10 +12,7 @@ OTC_INSTALL_HOME="/home/openthinclient/otc-manager-home/"
 # openthinclient specific cleanup
 
 if [ -f "/etc/init.d/openthinclient-manager" ]; then
-    echo "==> Stopping the xvfb server to disconect the openthinclient WebStart"
-    service xvfb stop
     echo "==> Stopping the openthinclient server before cleaning up"
-    service openthinclient-manager stop
     /etc/init.d/openthinclient-manager stop
 
     # wait for shutdown
@@ -45,6 +42,9 @@ if [ -d "/home/openthinclient/otc-manager-home/" ]; then
 
     # Remove unique server id
     ${OTC_INSTALL_PATH}bin/managerctl rm-server-id --home ${OTC_INSTALL_HOME}
+
+    # disable accessControlEnabledto to generate custom password on next restart
+    sed -i 's#<accessControlEnabled>true</accessControlEnabled>#<accessControlEnabled>false</accessControlEnabled>#' ${OTC_INSTALL_HOME}directory/service.xml
 
     # remove old logfiles from manager home
     rm -rf /home/openthinclient/otc-manager-home/logs/*

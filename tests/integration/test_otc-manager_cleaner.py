@@ -75,7 +75,7 @@ class Test_OTC_Cleaner(object):
         "openthinclient-manager",
     ])
     def test_openthinclient_manager_service_not_running(self, host, service_name):
-        time.sleep(20)
+        time.sleep(30)
         service = host.service(service_name)
         assert service.is_running is False
         assert service.is_enabled

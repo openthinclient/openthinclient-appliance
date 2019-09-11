@@ -95,6 +95,8 @@ def test_if_openthinclient_package_cache_dir_contains_deb_files(executable, expe
 @pytest.mark.parametrize("filename", [
     (otc_manager_install_home + "nfs/root/sfs/base.sfs"),
     (otc_manager_install_home + "nfs/root/sfs/package/tcos-libs.sfs"),
+    (otc_manager_install_home + "nfs/root/sfs/package/browser.sfs"),
+    (otc_manager_install_home + "nfs/root/sfs/package/printserver.sfs"),
 ])
 def test_if_otc_manager_default_install_packages_exists(host, filename):
     file = host.file(filename)

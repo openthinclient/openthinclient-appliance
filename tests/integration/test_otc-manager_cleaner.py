@@ -75,7 +75,7 @@ class Test_OTC_Cleaner(object):
         "openthinclient-manager",
     ])
     def test_openthinclient_manager_service_not_running(self, host, service_name):
-        time.sleep(20)
+        time.sleep(30)
         service = host.service(service_name)
         assert service.is_running is False
         assert service.is_enabled
@@ -86,7 +86,7 @@ class Test_OTC_Cleaner(object):
     ])
     @pytest.mark.last
     def test_socket_openthinclient_manager_tcp_not_listening_ipv4_ipv6(self, host, proto, port):
-        time.sleep(15)
+        time.sleep(30)
         socketoptions = '{0}://{1}'.format(proto, port)
         socket = host.socket(socketoptions)
         assert socket.is_listening is False
@@ -96,7 +96,17 @@ class Test_OTC_Cleaner(object):
     ])
     @pytest.mark.second_to_last
     def test_otc_manager_metadata_file_for_server_id(self, host, filename, content):
-        time.sleep(20)
+        time.sleep(30)
         filen = host.file(filename)
         assert filen.contains(content) is False
+        assert filen.exists is True
+
+    @pytest.mark.parametrize("filename,content", [
+        (OTC_INSTALL_HOME + "directory/service.xml", "<accessControlEnabled>false</accessControlEnabled>"),
+    ])
+    @pytest.mark.second_to_last
+    def test_otc_manager_access_control_enabled_false(self, host, filename, content):
+        time.sleep(30)
+        filen = host.file(filename)
+        assert filen.contains(content) is True
         assert filen.exists is True

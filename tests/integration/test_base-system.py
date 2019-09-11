@@ -34,6 +34,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("net-tools", "1.60"),
     ("dirmngr", "2.1"),
     ("network-manager", "1.6"),
+    ("virt-what", "1.15" )
 ])
 def test_basic_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -380,7 +381,7 @@ def test_sysctl_values(sysctl_option, expected_output, host):
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("dbus-launch gsettings get org.mate.background picture-filename",
-     "'/usr/local/share/openthinclient/backgrounds/2019_1_beta_magenta_2560x1440.jpg'\n"),
+     "'/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg'\n"),
 ])
 def test_mate_desktop_settings(executable, expected_output, host):
     cmd = host.run(executable)

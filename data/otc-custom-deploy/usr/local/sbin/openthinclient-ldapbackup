@@ -5,9 +5,8 @@
 
 LOGGER=$(which logger)
 
-# to have the password
-
-Password="secret"
+# get random passwod from xml file
+Password=$(grep 'contextSecurityCredentials' /home/openthinclient/otc-manager-home/directory/service.xml | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
 
 # define backup directory
 BUDIR=/var/backups/openthinclient

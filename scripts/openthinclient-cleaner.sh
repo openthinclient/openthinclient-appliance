@@ -19,6 +19,7 @@ OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
 if [ -f "/etc/init.d/openthinclient-manager" ]; then
     echo "==> Stopping the openthinclient server before cleaning up"
     /etc/init.d/openthinclient-manager stop
+    service openthinclient-manager stop
 
     # wait for shutdown
     while lsof -i -n -P | grep 8080 &>/dev/null; do
@@ -27,6 +28,7 @@ if [ -f "/etc/init.d/openthinclient-manager" ]; then
     done
     echo "==> Making sure the openthinclient server is stopped"
     /etc/init.d/openthinclient-manager status
+    service openthinclient-manager status
 fi
 
 if [ -d "/home/openthinclient/otc-manager-home/" ]; then
@@ -43,6 +45,12 @@ if [ -d "/home/openthinclient/otc-manager-home/" ]; then
 
     # remove homes
     rm -rf /home/openthinclient/otc-manager-home/nfs/home/*
+
+    # Remove unique server id
+    ${OTC_INSTALL_PATH}bin/managerctl rm-server-id --home ${OTC_INSTALL_HOME}
+
+    # disable accessControlEnabledto to generate custom password on next restart
+    sed -i 's#<accessControlEnabled>true</accessControlEnabled>#<accessControlEnabled>false</accessControlEnabled>#' ${OTC_INSTALL_HOME}directory/service.xml
 
     # remove old logfiles from manager home
     rm -rf /home/openthinclient/otc-manager-home/logs/*

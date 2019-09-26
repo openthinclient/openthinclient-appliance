@@ -33,7 +33,7 @@ To login into the openthinclient Virtual Appliance you need to enter the followi
 We recommend to change the password after the first successful login to increase the security of the Appliance.
 
 The login manager provides a language selector at the top right corner. Please choose the correct language before any login to apply all the correct settings.
-Currently supported is "English - USA" (The default) and "German - Germany"
+Currently supported is "English - USA" and "German - Germany"
 
 
 Default password of the openthinclient Manager WebConsole
@@ -55,6 +55,3 @@ http://wiki.openthinclient.org/
 
 Company website:
 http://openthinclient.com/
-
-Appliance download location:
-https://sourceforge.net/projects/openthinclient/

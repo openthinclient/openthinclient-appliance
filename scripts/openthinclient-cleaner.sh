@@ -21,10 +21,7 @@ if [ -f "/etc/systemd/system/openthinclient-manager.service" ]; then
     service openthinclient-manager stop
 
     # wait for shutdown
-    while lsof -i -n -P | grep 8080 &>/dev/null; do
-	    sleep 1
-	    echo "Waiting for shutdown...."
-    done
+    sleep 60
     echo "==> Making sure the openthinclient server is stopped"
     service openthinclient-manager status
 fi

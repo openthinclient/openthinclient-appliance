@@ -14,7 +14,7 @@ class Test_OTCManager_Uninstall(object):
     # otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
     @pytest.mark.parametrize("executable", [
-        (otc_manager_install_path + "support/uninstall -q"),
+        (otc_manager_install_path + "uninstall -q"),
     ])
     @pytest.mark.first
     def test_openthinclient_uninstallation(self, executable, host):

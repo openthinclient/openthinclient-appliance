@@ -4,7 +4,7 @@
 #------------------------------------------------------------------------------
 
 
-OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name "*.sh" -name '*with_JRE.sh' -type f)
+OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name '*.sh' ! -name '*with_JRE.sh' -type f)
 #OTC_INSTALLER_NAME=otc-manager_unix.sh
 #OTC_INSTALLER_FULLPATH=/tmp/installers/${OTC_INSTALLER_NAME}
 

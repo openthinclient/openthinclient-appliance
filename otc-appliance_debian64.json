@@ -124,7 +124,7 @@
     {
         "type": "hyperv-iso",
         "vm_name": "{{ user `vm_name` }}",
-        "ram_size": "{{ user `memory` }}",
+        "memory": "{{ user `memory` }}",
         "disk_size": "{{ user `disk_size` }}",
         "headless": "{{ user `headless` }}",
         "generation": 1,

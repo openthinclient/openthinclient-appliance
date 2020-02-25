@@ -6,7 +6,7 @@
         "ssh_name": "openthinclient",
         "ssh_pass": "0pen%TC",
         "hostname": "openthinclient-server",
-        "vmware_guest_os_type": "debian8-64",
+        "vmware_guest_os_type": "ubuntu-64",
         "virtualbox_guest_os_type": "Debian_64",
         "cpus": "2",
         "memory": "3072",

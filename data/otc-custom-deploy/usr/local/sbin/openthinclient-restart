@@ -3,21 +3,22 @@
 # Purpose:      restart the openthinclient server via start/stop action
 #------------------------------------------------------------------------------
 
-sudo /etc/init.d/openthinclient-manager stop
+echo "Stopping service"
+sudo service openthinclient-manager stop
 
 # wait for shutdown
 while lsof -i -n -P | grep 10389 &>/dev/null; do
-	sleep 1
+        sleep 1
 done
 
 # workaround for proper port release
 sudo killall nc &>/dev/null
-sudo nc -l 0.0.0.0 10386 &
-echo ok | sudo nc 0.0.0.0 10386
+sudo nc -l 0.0.0.0 10386 & echo ok | sudo nc 0.0.0.0 10386
 
 sleep 5
-sudo /etc/init.d/openthinclient-manager start
+echo "Starting service"
+sudo service openthinclient-manager start
 
-sudo /etc/init.d/openthinclient-manager status
 # wait a little to show status
-sleep 2
+sleep 3
+systemctl is-active --quiet openthinclient-manager && echo Service is running again

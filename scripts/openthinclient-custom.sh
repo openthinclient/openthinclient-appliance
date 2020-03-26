@@ -69,6 +69,7 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-vmversion /usr/loca
 
 echo "==> Setting executable bit for custom bin scripts in /usr/local/bin"
 chmod +x /usr/local/bin/openthinclient*
+dos2unix /usr/local/bin/openthinclient*
 
 echo "==> Copying custom sbin scripts to /usr/local/sbin"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/sbin/openthinclient* /usr/local/sbin/

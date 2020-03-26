@@ -156,16 +156,16 @@ apt-get install -y --no-install-recommends firefox-esr-l10n-de
 
 
 if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/mozilla/ ]; then
-    echo "==> Deploying custom openthinclient mozilla settings"
+  echo "==> Deploying custom openthinclient mozilla settings"
 	chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
 	cp -a ${OTC_CUSTOM_DEPLOY_PATH}/mozilla/ /home/openthinclient/
-    mv /home/openthinclient/mozilla /home/openthinclient/.mozilla
-    chown openthinclient:openthinclient /home/openthinclient/.mozilla/ -R
-    chmod 700 /home/openthinclient/.mozilla/
-    # Fix mozilla cache dir
-    chown openthinclient:openthinclient /home/openthinclient/.cache/ -R
+  mv /home/openthinclient/mozilla /home/openthinclient/.mozilla
+  chown openthinclient:openthinclient /home/openthinclient/.mozilla/ -R
+  chmod 700 /home/openthinclient/.mozilla/
+  # Fix mozilla cache dir
+  chown openthinclient:openthinclient /home/openthinclient/.cache/ -R
 else
-    echo "==> Deploying custom openthinclient mozilla settings failed"
+  echo "==> Deploying custom openthinclient mozilla settings failed"
 fi
 
 
@@ -185,6 +185,7 @@ chown openthinclient:openthinclient /home/openthinclient/.config/autostart/keybo
 echo "==> Deploying Workaround to fix the german keyboard layout after session login: bash script"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-keyboard-layout-fix /usr/local/bin/openthinclient-keyboard-layout-fix
 chmod +x /usr/local/bin/openthinclient-keyboard-layout-fix
+dos2unix /usr/local/bin/openthinclient-keyboard-layout-fix
 
 echo "==> Installing xtightvncviewer with --no-install-recommends"
 apt-get install -y --no-install-recommends xtightvncviewer

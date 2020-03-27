@@ -34,8 +34,8 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("net-tools", "1.60"),
     ("dirmngr", "2.1"),
     ("network-manager", "1.6"),
-    ("virt-what", "1.15" ),
-    ("dos2unix", "7.3" )
+    ("virt-what", "1.15"),
+    ("dos2unix", "7.3")
 ])
 def test_basic_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -402,12 +402,15 @@ def test_free_diskspace(executable, expected_output, host):
         use_limit_reached = True
     assert use_limit_reached is False
 
+
 @pytest.mark.parametrize("executable,expected_output", [
     ("dos2unix -ic /etc/vim/vimrc", ""),
     ("dos2unix -ic /etc/sudoers.d/90-openthinclient-appliance", ""),
+    ("dos2unix -ic /usr/local/sbin/zerofree.sh", ""),
+    ("dos2unix -ic /usr/local/sbin/openthinclient*", ""),
+    ("dos2unix -ic /usr/local/bin/openthinclient*", "")
 ])
 def test_modified_system_file_linux_mode(executable, expected_output, host):
     with host.sudo():
         cmd = host.run_test(executable)
         assert cmd.stdout == expected_output
-

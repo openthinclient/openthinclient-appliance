@@ -7,7 +7,7 @@
 
 ```shell
 ⁖ packer version
-Packer v1.1.0
+Packer v1.5.1
 ```
 
 ### Requirements
@@ -28,23 +28,23 @@ To perform a build simply run the following commands:
 #### Check syntax
 
 ```
-$ packer validate otc-appliance_debian32.json
+$ packer validate otc-appliance_debian64.json
 ```
 
 #### build virtualbox only
 
 ```
-$ packer build -only=virtualbox-iso otc-appliance_debian32.json 
+$ packer build -only=virtualbox-iso otc-appliance_debian64.json 
 ```
 
 #### build vmware only
 
 ```
-$ packer build -only=vmware-iso otc-appliance_debian32.json 
+$ packer build -only=vmware-iso otc-appliance_debian64.json 
 ```
 
 #### build for virtualbox and vmware 
 
 ```
-$ packer build otc-appliance_debian32.json
+$ packer build otc-appliance_debian64.json
 ```

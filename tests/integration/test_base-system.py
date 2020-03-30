@@ -262,6 +262,8 @@ def test_lightdm_config_content(host, filename, content):
     "/usr/local/bin/openthinclient-default-user-fix",
     "/usr/local/bin/openthinclient-keyboard-layout-fix",
     "/home/openthinclient/.config/autostart/keyboard-layout-fix.desktop",
+    "/home/openthinclient/.local/share/applications/userapp-javaws-HXB6H0.desktop",
+    "/home/openthinclient/.config/mimeapps.list"
 ])
 def test_otc_gui_fixes_via_script(host, filename):
     filen = host.file(filename)

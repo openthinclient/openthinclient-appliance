@@ -187,6 +187,16 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-keyboard-layout-fix
 chmod +x /usr/local/bin/openthinclient-keyboard-layout-fix
 dos2unix /usr/local/bin/openthinclient-keyboard-layout-fix
 
+echo "==> Deploying custom share javaws desktop file and mime type: mimeapps.list"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/home/openthinclient/config/mimeapps.list /home/openthinclient/.config/mimeapps.list
+chown openthinclient:openthinclient /home/openthinclient/.config/mimeapps.list
+
+echo "==> Deploying custom share javaws desktop file and mime type"
+USER_LOCAL_SHARE=/home/openthinclient/.local/share/applications/
+[ ! -d $USER_LOCAL_SHARE ] && mkdir -p $USER_LOCAL_SHARE
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/home/openthinclient/local/share/applications/userapp-javaws-HXB6H0.desktop /home/openthinclient/.local/share/applications/userapp-javaws-HXB6H0.desktop
+chown openthinclient:openthinclient /home/openthinclient/.local/ -R
+
 echo "==> Installing xtightvncviewer with --no-install-recommends"
 apt-get install -y --no-install-recommends xtightvncviewer
 

@@ -15,6 +15,10 @@ tar -zxf /tmp/java_linux.tar.gz -C /opt/jdk
 
 update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_202/bin/java 100
 update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_202/bin/javac 100
+update-alternatives --install /usr/bin/javaws javaws /opt/jdk/jdk1.8.0_202/bin/javaws 100
 
+# associate jnlp files with javaws
+cp -a /opt/jdk/jdk1.8.0_202/jre/lib/desktop/mime/packages/x-java-jnlp-file.xml /usr/share/mime/packages/
+update-mime-database /usr/share/mime/
 
 exit 0

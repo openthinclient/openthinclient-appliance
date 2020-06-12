@@ -34,7 +34,8 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("net-tools", "1.60"),
     ("dirmngr", "2.1"),
     ("network-manager", "1.6"),
-    ("virt-what", "1.15" )
+    ("virt-what", "1.15"),
+    ("dos2unix", "7.3")
 ])
 def test_basic_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -47,7 +48,7 @@ def test_basic_packages_installed(host, name, version):
     ("dconf-tools", "0.26"),
     ("xserver-xorg", "1:7"),
     ("gnome-system-tools", "3.0"),
-    ("firefox-esr", "60"),
+    ("firefox-esr", "68"),
     ("pluma", "1.16"),
     ("mate-desktop-environment-core", "1.16"),
     ("lightdm", "1.18"),
@@ -261,6 +262,8 @@ def test_lightdm_config_content(host, filename, content):
     "/usr/local/bin/openthinclient-default-user-fix",
     "/usr/local/bin/openthinclient-keyboard-layout-fix",
     "/home/openthinclient/.config/autostart/keyboard-layout-fix.desktop",
+    "/home/openthinclient/.local/share/applications/userapp-javaws-HXB6H0.desktop",
+    "/home/openthinclient/.config/mimeapps.list"
 ])
 def test_otc_gui_fixes_via_script(host, filename):
     filen = host.file(filename)
@@ -400,3 +403,16 @@ def test_free_diskspace(executable, expected_output, host):
     if avail > max:
         use_limit_reached = True
     assert use_limit_reached is False
+
+
+@pytest.mark.parametrize("executable,expected_output", [
+    ("dos2unix -ic /etc/vim/vimrc", ""),
+    ("dos2unix -ic /etc/sudoers.d/90-openthinclient-appliance", ""),
+    ("dos2unix -ic /usr/local/sbin/zerofree.sh", ""),
+    ("dos2unix -ic /usr/local/sbin/openthinclient*", ""),
+    ("dos2unix -ic /usr/local/bin/openthinclient*", "")
+])
+def test_modified_system_file_linux_mode(executable, expected_output, host):
+    with host.sudo():
+        cmd = host.run_test(executable)
+        assert cmd.stdout == expected_output

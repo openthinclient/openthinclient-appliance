@@ -69,6 +69,7 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-vmversion /usr/loca
 
 echo "==> Setting executable bit for custom bin scripts in /usr/local/bin"
 chmod +x /usr/local/bin/openthinclient*
+dos2unix /usr/local/bin/openthinclient*
 
 echo "==> Copying custom sbin scripts to /usr/local/sbin"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/sbin/openthinclient* /usr/local/sbin/
@@ -76,12 +77,15 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/sbin/zerofree.sh /usr/local/sbin/
 
 echo "==> Setting executable bit for custom sbin scripts in /usr/local/sbin"
 chmod +x /usr/local/sbin/openthinclient*
+dos2unix /usr/local/sbin/openthinclient*
 chmod +x /usr/local/sbin/zerofree.sh
+dos2unix /usr/local/sbin/zerofree.sh
 
 echo "==> Deploying openthinclient ldap cronjob file"
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/cron.d/openthinclient_ldap_backup /etc/cron.d/openthinclient_ldap_backup
 chown root:root /etc/cron.d/openthinclient_ldap_backup
 chmod +x /etc/cron.d/openthinclient_ldap_backup
+dos2unix /etc/cron.d/openthinclient_ldap_backup
 
 echo "==> Deploying openthinclient-documentation directory"
 if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/documentation/ ]; then

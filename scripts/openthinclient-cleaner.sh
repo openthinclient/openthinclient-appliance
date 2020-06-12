@@ -16,18 +16,13 @@ OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
 #------------------------------------------------------------------------------
 # openthinclient specific cleanup
 
-if [ -f "/etc/init.d/openthinclient-manager" ]; then
+if [ -f "/etc/systemd/system/openthinclient-manager.service" ]; then
     echo "==> Stopping the openthinclient server before cleaning up"
-    /etc/init.d/openthinclient-manager stop
     service openthinclient-manager stop
 
     # wait for shutdown
-    while lsof -i -n -P | grep 8080 &>/dev/null; do
-	    sleep 1
-	    echo "Waiting for shutdown...."
-    done
+    sleep 60
     echo "==> Making sure the openthinclient server is stopped"
-    /etc/init.d/openthinclient-manager status
     service openthinclient-manager status
 fi
 

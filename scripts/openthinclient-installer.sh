@@ -4,13 +4,11 @@
 #------------------------------------------------------------------------------
 
 
-OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name "*.sh" -type f)
+OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name '*.sh' ! -name '*with_JRE.sh' -type f)
 #OTC_INSTALLER_NAME=otc-manager_unix.sh
 #OTC_INSTALLER_FULLPATH=/tmp/installers/${OTC_INSTALLER_NAME}
 
 OTC_INSTALLER_VARFILE=/tmp/data/installer/unattended-linux.varfile.txt
-
-OTC_INSTALLER_LDIF_FILES=$(find /tmp/data/ldif -name "*.ldif" -type f)
 
 # Please sync the following settings with the unattended linux-varfile
 OTC_INSTALL_PATH=/opt/otc-manager/
@@ -65,14 +63,6 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
         echo "==> Creating .appliance.properties file to activate noVNC"
         touch ${OTC_INSTALL_HOME}.appliance.properties
         chown openthinclient:openthinclient ${OTC_INSTALL_HOME}.appliance.properties
-
-        echo "==> Deploying custom ldiff settings for import in openthinclient manager"
-        if [ -f ${OTC_INSTALLER_LDIF_FILES} ]; then
-            echo "==> OTC_INSTALLER_LDIF_FILES has content. Continue with deployment"
-	        for file in $OTC_INSTALLER_LDIF_FILES; do cp $file /home/openthinclient/; done
-	    else
-        	echo "==> OTC_INSTALLER_LDIF_FILES has no content. Skipping deployment"
-        fi
 
         echo "==> Starting the OTC manager service"
         ${OTC_INSTALL_PATH}/bin/openthinclient-manager start

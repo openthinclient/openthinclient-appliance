@@ -6,7 +6,7 @@
         "ssh_name": "openthinclient",
         "ssh_pass": "0pen%TC",
         "hostname": "openthinclient-server",
-        "vmware_guest_os_type": "debian8-64",
+        "vmware_guest_os_type": "ubuntu-64",
         "virtualbox_guest_os_type": "Debian_64",
         "cpus": "2",
         "memory": "3072",
@@ -15,13 +15,13 @@
         "iso_url": "http://cdimage.debian.org/mirror/cdimage/release/10.1.0/amd64/iso-cd/debian-10.1.0-amd64-netinst.iso",
         "iso_checksum": "7915fdb77a0c2623b4481fc5f0a8052330defe1cde1e0834ff233818dc6f301e",
         "iso_checksum_type": "sha256",
-        "appliance_version": "openthinclient 2019.1",
+        "appliance_version": "openthinclient 2019.1.3",
         "otc_manager_database_user": "openthinclient",
         "otc_manager_database_pass": "openthinclient",
         "otc_manager_default_pass": "0pen%TC",
         "otc_manager_install_home:": "/home/openthinclient/otc-manager-home/",
         "otc_manager_install_path:": "/opt/otc-manager/",
-        "vm_name": "OTC-Appliance-2019.1",
+        "vm_name": "OTC-Appliance-2019.1.3",
         "vm_description": "openthinclient is a Free Open Source Thin Client Solution consisting of a Linux based operating system along with a comprehensive Java based management GUI and server component. It is intended for environments where a medium to large number of Thin Clients must be supported and managed efficiently. Offering flexibility unheard of in the world of proprietary Thin Client Solutions, openthinclient empowers developers and integrators to create advanced Thin Client solutions... for free. www.openthinclient.org",
         "vmx_post_connectiontype": "bridged"
     },
@@ -89,9 +89,7 @@
             "annotation": "{{ user `vm_description` }}"
         },
         "vmx_data_post": {
-            "ethernet0.connectiontype": "{{ user `vmx_post_connectiontype` }}",
-            "svga.autodetect": "TRUE",
-            "svga.vramSize": "134217728"
+            "ethernet0.connectiontype": "{{ user `vmx_post_connectiontype` }}"
         },
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
@@ -126,7 +124,7 @@
     {
         "type": "hyperv-iso",
         "vm_name": "{{ user `vm_name` }}",
-        "ram_size": "{{ user `memory` }}",
+        "memory": "{{ user `memory` }}",
         "disk_size": "{{ user `disk_size` }}",
         "headless": "{{ user `headless` }}",
         "generation": 1,

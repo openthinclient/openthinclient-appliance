@@ -14,7 +14,6 @@
         "headless": "True",
         "iso_url": "http://cdimage.debian.org/mirror/cdimage/archive/9.8.0/i386/iso-cd/debian-9.8.0-i386-netinst.iso",
         "iso_checksum": "8156cc4ce7a06facf69d4f7161f89431a794cdaba8e2b4eb91b2c43a302e4614",
-        "iso_checksum_type": "sha256",
         "appliance_version": "openthinclient 2020.2-Beta",
         "otc_manager_database_user": "openthinclient",
         "otc_manager_database_pass": "openthinclient",
@@ -47,7 +46,6 @@
 
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
-        "iso_checksum_type": "{{user `iso_checksum_type`}}",
 
         "http_directory" : "debian9_32",
         "http_port_min" : 9001,
@@ -95,8 +93,7 @@
         },
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
-        "iso_checksum_type": "{{user `iso_checksum_type`}}",
-        
+
         "http_directory" : "debian9_32",
         "http_port_min" : 9001,
         "http_port_max" : 9001,

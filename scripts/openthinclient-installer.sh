@@ -46,7 +46,7 @@ if [ -f $OTC_INSTALLER_FULLPATH ]; then
 	        $OTC_INSTALL_PATH/bin/managerctl prepare-home \
 	        --admin-password $OTC_DEFAULT_PASS \
 	        --home $OTC_INSTALL_HOME \
-	        --dist-source http://archive.openthinclient.org/openthinclient/distributions-appliance.xml \
+	        --dist-source http://archive.openthinclient.org/openthinclient/v2020/first-start-profiles/distributions.xml \
 	        --db MYSQL \
 	        --db-host localhost \
 	        --db-name openthinclient \

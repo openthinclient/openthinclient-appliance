@@ -14,14 +14,13 @@
         "headless": "True",
         "iso_url": "http://cdimage.debian.org/mirror/cdimage/release/10.4.0/amd64/iso-cd/debian-10.4.0-amd64-netinst.iso",
         "iso_checksum": "ab3763d553330e90869487a6843c88f1d4aa199333ff16b653e60e59ac1fc60b",
-        "iso_checksum_type": "sha256",
-        "appliance_version": "openthinclient 2019.1.4",
+        "appliance_version": "openthinclient 2020.2-Beta",
         "otc_manager_database_user": "openthinclient",
         "otc_manager_database_pass": "openthinclient",
         "otc_manager_default_pass": "0pen%TC",
         "otc_manager_install_home:": "/home/openthinclient/otc-manager-home/",
         "otc_manager_install_path:": "/opt/otc-manager/",
-        "vm_name": "OTC-Appliance-2019.1.4",
+        "vm_name": "OTC-Appliance-2020.2-Beta",
         "vm_description": "openthinclient is a Free Open Source Thin Client Solution consisting of a Linux based operating system along with a comprehensive Java based management GUI and server component. It is intended for environments where a medium to large number of Thin Clients must be supported and managed efficiently. Offering flexibility unheard of in the world of proprietary Thin Client Solutions, openthinclient empowers developers and integrators to create advanced Thin Client solutions... for free. www.openthinclient.org",
         "vmx_post_connectiontype": "bridged"
     },
@@ -47,7 +46,6 @@
 
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
-        "iso_checksum_type": "{{user `iso_checksum_type`}}",
 
         "http_directory" : "debian9_64",
         "http_port_min" : 9001,
@@ -93,8 +91,7 @@
         },
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
-        "iso_checksum_type": "{{user `iso_checksum_type`}}",
-        
+
         "http_directory" : "debian9_64",
         "http_port_min" : 9001,
         "http_port_max" : 9001,
@@ -132,7 +129,6 @@
 
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
-        "iso_checksum_type": "{{user `iso_checksum_type`}}",
 
         "http_directory" : "debian9_64",
         "http_port_min" : 9001,

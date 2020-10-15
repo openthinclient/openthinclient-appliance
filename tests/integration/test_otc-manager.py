@@ -18,6 +18,7 @@ otc_manager_install_path = "/opt/otc-manager/"
     ("openthinclient-manager"),
 ])
 def test_openthinclient_manager_service_running(host, service_name):
+    time.sleep(20)
     service = host.service(service_name)
     assert service.is_running
     assert service.is_enabled

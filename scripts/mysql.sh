@@ -19,8 +19,8 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 
 sudo apt-get update
 #sudo apt-get install -y python-software-properties
-echo "==> Installing mysql-server package"
-sudo apt-get -y install mysql-server
+echo "==> Installing mariadb-server package"
+sudo apt-get -y install mariadb-server
 #sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 echo "==> Setting mysql root user privileges"
 mysql -u root -p${MYSQL_ROOT_PWD} -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION; FLUSH PRIVILEGES;"

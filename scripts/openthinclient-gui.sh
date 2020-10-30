@@ -54,6 +54,7 @@ chmod +x /usr/local/bin/openthinclient-default-user-fix
 
 echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
+chmod +x /home/openthinclient/Desktop/*.desktop
 
 echo "==> Installing dconf-tools"
 apt-get install -y dconf-tools

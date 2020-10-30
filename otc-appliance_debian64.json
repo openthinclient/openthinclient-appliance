@@ -12,8 +12,8 @@
         "memory": "3072",
         "disk_size" : "20480",
         "headless": "True",
-        "iso_url": "http://cdimage.debian.org/mirror/cdimage/release/10.4.0/amd64/iso-cd/debian-10.4.0-amd64-netinst.iso",
-        "iso_checksum": "ab3763d553330e90869487a6843c88f1d4aa199333ff16b653e60e59ac1fc60b",
+        "iso_url": "http://cdimage.debian.org/mirror/cdimage/release/10.6.0/amd64/iso-cd/debian-10.6.0-amd64-netinst.iso",
+        "iso_checksum": "2af8f43d4a7ab852151a7f630ba596572213e17d3579400b5648eba4cc974ed0",
         "appliance_version": "openthinclient 2020.2-Beta",
         "otc_manager_database_user": "openthinclient",
         "otc_manager_database_pass": "openthinclient",
@@ -47,7 +47,7 @@
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
 
-        "http_directory" : "debian9_64",
+        "http_directory" : "debian10_64",
         "http_port_min" : 9001,
         "http_port_max" : 9001,
 
@@ -92,7 +92,7 @@
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
 
-        "http_directory" : "debian9_64",
+        "http_directory" : "debian10_64",
         "http_port_min" : 9001,
         "http_port_max" : 9001,
 
@@ -130,7 +130,7 @@
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
 
-        "http_directory" : "debian9_64",
+        "http_directory" : "debian10_64",
         "http_port_min" : 9001,
         "http_port_max" : 9001,
 

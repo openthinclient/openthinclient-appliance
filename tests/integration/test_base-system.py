@@ -13,7 +13,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
 
 @pytest.mark.parametrize("name,version", [
-    ("mysql-server", "5.5"),
+    ("mariadb-server", "10.3"),
     ("python", "2.7"),
     ("vim", "2:8"),
     ("zerofree", "1.0"),

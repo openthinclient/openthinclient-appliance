@@ -13,10 +13,10 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
 
 @pytest.mark.parametrize("name,version", [
-    ("mariadb-server", "10.3"),
+    ("mariadb-server", "1:10.3"),
     ("python", "2.7"),
     ("vim", "2:8"),
-    ("zerofree", "1.0"),
+    ("zerofree", "1.1"),
     ("openssh-server", "1:7"),
     ("ntp", "1:4"),
     ("acpid", "1:2"),
@@ -25,17 +25,17 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("bzip2", "1.0"),
     ("rsync", "3.1"),
     ("ldapscripts", "2.0"),
-    ("htop", "2.0"),
+    ("htop", "2.2"),
     ("mc", "3:4"),
     ("vim", ""),
-    ("screen", "4.5"),
+    ("screen", "4.6"),
     ("tcpdump", "4.9"),
-    ("emacs", "46.1"),
+    ("emacs", "1:26.1"),
     ("net-tools", "1.60"),
-    ("dirmngr", "2.1"),
-    ("network-manager", "1.6"),
-    ("virt-what", "1.15"),
-    ("dos2unix", "7.3")
+    ("dirmngr", "2.2"),
+    ("network-manager", "1.14"),
+    ("virt-what", "1.19"),
+    ("dos2unix", "7.4")
 ])
 def test_basic_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -48,10 +48,10 @@ def test_basic_packages_installed(host, name, version):
     ("dconf-tools", "0.26"),
     ("xserver-xorg", "1:7"),
     ("gnome-system-tools", "3.0"),
-    ("firefox-esr", "68"),
-    ("pluma", "1.16"),
-    ("mate-desktop-environment-core", "1.16"),
-    ("lightdm", "1.18"),
+    ("firefox-esr", "78"),
+    ("pluma", "1.20"),
+    ("mate-desktop-environment-core", "1.20"),
+    ("lightdm", "1.26"),
     ("network-manager-gnome", "1.4"),
     ("arandr", "0.1"),
 ])

@@ -52,7 +52,7 @@ def test_basic_packages_installed(host, name, version):
     ("pluma", "1.20"),
     ("mate-desktop-environment-core", "1.20"),
     ("lightdm", "1.26"),
-    ("network-manager-gnome", "1.4"),
+    ("network-manager-gnome", "1.8"),
     ("arandr", "0.1"),
 ])
 def test_gui_packages_installed(host, name, version):
@@ -175,7 +175,7 @@ def test_openthinclient_version_information_file_present(host, filename, content
     with host.sudo():
         assert filen.contains(content)
         assert filen.user == "root"
-        assert filen.group == "staff"
+        assert filen.group == "root"
         assert filen.exists is True
 
 

@@ -45,7 +45,8 @@ def test_basic_packages_installed(host, name, version):
 
 @pytest.mark.parametrize("name,version", [
     ("xtightvncviewer", "1:1.3"),
-    ("dconf-tools", "0.26"),
+    ("dconf-cli", "0.26"),
+    ("dconf-editor", "3.22"),
     ("xserver-xorg", "1:7"),
     ("gnome-system-tools", "3.0"),
     ("firefox-esr", "78"),

@@ -11,8 +11,8 @@ sudo apt-get -y install cups cups-client cups-bsd
 echo "==> Installing cups driver packages"
 sudo apt-get -y install printer-driver-gutenprint printer-driver-hpijs
 
-echo "==> Installing cups pdf printer package"
-sudo apt-get -y install cups-pdf
+echo "==> Installing cups pdf printer driver package"
+sudo apt-get -y install printer-driver-cups-pdf
 
 echo "==> Stopping cups service before config changes are applied"
 sudo service cups stop

@@ -56,8 +56,8 @@ echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
 chmod +x /home/openthinclient/Desktop/*.desktop
 
-echo "==> Installing dconf-tools"
-apt-get install -y dconf-tools
+echo "==> Installing dconf packages"
+apt-get install -y dconf-editor dconf-cli
 
 echo "==> Installing mate-applets and mate-themes"
 apt-get install -y mate-applets mate-themes

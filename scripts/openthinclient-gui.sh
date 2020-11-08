@@ -103,7 +103,7 @@ echo "==> End Reading desktop configuration via dconf"
 echo "==> Setting preconfigured desktop configuration via dconf"
 DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-backup.txt"
 
-echo "dbus-launch dconf load < / $DCONF_CONFIG"
+echo "dbus-launch dconf load / < $DCONF_CONFIG"
 dbus-launch dconf load / < ${DCONF_CONFIG}
 
 

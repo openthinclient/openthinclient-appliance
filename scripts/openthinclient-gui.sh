@@ -54,9 +54,10 @@ chmod +x /usr/local/bin/openthinclient-default-user-fix
 
 echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
+chmod +x /home/openthinclient/Desktop/*.desktop
 
-echo "==> Installing dconf-tools"
-apt-get install -y dconf-tools
+echo "==> Installing dconf packages"
+apt-get install -y dconf-editor dconf-cli
 
 echo "==> Installing mate-applets and mate-themes"
 apt-get install -y mate-applets mate-themes
@@ -102,7 +103,7 @@ echo "==> End Reading desktop configuration via dconf"
 echo "==> Setting preconfigured desktop configuration via dconf"
 DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-backup.txt"
 
-echo "dbus-launch dconf load < / $DCONF_CONFIG"
+echo "dbus-launch dconf load / < $DCONF_CONFIG"
 dbus-launch dconf load / < ${DCONF_CONFIG}
 
 

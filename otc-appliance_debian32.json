@@ -12,15 +12,15 @@
         "memory": "2048",
         "disk_size" : "20480",
         "headless": "True",
-        "iso_url": "http://cdimage.debian.org/mirror/cdimage/archive/9.13.0/i386/iso-cd/debian-9.13.0-i386-netinst.iso",
-        "iso_checksum": "27de998af87007bf5daa3030d3863d3ef801b948c29f5bbce232be4f928eedba",
-        "appliance_version": "openthinclient 2020.2-Beta",
+        "iso_url": "http://cdimage.debian.org/mirror/cdimage/release/10.6.0/i386/iso-cd/debian-10.6.0-i386-netinst.iso",
+        "iso_checksum": "c6e7bdada5a04a639e745b41ea43ae36b796b4cf4128e3dcb3c2502ab034caa3",
+        "appliance_version": "openthinclient 2020.2",
         "otc_manager_database_user": "openthinclient",
         "otc_manager_database_pass": "openthinclient",
         "otc_manager_default_pass": "0pen%TC",
         "otc_manager_install_home:": "/home/openthinclient/otc-manager-home/",
         "otc_manager_install_path:": "/opt/otc-manager/",
-        "vm_name": "OTC-Appliance-2020.2-Beta",
+        "vm_name": "OTC-Appliance-2020.2",
         "vm_description": "openthinclient is a Free Open Source Thin Client Solution consisting of a Linux based operating system along with a comprehensive Java based management GUI and server component. It is intended for environments where a medium to large number of Thin Clients must be supported and managed efficiently. Offering flexibility unheard of in the world of proprietary Thin Client Solutions, openthinclient empowers developers and integrators to create advanced Thin Client solutions... for free. www.openthinclient.org",
         "vmx_post_connectiontype": "bridged"
     },
@@ -47,7 +47,7 @@
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
 
-        "http_directory" : "debian9_32",
+        "http_directory" : "debian10_32",
         "http_port_min" : 9001,
         "http_port_max" : 9001,
 
@@ -94,7 +94,7 @@
         "iso_url": "{{user `iso_url`}}",
         "iso_checksum": "{{user `iso_checksum`}}",
 
-        "http_directory" : "debian9_32",
+        "http_directory" : "debian10_32",
         "http_port_min" : 9001,
         "http_port_max" : 9001,
 

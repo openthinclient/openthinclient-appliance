@@ -52,6 +52,11 @@ echo "==> Deploying lightdm fix for default user setting"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-default-user-fix /usr/local/bin/openthinclient-default-user-fix
 chmod +x /usr/local/bin/openthinclient-default-user-fix
 
+echo "==> Disable reboot for ctrl-alt-delete keyboard combination"
+rm /lib/systemd/system/ctrl-alt-del.target
+ln -s /dev/null /lib/systemd/system/ctrl-alt-del.target
+systemctl daemon-reload
+
 echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
 chmod +x /home/openthinclient/Desktop/*.desktop

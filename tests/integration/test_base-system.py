@@ -225,6 +225,14 @@ def test_otc_gui_lightdm_locale_fix(host, filename):
     # assert file.mode == 0o744 # FIXME - check if this needs to executable
 
 
+def test_ctrl_alt_del_reboot_keyboard_config_disabled(host):
+    directory = host.file("/lib/systemd/system/ctrl-alt-del.target")
+    assert directory.user == "root"
+    assert directory.group == "root"
+    assert directory.is_symlink is True
+    assert directory.linked_to == "/dev/null"
+
+
 @pytest.mark.parametrize("filename", [
     "/etc/lightdm/lightdm.conf",
 ])

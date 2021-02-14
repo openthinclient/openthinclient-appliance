@@ -111,11 +111,12 @@ DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-backup.txt"
 echo "dbus-launch dconf load / < $DCONF_CONFIG"
 dbus-launch dconf load / < ${DCONF_CONFIG}
 
-
-echo "==> Setting openthinclient Pales desktop background"
+echo "==> Setting openthinclient appliance desktop background"
 dbus-launch gsettings writable org.mate.background picture-filename
 dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg'
 
+echo "==> disable unwanted <Ctrl><Alt><Delete> restart inside mate desktop environment"
+dbus-launch dconf write /org/mate/settings-daemon/plugins/media-keys/power "''"
 
 #echo "==> Adding openthinclient manager icon to top panel"
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ object-type '"launcher"'
@@ -133,7 +134,6 @@ dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ panel-right-stick 'false'
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ object-type '"launcher"'
 #dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-restart' ]"
-#
 #
 #echo "==> Adding firefox icon to top panel"
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ toplevel-id 'top'

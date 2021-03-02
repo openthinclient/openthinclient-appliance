@@ -149,3 +149,5 @@ else
 	#reboot -f
     #fi
 fi
+
+exit 0

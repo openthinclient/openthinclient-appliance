@@ -103,7 +103,7 @@ echo "==> Populating openthinclient vm version information"
 if [ -f ${VERSION_FILE} ]; then
     echo "==> Populating already existing openthinclient vm version ${VERSION_FILE}"
     echo "===================" >>  ${VERSION_FILE}
-    PLATFORM_MSG=$(printf '%s' "$OTC_APPLIANCE_VERSION")
+    PLATFORM_MSG=$(printf 'openthinclient %s' "$OTC_APPLIANCE_VERSION")
     BUILT_MSG=$(printf 'built %s' $(date +%Y-%m-%d))
     printf '%s%-30s%10s\n' " " "${PLATFORM_MSG}" "${BUILT_MSG}" >> ${VERSION_FILE}
     echo "===================" >>  ${VERSION_FILE}

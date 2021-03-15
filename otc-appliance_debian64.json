@@ -12,8 +12,8 @@
         "memory": "3072",
         "disk_size" : "20480",
         "headless": "True",
-        "iso_url": "http://cdimage.debian.org/mirror/cdimage/release/10.6.0/amd64/iso-cd/debian-10.6.0-amd64-netinst.iso",
-        "iso_checksum": "2af8f43d4a7ab852151a7f630ba596572213e17d3579400b5648eba4cc974ed0",
+        "iso_url": "http://cdimage.debian.org/mirror/cdimage/release/10.8.0/amd64/iso-cd/debian-10.8.0-amd64-netinst.iso",
+        "iso_checksum": "396553f005ad9f86a51e246b1540c60cef676f9c71b95e22b753faef59f89bee",
         "appliance_version": "2020.2",
         "otc_manager_database_user": "openthinclient",
         "otc_manager_database_pass": "openthinclient",
@@ -24,7 +24,6 @@
         "vm_description": "openthinclient is a Free Open Source Thin Client Solution consisting of a Linux based operating system along with a comprehensive Java based management GUI and server component. It is intended for environments where a medium to large number of Thin Clients must be supported and managed efficiently. Offering flexibility unheard of in the world of proprietary Thin Client Solutions, openthinclient empowers developers and integrators to create advanced Thin Client solutions... for free. www.openthinclient.org",
         "vmx_post_connectiontype": "bridged"
     },
-
     "builders": [{
         "type": "virtualbox-iso",
         "guest_os_type": "{{ user `virtualbox_guest_os_type` }}",

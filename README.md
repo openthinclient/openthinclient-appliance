@@ -7,7 +7,7 @@
 
 ```shell
 ⁖ packer version
-Packer v1.5.1
+Packer v1.6.3
 ```
 
 ### Requirements

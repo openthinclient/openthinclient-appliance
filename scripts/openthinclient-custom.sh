@@ -121,6 +121,13 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/grub_background/desktopB_1920x1200.png /boot/gru
 echo 'GRUB_BACKGROUND="/boot/grub/desktopB_1920x1200.png"' >> /etc/default/grub 
 
 
+if [ $PACKER_BUILDER_TYPE == 'hyperv-iso' ]; then
+  echo "Installing custom kernel grub configuration for Hyper-V"
+  sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="quiet video=hyperv_fb:1600x900"/g' /etc/default/grub
+else
+  echo "Using default kernel grub configuration for virtualbox/VMware builds"
+fi
+
 echo "==> Deploying openthinclient grub color configuration"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/grub.d/05_debian_theme /etc/grub.d/05_debian_theme
 chown root:root /etc/grub.d/05_debian_theme

@@ -436,3 +436,9 @@ def test_modified_system_file_linux_mode(executable, expected_output, host):
 def test_path_in_profile_file(host, path):
     profile = host.file("/home/openthinclient/.profile")
     assert profile.contains(path)
+
+def test_openthinclient_user_dotxsessionrc(host):
+    managerbin = host.file("/home/openthinclient/.xsessionrc")
+    assert managerbin.user == "openthinclient"
+    assert managerbin.group == "openthinclient"
+    assert managerbin.exists is True

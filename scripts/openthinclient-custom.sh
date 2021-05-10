@@ -57,6 +57,7 @@ echo "${ALIASINCLUDE}" > ${ROOT_BASHRC_FILE}
 
 echo "==> Adding sbin paths for openthinclient user"
 echo 'export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"' > /home/openthinclient/.profile
+echo 'if [ -r ~/.profile ]; then . ~/.profile; fi' > /home/openthinclient/.xsessionrc
 
 echo "==> Creating openthinclient directory in /usr/local/share"
 OTCLOCALSHARE="/usr/local/share/openthinclient/"

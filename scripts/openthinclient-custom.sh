@@ -55,6 +55,9 @@ EOF
 echo "==> Including aliases in bashrc for root"
 echo "${ALIASINCLUDE}" > ${ROOT_BASHRC_FILE}
 
+echo "==> Adding sbin paths for openthinclient user"
+echo 'export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"' > /home/openthinclient/.profile
+
 echo "==> Creating openthinclient directory in /usr/local/share"
 OTCLOCALSHARE="/usr/local/share/openthinclient/"
 

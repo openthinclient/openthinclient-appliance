@@ -426,3 +426,13 @@ def test_modified_system_file_linux_mode(executable, expected_output, host):
     with host.sudo():
         cmd = host.run_test(executable)
         assert cmd.stdout == expected_output
+
+
+@pytest.mark.parametrize("path", [
+    "/usr/local/sbin",
+    "/usr/sbin",
+    "/sbin"
+])
+def test_path_in_profile_file(host, path):
+    profile = host.file("/home/openthinclient/.profile")
+    assert profile.contains(path)

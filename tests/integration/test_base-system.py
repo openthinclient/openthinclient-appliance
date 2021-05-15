@@ -415,7 +415,7 @@ def test_free_diskspace(executable, expected_output, host):
     assert use_limit_reached is False
 
 
-@pytest.mark.parametrize("executable,expected_output", [
+@pytest.mark.parametrize("executable, expected_output", [
     ("dos2unix -ic /etc/vim/vimrc", ""),
     ("dos2unix -ic /etc/sudoers.d/90-openthinclient-appliance", ""),
     ("dos2unix -ic /usr/local/sbin/zerofree.sh", ""),
@@ -442,3 +442,22 @@ def test_openthinclient_user_dotxsessionrc(host):
     assert managerbin.user == "openthinclient"
     assert managerbin.group == "openthinclient"
     assert managerbin.exists is True
+
+
+@pytest.mark.parametrize("limit, result", [
+    ("-Hn", "65535"),
+    ("-Sn", "65535"),
+])
+def test_limit(host, limit, result):
+    with host.sudo():
+        output = host.check_output('ulimit ' + limit)
+        assert output == result
+
+
+@pytest.mark.parametrize("limit, result", [
+    ("-Hn", "65535"),
+    ("-Sn", "65535"),
+])
+def test_limit_otc_user(host, limit, result):
+    output = host.check_output('ulimit ' + limit)
+    assert output == result

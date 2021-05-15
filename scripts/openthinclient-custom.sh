@@ -58,6 +58,7 @@ echo "${ALIASINCLUDE}" > ${ROOT_BASHRC_FILE}
 echo "==> Adding sbin paths for openthinclient user"
 echo 'export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"' > /home/openthinclient/.profile
 echo 'if [ -r ~/.profile ]; then . ~/.profile; fi' > /home/openthinclient/.xsessionrc
+chown openthinclient:openthinclient /home/openthinclient/.xsessionrc
 
 echo "==> Creating openthinclient directory in /usr/local/share"
 OTCLOCALSHARE="/usr/local/share/openthinclient/"
@@ -119,7 +120,6 @@ else
     echo "==> Populating openthinclient VM information failed. File not found"
 fi
 
-
 echo "==> Deploying openthinclient grub background image"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/grub_background/desktopB_1920x1200.png /boot/grub/desktopB_1920x1200.png
 echo 'GRUB_BACKGROUND="/boot/grub/desktopB_1920x1200.png"' >> /etc/default/grub 
@@ -146,5 +146,12 @@ apt-get install -y zerofree
 
 echo "==> Updating grub configuration"
 update-grub
+
+echo "==> setting nofile limits"
+cat <<EOF >> /etc/security/limits.conf
+*               -   nofile  	65535
+openthinclient	-  	nofile  	65535
+root            -  	nofile  	65535
+EOF
 
 exit 0

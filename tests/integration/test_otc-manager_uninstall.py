@@ -16,7 +16,6 @@ class Test_OTCManager_Uninstall(object):
     @pytest.mark.parametrize("executable", [
         (otc_manager_install_path + "uninstall -q"),
     ])
-    @pytest.mark.first
     def test_openthinclient_uninstallation(self, executable, host):
         with host.sudo():
             cmd = host.run_test(executable)
@@ -39,7 +38,7 @@ class Test_OTCManager_Uninstall(object):
         (otc_manager_install_path + "bin/managerctl"),
         (otc_manager_install_path + "support/uninstall"),
         (otc_manager_install_path + "support/update-check"),
-        ("/etc/init.d/openthinclient-manager"),
+        "/etc/init.d/openthinclient-manager",
     ])
     def test_if_otc_manager_exuectable_files_exist(self, host, filename):
         filen = host.file(filename)
@@ -54,7 +53,6 @@ class Test_OTCManager_Uninstall(object):
         directory = host.file(directory)
         assert directory.is_directory is False
 
-    @pytest.mark.last
     def test_openthinclient_install_directory_after_uninstall(self, host):
         dir_content = host.run("ls -ld $(find " + otc_manager_install_path + " )")
         print("Contents of: " + otc_manager_install_path)
@@ -62,4 +60,3 @@ class Test_OTCManager_Uninstall(object):
 
         directory = host.file(otc_manager_install_path)
         assert directory.is_directory is False
-

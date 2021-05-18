@@ -106,6 +106,16 @@ def test_if_otc_manager_default_install_packages_exists(host, filename):
     assert file.exists is True
 
 
+@pytest.mark.parametrize("filename,content", [
+    (otc_manager_install_home + ".otc-manager-home.meta", "<server-id>"),
+])
+def test_otc_manager_metadata_file_for_server_id_present(host, filename, content):
+    time.sleep(5)
+    filen = host.file(filename)
+    assert filen.exists is True
+    assert filen.contains(content) is True
+
+
 @pytest.mark.parametrize("proto,port", [
     ("tcp", "10389"),
     ("tcp", "8080"),
@@ -177,15 +187,6 @@ def test_otc_manager_home_directories_permissions(host, filename):
      "<acknowledged-privacy-notice-version>0</acknowledged-privacy-notice-version>"),
 ])
 def test_otc_manager_metadata_file_for_privacy_notice_present(host, filename, content):
-    filen = host.file(filename)
-    assert filen.exists is True
-    assert filen.contains(content) is True
-
-@pytest.mark.parametrize("filename,content", [
-    (otc_manager_install_home + ".otc-manager-home.meta", "<server-id>"),
-])
-def test_otc_manager_metadata_file_for_server_id_present(host, filename, content):
-    time.sleep(25)
     filen = host.file(filename)
     assert filen.exists is True
     assert filen.contains(content) is True

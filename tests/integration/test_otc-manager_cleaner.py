@@ -7,13 +7,11 @@ otc_cleaner_script = "/usr/local/sbin/openthinclient-cleaner"
 OTC_INSTALL_HOME = "/home/openthinclient/otc-manager-home/"
 
 
-@pytest.mark.second_to_last
 class Test_OTC_Cleaner(object):
 
     @pytest.mark.parametrize("executable", [
         (otc_cleaner_script),
     ])
-    @pytest.mark.first
     def test_openthinclient_cleaner(self, executable, host):
         with host.sudo():
             cmd = host.run_test(executable)
@@ -94,7 +92,6 @@ class Test_OTC_Cleaner(object):
     @pytest.mark.parametrize("filename,content", [
         (OTC_INSTALL_HOME + ".otc-manager-home.meta", "<server-id>"),
     ])
-    @pytest.mark.second_to_last
     def test_otc_manager_metadata_file_for_server_id(self, host, filename, content):
         time.sleep(30)
         filen = host.file(filename)
@@ -104,9 +101,17 @@ class Test_OTC_Cleaner(object):
     @pytest.mark.parametrize("filename,content", [
         (OTC_INSTALL_HOME + "directory/service.xml", "<accessControlEnabled>false</accessControlEnabled>"),
     ])
-    @pytest.mark.second_to_last
     def test_otc_manager_access_control_enabled_false(self, host, filename, content):
         time.sleep(30)
         filen = host.file(filename)
         assert filen.contains(content) is True
         assert filen.exists is True
+
+    @pytest.mark.parametrize("filename,content", [
+        (OTC_INSTALL_HOME + ".otc-manager-home.meta", "<server-id>"),
+    ])
+    def test_otc_manager_metadata_file_for_server_id_present(self, host, filename, content):
+        time.sleep(30)
+        filen = host.file(filename)
+        assert filen.exists is True
+        assert filen.contains(content) is False

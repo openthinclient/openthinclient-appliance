@@ -13,6 +13,7 @@ class Test_OTC_Cleaner(object):
         (otc_cleaner_script),
     ])
     def test_openthinclient_cleaner(self, executable, host):
+        time.sleep(30)
         with host.sudo():
             cmd = host.run_test(executable)
             assert cmd.exit_status == 0
@@ -92,7 +93,7 @@ class Test_OTC_Cleaner(object):
     @pytest.mark.parametrize("filename,content", [
         (OTC_INSTALL_HOME + ".otc-manager-home.meta", "<server-id>"),
     ])
-    def test_otc_manager_metadata_file_for_server_id(self, host, filename, content):
+    def test_otc_manager_metadata_file_for_server_id_not_present(self, host, filename, content):
         time.sleep(30)
         filen = host.file(filename)
         assert filen.contains(content) is False
@@ -107,11 +108,3 @@ class Test_OTC_Cleaner(object):
         assert filen.contains(content) is True
         assert filen.exists is True
 
-    @pytest.mark.parametrize("filename,content", [
-        (OTC_INSTALL_HOME + ".otc-manager-home.meta", "<server-id>"),
-    ])
-    def test_otc_manager_metadata_file_for_server_id_present(self, host, filename, content):
-        time.sleep(30)
-        filen = host.file(filename)
-        assert filen.exists is True
-        assert filen.contains(content) is False

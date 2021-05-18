@@ -107,4 +107,3 @@ class Test_OTC_Cleaner(object):
         filen = host.file(filename)
         assert filen.contains(content) is True
         assert filen.exists is True
-

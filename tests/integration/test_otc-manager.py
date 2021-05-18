@@ -15,7 +15,7 @@ otc_manager_install_path = "/opt/otc-manager/"
 
 
 @pytest.mark.parametrize("service_name", [
-    ("openthinclient-manager"),
+    "openthinclient-manager",
 ])
 def test_openthinclient_manager_service_running(host, service_name):
     time.sleep(20)

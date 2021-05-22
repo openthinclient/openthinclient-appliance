@@ -110,7 +110,7 @@ def test_if_otc_manager_default_install_packages_exists(host, filename):
     (otc_manager_install_home + ".otc-manager-home.meta", "<server-id>"),
 ])
 def test_otc_manager_metadata_file_for_server_id_present(host, filename, content):
-    time.sleep(5)
+    time.sleep(20)
     filen = host.file(filename)
     assert filen.exists is True
     assert filen.contains(content) is True

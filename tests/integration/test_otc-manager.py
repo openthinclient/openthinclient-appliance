@@ -173,6 +173,16 @@ def test_otc_manager_home_directories_permissions(host, filename):
 
 
 @pytest.mark.parametrize("filename,content", [
+    (otc_manager_install_home + ".otc-manager-home.meta", "<server-id>"),
+])
+def test_otc_manager_metadata_file_for_server_id_present(host, filename, content):
+    time.sleep(5)
+    filen = host.file(filename)
+    assert filen.exists is True
+    assert filen.contains(content) is True
+
+
+@pytest.mark.parametrize("filename,content", [
     (otc_manager_install_home + ".otc-manager-home.meta",
      "<acknowledged-privacy-notice-version>0</acknowledged-privacy-notice-version>"),
 ])

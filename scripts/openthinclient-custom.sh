@@ -58,6 +58,13 @@ echo "${ALIASINCLUDE}" > ${ROOT_BASHRC_FILE}
 echo "==> Adding sbin paths for openthinclient user"
 echo 'export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"' > /home/openthinclient/.profile
 echo 'if [ -r ~/.profile ]; then . ~/.profile; fi' > /home/openthinclient/.xsessionrc
+
+echo "==> turn off screen blanking inside openthinclient VM"
+cat <<EOF >> /home/openthinclient/.xsessionrc
+# Turn off screen blanking
+xset s off && xset -dpms
+
+EOF
 chown openthinclient:openthinclient /home/openthinclient/.xsessionrc
 
 echo "==> Creating openthinclient directory in /usr/local/share"

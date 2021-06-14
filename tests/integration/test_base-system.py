@@ -2,7 +2,6 @@ import pytest
 import re
 
 # set some default variables
-
 ssh_name = "openthinclient"
 ssh_pass = "0pen%TC"
 otc_manager_database_user = "openthinclient"
@@ -437,11 +436,21 @@ def test_path_in_profile_file(host, path):
     profile = host.file("/home/openthinclient/.profile")
     assert profile.contains(path)
 
+
 def test_openthinclient_user_dotxsessionrc(host):
     managerbin = host.file("/home/openthinclient/.xsessionrc")
     assert managerbin.user == "openthinclient"
     assert managerbin.group == "openthinclient"
     assert managerbin.exists is True
+
+
+@pytest.mark.parametrize("setting", [
+    "xset s off",
+    "xset -dpms",
+])
+def test_xset_openthinclient_user_dotxsessionrc(host, setting):
+    file = host.file("/home/openthinclient/.xsessionrc")
+    assert file.contains(setting)
 
 
 @pytest.mark.parametrize("limit, result", [

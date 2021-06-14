@@ -202,8 +202,8 @@ def test_udev_rule_eth0_rules_file_workaround(host):
 
 
 @pytest.mark.parametrize("filename,content", [
-    ("/home/openthinclient/.bash_aliases", "alias ll='ls -l'"),
-    ("/root/.bash_aliases", "alias ll='ls -l'"),
+    ("/home/openthinclient/.bash_aliases", "alias ll='ls -alF'"),
+    ("/root/.bash_aliases", "alias ll='ls -alF'"),
     ("/home/openthinclient/.bashrc", ". ~/.bash_aliases"),
     ("/root/.bashrc", ". ~/.bash_aliases"),
     ("/home/openthinclient/.bash_profile", "source ~/.bashrc"),

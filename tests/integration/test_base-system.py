@@ -206,6 +206,7 @@ def test_udev_rule_eth0_rules_file_workaround(host):
     ("/root/.bash_aliases", "alias ll='ls -l'"),
     ("/home/openthinclient/.bashrc", ". ~/.bash_aliases"),
     ("/root/.bashrc", ". ~/.bash_aliases"),
+    ("/home/openthinclient/.bash_profile", "source ~/.bashrc"),
 ])
 def test_bash_aliases_file(host, filename, content):
     with host.sudo():

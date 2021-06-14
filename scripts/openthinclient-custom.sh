@@ -23,7 +23,7 @@ ROOT_ALIASES_FILE=/root/.bash_aliases
 ROOT_BASHRC_FILE=/root/.bashrc
 
 read -r -d '' ALIASES << EOF
-alias ll='ls -l'
+alias ll='ls -alF'
 #alias la='ls -A'
 #alias l='ls -CF'
 EOF
@@ -39,7 +39,6 @@ chown openthinclient:openthinclient ${USER_ALIASES_FILE}
 echo "==> Setting custom bashrc aliases for root"
 echo "${ALIASES}" > ${ROOT_ALIASES_FILE}
 
-
 read -r -d '' ALIASINCLUDE << EOF
 
 # Alias definitions.
@@ -54,6 +53,15 @@ EOF
 
 echo "==> Including aliases in bashrc for root"
 echo "${ALIASINCLUDE}" > ${ROOT_BASHRC_FILE}
+
+echo "==> Creating custom .bash_profile and referencing .bashrc"
+cat <<EOF >> /home/openthinclient/.bash_profile
+if [ -f ~/.bashrc ]; then
+source ~/.bashrc
+fi
+EOF
+chown openthinclient:openthinclient /home/openthinclient/.bash_profile
+
 
 echo "==> Adding sbin paths for openthinclient user"
 echo 'export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"' > /home/openthinclient/.profile

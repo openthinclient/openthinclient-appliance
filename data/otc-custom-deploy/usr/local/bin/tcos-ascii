@@ -1,0 +1,27 @@
+#! /bin/bash
+
+#for((i=33;i<=47;i++)); do
+for((i=33;i<=40;i++)); do
+   printf \\$(printf '%03o\t' "$i"); printf " "
+done
+printf "\n"
+
+for((i=41;i<=47;i++)); do
+   printf \\$(printf '%03o\t' "$i"); printf " "
+done
+printf "\n"
+
+for((i=94;i<=96;i++)); do
+   printf \\$(printf '%03o\t' "$i"); printf " "
+done
+printf "\n"
+
+for((i=58;i<=64;i++)); do
+   printf \\$(printf '%03o\t' "$i"); printf " "
+done
+printf "\n"
+
+for((i=123 ;i<=126;i++)); do
+   printf \\$(printf '%03o\t' "$i"); printf " "
+done
+printf "\n"

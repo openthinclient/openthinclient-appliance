@@ -91,6 +91,11 @@ echo "==> Setting executable bit for custom bin scripts in /usr/local/bin"
 chmod +x /usr/local/bin/openthinclient*
 dos2unix /usr/local/bin/openthinclient*
 
+echo "==> Copying custom tcos-ascii script to /usr/local/bin"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/tcos-ascii /usr/local/bin/tcos-ascii
+dos2unix /usr/local/bin/tcos-ascii
+chmod +x /usr/local/bin/tcos-ascii
+
 echo "==> Copying custom sbin scripts to /usr/local/sbin"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/sbin/openthinclient* /usr/local/sbin/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/sbin/zerofree.sh /usr/local/sbin/

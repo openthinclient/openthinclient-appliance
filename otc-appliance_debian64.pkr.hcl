@@ -207,6 +207,6 @@ build {
 
   post-processor "vagrant" {
     keep_input_artifact = true
-    output              = "builds/${var.hostname}.<no value>.box"
+    output              = "builds/${var.hostname}.{{.Provider}}.box"
   }
 }

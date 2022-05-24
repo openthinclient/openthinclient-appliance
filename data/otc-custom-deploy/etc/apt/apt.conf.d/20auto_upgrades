@@ -1,0 +1,6 @@
+// Filename:    20auto_upgrades
+// Purpose:     configure how often automatic updates run
+// Status:      set to install updates daily "1"
+//------------------------------------------------------------------------------ 
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";

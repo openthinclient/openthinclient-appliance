@@ -36,12 +36,12 @@ variable "https_proxy" {
 
 variable "iso_checksum" {
   type    = string
-  default = "c433254a7c5b5b9e6a05f9e1379a0bd6ab3323f89b56537b684b6d1bd1f8b6ad"
+  default = "7892981e1da216e79fb3a1536ce5ebab157afdd20048fe458f2ae34fbc26c19b"
 }
 
 variable "iso_url" {
   type    = string
-  default = "https://cdimage.debian.org/cdimage/archive/10.10.0/amd64/iso-cd/debian-10.10.0-amd64-netinst.iso"
+  default = "https://cdimage.debian.org/cdimage/release/current/amd64/iso-cd/debian-11.3.0-amd64-netinst.iso"
 }
 
 variable "memory" {
@@ -120,7 +120,7 @@ source "hyperv-iso" "hyperv" {
   enable_secure_boot = false
   generation         = 1
   headless           = "${var.headless}"
-  http_directory     = "debian10_64"
+  http_directory     = "debian_64"
   http_port_max      = 9001
   http_port_min      = 9001
   iso_checksum       = "${var.iso_checksum}"
@@ -139,7 +139,7 @@ source "virtualbox-iso" "vbox" {
   disk_size           = "${var.disk_size}"
   guest_os_type       = "${var.virtualbox_guest_os_type}"
   headless            = "${var.headless}"
-  http_directory      = "debian10_64"
+  http_directory      = "debian_64"
   http_port_max       = 9001
   http_port_min       = 9001
   iso_checksum        = "${var.iso_checksum}"
@@ -160,7 +160,7 @@ source "vmware-iso" "vmware" {
   disk_size        = "${var.disk_size}"
   guest_os_type    = "${var.vmware_guest_os_type}"
   headless         = "${var.headless}"
-  http_directory   = "debian10_64"
+  http_directory   = "debian_64"
   http_port_max    = 9001
   http_port_min    = 9001
   iso_checksum     = "${var.iso_checksum}"

@@ -359,7 +359,7 @@ def test_package_cleanup(host, name):
 def test_basic_system_information(host):
     assert host.system_info.type == "linux"
     assert host.system_info.distribution == "debian"
-    assert host.system_info.codename == "buster"
+    assert host.system_info.codename == "bullseye"
 
 
 @pytest.mark.parametrize("executable,expected_output", [

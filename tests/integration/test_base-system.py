@@ -36,7 +36,9 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("virt-what", "1.19"),
     ("dos2unix", "7.4"),
     ("dnsutils", "1:9.11"),
-    ("unattended-upgrades", "")
+    ("unattended-upgrades", ""),
+    ("openjdk-11-jre", ""),
+    ("icedtea-netx", "1.8.4-1")
 ])
 def test_basic_packages_installed(host, name, version):
     pkg = host.package(name)

@@ -7,7 +7,7 @@
 
 ```shell
 ⁖ packer version
-Packer v1.7.4
+Packer v1.8.0
 ```
 
 ### Requirements
@@ -16,10 +16,8 @@ To create a successful build you need to place a openthinclient software install
 the following folder:
 
 * installers
-
-    This folder should be used for the new installer
-    
-
+   
+   
 ### Use existing template
 
 To perform a build simply run the following commands:

@@ -202,7 +202,7 @@ build {
   provisioner "shell" {
     environment_vars = ["OTC_APPLIANCE_VERSION=${var.appliance_version}", "MYSQL_OTC_USER=${var.otc_manager_database_user}", "MYSQL_OTC_PWD=${var.otc_manager_database_pass}", "OTC_DEFAULT_PASS=${var.otc_manager_default_pass}", "OTC_INSTALL_HOME=${var.otc_manager_install_home}", "OTC_INSTALL_PATH=${var.otc_manager_install_path}", "http_proxy=${var.http_proxy}", "https_proxy=${var.https_proxy}", "no_proxy=${var.no_proxy}"]
     execute_command  = "echo ${var.ssh_pass} | {{ .Vars }} sudo -S -E bash '{{ .Path }}'"
-    scripts          = ["scripts/networking.sh", "scripts/jre-oracle-8.sh", "scripts/mysql.sh", "scripts/openthinclient-installer.sh", "scripts/openthinclient-custom.sh", "scripts/openthinclient-gui.sh", "scripts/vmtools.sh", "scripts/motd.sh", "scripts/print-server.sh", "scripts/openthinclient-cleaner.sh", "scripts/minimize.sh"]
+    scripts          = ["scripts/networking.sh", "scripts/jre-oracle-8.sh", "scripts/openthinclient-installer.sh", "scripts/openthinclient-custom.sh", "scripts/openthinclient-gui.sh", "scripts/vmtools.sh", "scripts/motd.sh", "scripts/print-server.sh", "scripts/openthinclient-cleaner.sh", "scripts/minimize.sh"]
   }
 
   post-processor "vagrant" {

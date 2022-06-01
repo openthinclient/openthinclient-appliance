@@ -12,7 +12,6 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
 
 @pytest.mark.parametrize("name,version", [
-    ("mariadb-server", "1:10.3"),
     ("python", "2.7"),
     ("vim", "2:8"),
     ("zerofree", "1.1"),
@@ -37,7 +36,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("dos2unix", "7.4"),
     ("dnsutils", "1:9.11"),
     ("unattended-upgrades", ""),
-    ("openjdk-11-jre", ""),
+    ("openjdk-11-jre", "11.0.15"),
     ("icedtea-netx", "1.8.4-1")
 ])
 def test_basic_packages_installed(host, name, version):
@@ -76,7 +75,6 @@ def test_user_in_passwd_file(host, user):
 
 @pytest.mark.parametrize("service_name", [
     "lightdm",
-    "mariadb",
 ])
 def test_service_running(host, service_name):
     service = host.service(service_name)
@@ -275,8 +273,6 @@ def test_lightdm_config_content(host, filename, content):
     "/usr/local/bin/openthinclient-default-user-fix",
     "/usr/local/bin/openthinclient-keyboard-layout-fix",
     "/home/openthinclient/.config/autostart/keyboard-layout-fix.desktop",
-    "/home/openthinclient/.local/share/applications/userapp-javaws-HXB6H0.desktop",
-    "/home/openthinclient/.config/mimeapps.list",
     "/usr/local/bin/tcos-ascii"
 ])
 def test_otc_gui_fixes_via_script(host, filename):
@@ -294,7 +290,6 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/time.desktop",
     "/home/openthinclient/Desktop/openthinclient Manager WebConsole.desktop",
     "/home/openthinclient/Desktop/openthinclient service restart.desktop",
-    "/home/openthinclient/Desktop/Oracle-Java-Licence",
     "/home/openthinclient/Desktop/README.desktop",
     "/home/openthinclient/Desktop/VNC Viewer.desktop",
 ])
@@ -366,22 +361,12 @@ def test_basic_system_information(host):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "1.8.0_202"),
+    ("/usr/bin/java -version", "10.0.15"),
 ])
 def test_java_version(executable, expected_output, host):
     with host.sudo():
         cmd = host.run(executable)
-        reported_version = re.findall('java version "(.+)"', cmd.stderr)
-        assert reported_version[0] == expected_output
-
-
-@pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "1.8.0"),
-])
-def test_java_major_version(executable, expected_output, host):
-    with host.sudo():
-        cmd = host.run(executable)
-        reported_version = re.findall('java version "(.+)_\d{3}"', cmd.stderr)
+        reported_version = re.findall('openjdk version "(.+)"', cmd.stderr)
         assert reported_version[0] == expected_output
 
 

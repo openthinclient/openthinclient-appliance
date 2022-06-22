@@ -22,7 +22,7 @@ OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
 #OTC_DEFAULT_PASS=0pen%TC
 
 echo "==> Installing new openthinclient manager"
-if [ -f $OTC_INSTALLER_FULLPATH ]; then
+if [ -f "$OTC_INSTALLER_FULLPATH" ]; then
 	echo "==> $OTC_INSTALLER_FULLPATH exists. Continue with installation"
 	echo $OTC_INSTALLER_FULLPATH
 

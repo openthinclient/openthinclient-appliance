@@ -1,9 +1,0 @@
-#!/bin/bash
-# Filename:     openthinclient-default-user-fix
-# Purpose:      Workaround for default-user in lightdm
-#------------------------------------------------------------------------------
-
-/bin/echo -e '[greeter]\nlast-user=openthinclient' > /var/lib/lightdm/.cache/lightdm-gtk-greeter/state
-chown lightdm:lightdm /var/lib/lightdm/.cache/lightdm-gtk-greeter/state
-
-# EOF

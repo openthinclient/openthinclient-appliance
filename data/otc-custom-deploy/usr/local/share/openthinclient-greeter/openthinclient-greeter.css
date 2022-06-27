@@ -1,0 +1,28 @@
+#innerBox {
+  background-image: url("/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom right;
+
+  color: white;
+}
+
+#topBar {
+  background-color: #333;
+}
+
+#topBar #clock {
+  color: #eee;
+}
+
+button:focus {
+  outline: 2px solid #4097ed;
+}
+
+button {
+  color: black;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+/* #4097ed #bf6812 */

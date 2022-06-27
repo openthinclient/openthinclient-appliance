@@ -38,19 +38,23 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/backgrounds/ $OTC
 
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/icons/ $OTCLOCALSHARE/
 
-echo "==> Deploying custom lightdm greeter"
-cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
+echo "==> Deploying openthinclient LightDM/GTK-greeter configuration"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf
 
-echo "==> Deploying custom lightdm.conf"
-cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf
+echo "==> Deploying LightDM-openthinclient-greeter"
+mkdir -p /usr/local/share/lightdm/greeters/
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/lightdm/greeters/lightdm-openthinclient-greeter.desktop /usr/local/share/lightdm/greeters/lightdm-openthinclient-greeter.desktop
+chmod +x /usr/local/share/lightdm/greeters/lightdm-openthinclient-greeter.desktop
 
-echo "==> Deploying lightdm-dmrc-fix"
-cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/21-lightdm-locale-fix /etc/X11/Xsession.d/21-lightdm-locale-fix
-chown root:root /etc/X11/Xsession.d/21-lightdm-locale-fix
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-greeter.py /usr/local/bin
+chmod +x /usr/local/bin/openthinclient-greeter.py
 
-echo "==> Deploying lightdm fix for default user setting"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-default-user-fix /usr/local/bin/openthinclient-default-user-fix
-chmod +x /usr/local/bin/openthinclient-default-user-fix
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-greeter/ /usr/local/share/
+chmod +x /usr/local/share/openthinclient-greeter.*
+
+mkdir -p /var/lib/lightdm/.cache/openthinclient-greeter
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/var/lib/lightdm/.cache/openthinclient-greeter/state /var/lib/lightdm/.cache/openthinclient-greeter
+chown -R lightdm:lightdm /var/lib/lightdm/.cache/openthinclient-greeter
 
 echo "==> Disable reboot for ctrl-alt-delete keyboard combination"
 rm /lib/systemd/system/ctrl-alt-del.target
@@ -84,7 +88,7 @@ apt-get install -y arandr
 
 
 # workaround
-/etc/init.d/lightdm start
+#/etc/init.d/lightdm start
 
 #xhost
 #export DISPLAY=:0
@@ -174,34 +178,10 @@ else
   echo "==> Deploying custom openthinclient mozilla settings failed"
 fi
 
-
 echo "==> Deploying .java default settings for the openthinclient manager"
 tar xvfz ${OTC_CUSTOM_DEPLOY_PATH}/dotjava.tar.gz -C /home/openthinclient/
 chown openthinclient:openthinclient /home/openthinclient/.java/ -R
 chmod 700 /home/openthinclient/.java/
-
-echo "==> Deploying Workaround to fix the german keyboard layout after session login: create autostart dir"
-CONFIG_AUTOSTART_DIR=/home/openthinclient/.config/autostart/
-[ ! -d $CONFIG_AUTOSTART_DIR ] && mkdir -p $CONFIG_AUTOSTART_DIR
-
-echo "==> Deploying Workaround to fix the german keyboard layout after session login: create autostart icon"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/home/openthinclient/config/autostart/keyboard-layout-fix.desktop /home/openthinclient/.config/autostart/keyboard-layout-fix.desktop
-chown openthinclient:openthinclient /home/openthinclient/.config/autostart/keyboard-layout-fix.desktop
-
-echo "==> Deploying Workaround to fix the german keyboard layout after session login: bash script"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-keyboard-layout-fix /usr/local/bin/openthinclient-keyboard-layout-fix
-chmod +x /usr/local/bin/openthinclient-keyboard-layout-fix
-dos2unix /usr/local/bin/openthinclient-keyboard-layout-fix
-
-echo "==> Deploying custom share javaws desktop file and mime type: mimeapps.list"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/home/openthinclient/config/mimeapps.list /home/openthinclient/.config/mimeapps.list
-chown openthinclient:openthinclient /home/openthinclient/.config/mimeapps.list
-
-echo "==> Deploying custom share javaws desktop file and mime type"
-USER_LOCAL_SHARE=/home/openthinclient/.local/share/applications/
-[ ! -d $USER_LOCAL_SHARE ] && mkdir -p $USER_LOCAL_SHARE
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/home/openthinclient/local/share/applications/userapp-javaws-HXB6H0.desktop /home/openthinclient/.local/share/applications/userapp-javaws-HXB6H0.desktop
-chown openthinclient:openthinclient /home/openthinclient/.local/ -R
 
 echo "==> Installing xtightvncviewer with --no-install-recommends"
 apt-get install -y --no-install-recommends xtightvncviewer

@@ -5,21 +5,9 @@
 if pidof lightdm
 then
 	# use Language setting from ~/.dmrc
-	export LANG=`cat "$HOME/.dmrc" | grep '^Language=' | cut -d '=' -f 2- | sed 's/utf8/UTF-8/'`
+	export LANG=$(cat "$HOME/.dmrc" | grep '^Language=' | cut -d '=' -f 2- | sed 's/utf8/UTF-8/')
 
 	# if $LANGUAGE is set, sync it with chosen locale
 	[ -n "$LANGUAGE" ] && export LANGUAGE=`echo $LANG | cut -d '.' -f 1`:`echo -n $LANG | cut -d '.' -f 1 | cut -d '_' -f 1`
-
-	# remove untrustworthy $GDM_LANG
-	[ -n "$GDM_LANG" ] && unset GDM_LANG
-
-    # if the session has the german language we need to set the correct keymap.
-    # Therefore get the lang_code only
-    #LANG_CODE=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
-    export LANG_CODE=`cat "$HOME/.dmrc" | grep '^Language=' | cut -d '=' -f 2- | cut -d_ -f1`
-
-    #if [ $LANG_CODE == "de" ]; then
-    #    setxkbmap de
-    #fi
 
 fi

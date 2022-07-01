@@ -8,6 +8,8 @@ OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
 
 OTC_INSTALL_PATH=/opt/otc-manager/
 
+echo "==> Deploying htop preconfiguration file"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/htoprc /etc/
 
 echo "==> Deploying custom sudoers file for openthinclient user"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/sudoers.d/90-openthinclient-appliance /etc/sudoers.d/90-openthinclient-appliance

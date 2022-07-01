@@ -11,6 +11,10 @@ OTC_INSTALL_PATH=/opt/otc-manager/
 echo "==> Deploying htop preconfiguration file"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/htoprc /etc/
 
+echo "==> Deploying unattended upgrades preconfiguration files"
+mkdir -p /etc/apt/apt.conf.d/
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/apt/apt.conf.d/*_upgrades /etc/apt/apt.conf.d/
+
 echo "==> Deploying custom sudoers file for openthinclient user"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/sudoers.d/90-openthinclient-appliance /etc/sudoers.d/90-openthinclient-appliance
 chown root:root /etc/sudoers.d/90-openthinclient-appliance

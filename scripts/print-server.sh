@@ -15,11 +15,8 @@ echo "==> Installing cups pdf printer driver package"
 sudo apt-get -y install printer-driver-cups-pdf
 
 echo "==> Stopping cups service before config changes are applied"
-sudo service cups stop
+sudo systemctl stop cups
 sleep 2
-
-echo "==> Check that cups is stopped before config changes are made"
-sudo service cups status
 
 echo "==> Copying custom cups configuration file"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/cups/cupsd.conf /etc/cups/cupsd.conf

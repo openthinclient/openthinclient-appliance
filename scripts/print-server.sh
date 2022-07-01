@@ -27,3 +27,6 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/cups/cupsd.conf /etc/cups/cupsd.conf
 echo "==> Setting correct permissions for custom cupsd.conf configuration"
 chown root:lp /etc/cups/cupsd.conf
 
+echo "==> Adding user "openthinclient" to lpadmin group"
+sudo usermod -a -G lpadmin openthinclient
+

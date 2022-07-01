@@ -15,6 +15,11 @@ echo "==> Deploying unattended upgrades preconfiguration files"
 mkdir -p /etc/apt/apt.conf.d/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/apt/apt.conf.d/*_upgrades /etc/apt/apt.conf.d/
 
+echo "==> Deploying 21-lightdm-locale-fix"
+mkdir -p /etc/X11/Xsession.d/
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/X11/Xsession.d/21-lightdm-locale-fix /etc/X11/Xsession.d/21-lightdm-locale-fix
+chmod +x /etc/X11/Xsession.d/21-lightdm-locale-fix
+
 echo "==> Deploying custom sudoers file for openthinclient user"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/sudoers.d/90-openthinclient-appliance /etc/sudoers.d/90-openthinclient-appliance
 chown root:root /etc/sudoers.d/90-openthinclient-appliance

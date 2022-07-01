@@ -2,9 +2,9 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Terminal=false
-Icon[en_US]=nm-device-wired
 Exec=/usr/bin/vncviewer
-Name[en_US]=VNC Viewer
-Name=VNC Viewer
 Icon=nm-device-wired
+Icon[en_US]=nm-device-wired
+Name=VNC Viewer
+Name[en_US]=VNC Viewer
+Terminal=false

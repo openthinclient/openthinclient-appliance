@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Categories=Network;WebBrowser;
+Exec=firefox %u http://localhost:8080
+Icon=/usr/local/share/openthinclient/icons/openthinclient_manager.png
+Name=openthinclient-Server-Management
+Comment=Start openthinclient-Server-Management
+GenericName=openthinclient-Server-Management
+X-GNOME-FullName=openthinclient-Management
+X-MultipleArgs=false
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
+StartupWMClass=firefox
+StartupNotify=true
+Terminal=false

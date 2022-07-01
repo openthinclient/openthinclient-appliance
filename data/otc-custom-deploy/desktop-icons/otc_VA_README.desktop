@@ -2,12 +2,8 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Icon[en_US]=/usr/local/share/openthinclient/icons/openthinclient_readme.png
-Terminal=false
-Name[en_US]=README
 Exec=firefox %u https://wiki.openthinclient.org/display/OMD/Virtual+Appliance
-Comment[en_US]=README for Virtual Appliance
-Name=README
-Comment=README for Virtual Appliance
 Icon=/usr/local/share/openthinclient/icons/openthinclient_readme.png
-
+Name=README
+Comment=README for openthinclient-Virtual Appliance
+Terminal=false

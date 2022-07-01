@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Categories=Network;WebBrowser;
+Icon=/usr/local/share/openthinclient/icons/openthinclient_professional_support.png
+Exec=firefox %u https://livesupport.levigo.de/
+Name=openthinclient-Livesupport
+Comment=powered by levigo
+GenericName=openthinclient-Livesupport
+X-GNOME-FullName=openthinclient-Livesupport
+X-MultipleArgs=false
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
+StartupWMClass=firefox
+StartupNotify=true
+Terminal=false

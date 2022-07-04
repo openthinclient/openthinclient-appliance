@@ -28,9 +28,9 @@ translation = {
     "poweroff_button": ["Power Off", "Ausschalten"],
     "label_manager": ["openthinclient-Management server", "openthinclient-Management Server"],
     "manager_states": {
-        "UP": "LÄUFT",
+        "ACTIVE": "AKTIV",
         "STARTING": "STARTET",
-        "RESTARTING": "STARTET NEU",
+        "RESTARTING": "NEUSTART",
         "UPDATING": "AKTUALISIERT",
         "INACTIVE": "INAKTIV"
     }
@@ -317,7 +317,7 @@ def set_manager_state():
     try:
         resp = requests.get("http://localhost:8080/api/v2/server-status", allow_redirects=False)
         if resp.status_code == 302:
-            state = "UP"
+            state = "ACTIVE"
         else:
             state = resp.text
     except requests.exceptions.ConnectionError:
@@ -326,7 +326,7 @@ def set_manager_state():
         manager_label.set_text(state)
         manager_state = state
 
-        if state == "UP":
+        if state == "ACTIVE":
             manager_icon.set_from_icon_name("gtk-yes", manager_icon.get_icon_name()[1])
         else:
             manager_icon.set_from_icon_name("gtk-no", manager_icon.get_icon_name()[1])

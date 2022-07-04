@@ -128,7 +128,7 @@ position=0
 object-type='menu-bar'
 
 [org/mate/panel/objects/otc-restart]
-launcher-location='/home/openthinclient/Desktop/openthinclient service restart.desktop'
+launcher-location='/home/openthinclient/Desktop/otc_service_restart.desktop'
 toplevel-id='top'
 position=30
 object-type='launcher'
@@ -157,7 +157,7 @@ position=0
 object-type='applet'
 
 [org/mate/panel/objects/otc-manager]
-launcher-location='/home/openthinclient/Desktop/openthinclient Manager WebConsole.desktop'
+launcher-location='/home/openthinclient/Desktop/otc_manager_gui.desktop'
 toplevel-id='top'
 position=20
 object-type='launcher'
@@ -193,13 +193,14 @@ timeout=120
 slowkeys-enable=false
 
 [org/mate/desktop/background]
-picture-filename='/usr/local/share/openthinclient/backgrounds/openthinclient-server-Desktop-Pales.jpg'
+picture-filename='/usr/local/share/openthinclient/backgrounds/desktopB_1920x1200.png'
 
 [org/mate/desktop/session]
 session-start=1516991722
 
 [org/mate/desktop/lockdown]
 disable-user-switching=true
+
 [ca/desrt/dconf-editor]
 window-is-fullscreen=false
 window-height=600

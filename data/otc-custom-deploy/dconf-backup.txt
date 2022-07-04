@@ -198,6 +198,8 @@ picture-filename='/usr/local/share/openthinclient/backgrounds/openthinclient-ser
 [org/mate/desktop/session]
 session-start=1516991722
 
+[org/mate/desktop/lockdown]
+disable-user-switching=true
 [ca/desrt/dconf-editor]
 window-is-fullscreen=false
 window-height=600

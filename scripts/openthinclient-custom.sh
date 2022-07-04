@@ -13,7 +13,8 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/htoprc /etc/
 
 echo "==> Deploying unattended upgrades preconfiguration files"
 mkdir -p /etc/apt/apt.conf.d/
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/apt/apt.conf.d/*_upgrades /etc/apt/apt.conf.d/
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/apt/apt.conf.d/*-upgrades /etc/apt/apt.conf.d/
+chown root:root /etc/apt/apt.conf.d/*-upgrades
 
 echo "==> Deploying 21-lightdm-locale-fix"
 mkdir -p /etc/X11/Xsession.d/

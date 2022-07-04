@@ -31,6 +31,10 @@ data/installer*/*.sh
 # exclude installer files
 installer*/*.jar
 installer*/*.sh
+installer*/*sums
+installer*/*.txt
+installer*/*.xml
+
 
 # exclude teamviewer.deb
 data/teamviewer_linux.deb

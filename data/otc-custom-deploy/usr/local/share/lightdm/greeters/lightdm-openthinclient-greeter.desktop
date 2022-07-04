@@ -1,5 +1,6 @@
 [Desktop Entry]
-Name=LightDM-openthinclient-greeter
-Exec=/usr/local/bin/openthinclient-greeter.py
+Version=1.0
 Type=Application
 X-LightDM-Session-Type=x
+Exec=/usr/local/bin/openthinclient-greeter.py
+Name=LightDM-openthinclient-greeter

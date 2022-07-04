@@ -4,7 +4,7 @@
 #------------------------------------------------------------------------------
 
 echo "Stopping service"
-sudo service openthinclient-manager stop
+sudo systemctl stop openthinclient-manager
 
 # wait for shutdown
 while lsof -i -n -P | grep 10389 &>/dev/null; do
@@ -17,7 +17,7 @@ sudo nc -l 0.0.0.0 10386 & echo ok | sudo nc 0.0.0.0 10386
 
 sleep 5
 echo "Starting service"
-sudo service openthinclient-manager start
+sudo systemctl start openthinclient-manager
 
 # wait a little to show status
 sleep 3

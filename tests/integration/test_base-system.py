@@ -12,29 +12,29 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
 
 @pytest.mark.parametrize("name,version", [
-    ("python", "2.7"),
+    ("python", "3"),
     ("vim", "2:8"),
     ("zerofree", "1.1"),
-    ("openssh-server", "1:7"),
+    ("openssh-server", "1:8"),
     ("ntp", "1:4"),
     ("acpid", "1:2"),
     ("aptitude", "0.8"),
-    ("sudo", "1.8"),
+    ("sudo", "1.9"),
     ("bzip2", "1.0"),
-    ("rsync", "3.1"),
+    ("rsync", "3.2"),
     ("ldapscripts", "2.0"),
-    ("htop", "2.2"),
+    ("htop", "3"),
     ("mc", "3:4"),
     ("vim", ""),
-    ("screen", "4.6"),
+    ("screen", "4.8"),
     ("tcpdump", "4.9"),
-    ("emacs", "1:26.1"),
+    ("emacs", "1:27"),
     ("net-tools", "1.60"),
     ("dirmngr", "2.2"),
-    ("network-manager", "1.14"),
+    ("network-manager", "1.3"),
     ("virt-what", "1.19"),
     ("dos2unix", "7.4"),
-    ("dnsutils", "1:9.11"),
+    ("dnsutils", "1:9"),
     ("unattended-upgrades", "2.8"),
     ("openjdk-11-jre", "11.0.15"),
     ("icedtea-netx", "1.8.4"),
@@ -48,15 +48,15 @@ def test_basic_packages_installed(host, name, version):
 
 @pytest.mark.parametrize("name,version", [
     ("xtightvncviewer", "1:1.3"),
-    ("dconf-cli", "0.30"),
-    ("dconf-editor", "3.30"),
+    ("dconf-cli", "0.38"),
+    ("dconf-editor", "3.38"),
     ("xserver-xorg", "1:7"),
     ("gnome-system-tools", "3.0"),
-    ("firefox-esr", "78"),
-    ("pluma", "1.20"),
-    ("mate-desktop-environment-core", "1.20"),
+    ("firefox-esr", "91"),
+    ("pluma", "1.2"),
+    ("mate-desktop-environment-core", "1.24"),
     ("lightdm", "1.26"),
-    ("network-manager-gnome", "1.8"),
+    ("network-manager-gnome", "1.2"),
     ("arandr", "0.1"),
 ])
 def test_gui_packages_installed(host, name, version):
@@ -84,7 +84,6 @@ def test_service_running(host, service_name):
 
 
 @pytest.mark.parametrize("proto,hostname,port", [
-    ("tcp", "127.0.0.1", "3306"),
     ("tcp", "0.0.0.0", "22"),
     ("tcp", "::", "22"),
 ])
@@ -112,7 +111,6 @@ def test_openthinclient_user(host):
 @pytest.mark.parametrize("filename", [
     "/usr/local/sbin/openthinclient-changepassword",
     "/usr/local/sbin/openthinclient-cleaner",
-    "/usr/local/sbin/openthinclient-edit-sources-lst-lite",
     "/usr/local/sbin/openthinclient-ldapbackup",
     "/usr/local/sbin/openthinclient-restart",
     "/usr/local/sbin/zerofree.sh",
@@ -129,21 +127,6 @@ def test_otc_usr_local_sbin_files(host, filename):
     "/usr/local/bin/openthinclient-vmversion",
 ])
 def test_otc_usr_local_bin_files(host, filename):
-    file = host.file(filename)
-    assert file.user == "openthinclient"
-    assert file.group == "openthinclient"
-    assert file.exists is True
-
-
-@pytest.mark.parametrize("filename", [
-    "/usr/local/sbin/openthinclient-changepassword",
-    "/usr/local/sbin/openthinclient-cleaner",
-    "/usr/local/sbin/openthinclient-edit-sources-lst-lite",
-    "/usr/local/sbin/openthinclient-ldapbackup",
-    "/usr/local/sbin/openthinclient-restart",
-    "/usr/local/sbin/zerofree.sh",
-])
-def test_otc_usr_local_sbin_files(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
@@ -247,7 +230,8 @@ def test_lightdm_config_file(host, filename):
 
 
 @pytest.mark.parametrize("filename,content", [
-    ("/etc/lightdm/lightdm.conf", "greeter-setup-script=/usr/local/bin/openthinclient-default-user-fix"),
+    ("/etc/lightdm/lightdm.conf", "greeters-directory=/usr/local/share/lightdm/greeters")
+    ("/etc/lightdm/lightdm.conf", "greeter-session=lightdm-openthinclient-greeter"),
     ("/etc/lightdm/lightdm.conf", "allow-guest=false"),
     ("/etc/lightdm/lightdm.conf", "greeter-hide-users=false"),
     ("/etc/lightdm/lightdm.conf", "greeter-show-manual-login=true"),
@@ -259,21 +243,8 @@ def test_lightdm_config_content(host, filename, content):
     assert file.exists is True
 
 
-@pytest.mark.parametrize("filename,content", [
-    ("/etc/lightdm/lightdm-gtk-greeter.conf",
-     "background=/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg"),
-    ("/etc/lightdm/lightdm-gtk-greeter.conf", "show-clock=true"),
-])
-def test_lightdm_config_content(host, filename, content):
-    file = host.file(filename)
-    assert file.contains(content)
-    assert file.exists is True
-
-
 @pytest.mark.parametrize("filename", [
-    "/usr/local/bin/openthinclient-default-user-fix",
-    "/usr/local/bin/openthinclient-keyboard-layout-fix",
-    "/home/openthinclient/.config/autostart/keyboard-layout-fix.desktop",
+    "/usr/local/bin/openthinclient-greeter.py",
     "/usr/local/bin/tcos-ascii"
 ])
 def test_otc_gui_fixes_via_script(host, filename):
@@ -284,16 +255,17 @@ def test_otc_gui_fixes_via_script(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
-    "/home/openthinclient/Desktop/change password.desktop",
-    "/home/openthinclient/Desktop/livesupport.levigo.de.desktop",
     "/home/openthinclient/Desktop/mate-network-properties.desktop",
+    "/home/openthinclient/Desktop/mate-terminal.desktop",
     "/home/openthinclient/Desktop/nm-connection-editor.desktop",
+    "/home/openthinclient/Desktop/otc_livesupport.desktop",
+    "/home/openthinclient/Desktop/otc_manager_gui.desktop",
+    "/home/openthinclient/Desktop/otc_password.desktop",
+    "/home/openthinclient/Desktop/otc_service_restart.desktop",
+    "/home/openthinclient/Desktop/otc_VA_README.desktop",
     "/home/openthinclient/Desktop/time.desktop",
-    "/home/openthinclient/Desktop/openthinclient Manager WebConsole.desktop",
-    "/home/openthinclient/Desktop/openthinclient service restart.desktop",
-    "/home/openthinclient/Desktop/README.desktop",
-    "/home/openthinclient/Desktop/VNC Viewer.desktop",
-])
+    "/home/openthinclient/Desktop/VNC_Viewer.desktop",
+])  
 def test_otc_desktop_icons_present(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
@@ -302,46 +274,17 @@ def test_otc_desktop_icons_present(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
-    "/home/openthinclient/Desktop/Version-Information.desktop",
-    "/home/openthinclient/Desktop/openthinclient Legacy WebStart Manager.desktop",
-    "/home/openthinclient/Desktop/Feature Bid.desktop",
-    "/home/openthinclient/Desktop/Buy hardware.desktop",
-    "/home/openthinclient/Desktop/professional support & hardware.desktop",
-])
-def test_otc_desktop_icons_not_present(host, filename):
-    file = host.file(filename)
-    assert file.exists is False
-
-
-@pytest.mark.parametrize("filename", [
     "/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg",
-    "/usr/local/share/openthinclient/backgrounds/2019_1_beta_magenta_2560x1440.jpg",
     "/usr/local/share/openthinclient/backgrounds/desktopB_1920x1200.png",
-    "/usr/local/share/openthinclient/backgrounds/OTC_VM_1280x1024.png",
     "/usr/local/share/openthinclient/icons/openthinclient_advisor.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_ceres_version.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_consus_version.png",
     "/usr/local/share/openthinclient/icons/openthinclient-features.png",
     "/usr/local/share/openthinclient/icons/openthinclient_manager.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_minerva_version.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_pales_version.png",
     "/usr/local/share/openthinclient/icons/openthinclient_professional_support.png",
     "/usr/local/share/openthinclient/icons/openthinclient_readme.png",
     "/usr/local/share/openthinclient/icons/openthinclient_service_restart.png",
     "/usr/local/share/openthinclient/icons/openthinclient_shop.png",
 ])
 def test_otc_background_and_icons_present(host, filename):
-    file = host.file(filename)
-    assert file.user == "openthinclient"
-    assert file.group == "openthinclient"
-    assert file.exists is True
-
-
-@pytest.mark.parametrize("filename", [
-    "/usr/local/share/openthinclient/documentation/README.txt",
-    "/usr/local/share/openthinclient/documentation/README-openthinclient-VirtualAppliance.pdf",
-])
-def test_otc_documentation_present(host, filename):
     file = host.file(filename)
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
@@ -362,7 +305,7 @@ def test_basic_system_information(host):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "10.0.15"),
+    ("/usr/bin/java -version", "11.0.15"),
 ])
 def test_java_version(executable, expected_output, host):
     with host.sudo():

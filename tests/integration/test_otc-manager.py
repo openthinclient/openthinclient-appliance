@@ -54,36 +54,6 @@ def test_openthinclient_legcacy_install_dir_symlink(host):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("mysql -uroot -proot -e 'use openthinclient;'", ""),
-])
-def test_if_openthinclient_mysql_db_exists(executable, expected_output, host):
-    with host.sudo():
-        cmd = host.run_test(executable)
-        assert cmd.exit_status == 0
-        assert cmd.stderr == expected_output
-
-
-@pytest.mark.parametrize("executable,expected_output", [
-    ("mysql -uroot -proot -sse 'SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = \"openthinclient\")';", "1\n"),
-])
-def test_if_openthinclient_mysql_user_exists(executable, expected_output, host):
-    with host.sudo():
-        cmd = host.run_test(executable)
-        assert cmd.exit_status == 0
-        assert cmd.stdout == expected_output
-
-
-@pytest.mark.parametrize("executable,expected_output", [
-    ("mysql -u" + otc_manager_database_user + " -p" + otc_manager_database_user + " -e 'use openthinclient;'", ""),
-])
-def test_if_openthinclient_user_has_access_to_mysql_db(executable, expected_output, host):
-    with host.sudo():
-        cmd = host.run_test(executable)
-        assert cmd.exit_status == 0
-        assert cmd.stderr == expected_output
-
-
-@pytest.mark.parametrize("executable,expected_output", [
     ('find /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/ -name "*.deb" -exec ls -A {} \;', ''),
 ])
 def test_if_openthinclient_package_cache_dir_contains_deb_files(executable, expected_output, host):
@@ -115,15 +85,6 @@ def test_socket_openthinclient_manager_tcp_listening_ipv4_ipv6(host, proto, port
     socketoptions = '{0}://{1}'.format(proto, port)
     socket = host.socket(socketoptions)
     assert socket.is_listening
-
-
-@pytest.mark.parametrize("filename,content", [
-    (otc_manager_install_home + "db.xml", "jdbc:mysql://localhost:3306/openthinclient"),
-])
-def test_otc_manager_db_xml_settings(host, filename, content):
-    file = host.file(filename)
-    assert file.contains(content)
-    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [

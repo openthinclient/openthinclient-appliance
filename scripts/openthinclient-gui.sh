@@ -41,24 +41,28 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/icons/ $OTCLOCALS
 echo "==> Deploying openthinclient LightDM/GTK-greeter configuration"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf
 
-echo "==> Deploying LightDM-openthinclient-greeter [0/4]"
+echo -ne "==> LightDM-openthinclient-greeter [0/4] deploying\r"
 mkdir -p /usr/local/share/lightdm/greeters/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/lightdm/greeters/lightdm-openthinclient-greeter.desktop /usr/local/share/lightdm/greeters/
-echo "==> Deploying LightDM-openthinclient-greeter [1/4]"
+echo -ne "==> LightDM-openthinclient-greeter [1/4] deployed \r"
+sleep 0.3
 
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-greeter.py /usr/local/bin/
 chmod +x /usr/local/bin/openthinclient-greeter.py
-echo "==> Deploying LightDM-openthinclient-greeter [2/4]"
+echo -ne "==> LightDM-openthinclient-greeter [2/4] deployed \r"
+sleep 0.3
 
 mkdir -p /usr/local/share/openthinclient-greeter/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-greeter/openthinclient-greeter.* /usr/local/share/openthinclient-greeter/
 chmod +x /usr/local/share/openthinclient-greeter/openthinclient-greeter.*
-echo "==> Deploying LightDM-openthinclient-greeter [3/4]"
+echo -ne "==> LightDM-openthinclient-greeter [3/4] deployed \r"
+sleep 0.3
 
 mkdir -p /var/lib/lightdm/.cache/openthinclient-greeter/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/var/lib/lightdm/.cache/openthinclient-greeter/state /var/lib/lightdm/.cache/openthinclient-greeter/
 chown -R lightdm:lightdm /var/lib/lightdm/.cache/openthinclient-greeter
-echo "==> Deploying LightDM-openthinclient-greeter [4/4]"
+echo -ne "==> LightDM-openthinclient-greeter [4/4] deployed \r"
+echo -ne '\n'
 
 echo "==> Disable reboot for ctrl-alt-delete keyboard combination"
 rm /lib/systemd/system/ctrl-alt-del.target

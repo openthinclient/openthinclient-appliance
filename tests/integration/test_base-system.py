@@ -230,7 +230,6 @@ def test_lightdm_config_file(host, filename):
 
 
 @pytest.mark.parametrize("filename,content", [
-    ("/etc/lightdm/lightdm.conf", "greeters-directory=/usr/local/share/lightdm/greeters")
     ("/etc/lightdm/lightdm.conf", "greeter-session=lightdm-openthinclient-greeter"),
     ("/etc/lightdm/lightdm.conf", "allow-guest=false"),
     ("/etc/lightdm/lightdm.conf", "greeter-hide-users=false"),

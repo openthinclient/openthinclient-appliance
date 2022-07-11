@@ -12,7 +12,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
 
 @pytest.mark.parametrize("name,version", [
-    ("python", "3"),
+    ("python3", "3.9"),
     ("vim", "2:8"),
     ("zerofree", "1.1"),
     ("openssh-server", "1:8"),
@@ -123,7 +123,6 @@ def test_otc_usr_local_sbin_files(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
-    "/usr/local/bin/openthinclient-manager",
     "/usr/local/bin/openthinclient-vmversion",
 ])
 def test_otc_usr_local_bin_files(host, filename):
@@ -276,7 +275,7 @@ def test_otc_desktop_icons_present(host, filename):
     "/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg",
     "/usr/local/share/openthinclient/backgrounds/desktopB_1920x1200.png",
     "/usr/local/share/openthinclient/icons/openthinclient_advisor.png",
-    "/usr/local/share/openthinclient/icons/openthinclient-features.png",
+    "/usr/local/share/openthinclient/icons/openthinclient_features.png",
     "/usr/local/share/openthinclient/icons/openthinclient_manager.png",
     "/usr/local/share/openthinclient/icons/openthinclient_professional_support.png",
     "/usr/local/share/openthinclient/icons/openthinclient_readme.png",

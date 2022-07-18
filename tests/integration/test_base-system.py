@@ -277,6 +277,7 @@ def test_otc_desktop_icons_present(host, filename):
     "/usr/local/share/openthinclient/icons/openthinclient_advisor.png",
     "/usr/local/share/openthinclient/icons/openthinclient_features.png",
     "/usr/local/share/openthinclient/icons/openthinclient_manager.png",
+    "/usr/local/share/openthinclient/icons/openthinclient_network_proxy.png",
     "/usr/local/share/openthinclient/icons/openthinclient_professional_support.png",
     "/usr/local/share/openthinclient/icons/openthinclient_readme.png",
     "/usr/local/share/openthinclient/icons/openthinclient_service_restart.png",

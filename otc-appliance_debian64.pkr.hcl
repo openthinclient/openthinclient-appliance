@@ -129,6 +129,11 @@ variable "virtualbox_hardware_clock" {
   default = "UTC"
 }
 
+variable "virtualbox_gpu_controller" {
+  type    = string
+  default = "vmsvga"
+}
+
 variable "vmware_guest_os_type" {
   type    = string
   default = "ubuntu-64"
@@ -205,6 +210,7 @@ source "virtualbox-iso" "vbox" {
 
   guest_os_type       = "${var.virtualbox_guest_os_type}"
   rtc_time_base       = "${var.virtualbox_hardware_clock}"
+  gpu_controller      = "${var.virtualbox_gpu_controller}"
   post_shutdown_delay = "30s"
   vboxmanage          = [["modifyvm", "{{ .Name }}", "--vram", "32"], ["modifyvm", "{{ .Name }}", "--description", "${var.vm_description}"]]
   vboxmanage_post     = [["modifyvm", "{{ .Name }}", "--vram", "32"], ]

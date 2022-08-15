@@ -8,9 +8,6 @@ OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
 
 OTC_INSTALL_PATH=/opt/otc-manager/
 
-echo "==> Removing pipewire"
-sudo apt remove pipewire
-
 echo "==> Deploying LDAP backup"
 mkdir -p /etc/skel_ldap/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/skel_ldap/ldap_empty.zip /etc/skel_ldap/

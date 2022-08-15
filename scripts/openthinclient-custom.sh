@@ -34,9 +34,6 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/sudoers.d/90-openthinclient-appliance /etc/s
 chown root:root /etc/sudoers.d/90-openthinclient-appliance
 chmod 0440 /etc/sudoers.d/90-openthinclient-appliance
 
-echo "==> "echo "==> Adding user "openthinclient" to vboxsf group"
-sudo usermod -a -G vboxsf openthinclient
-
 echo "==> Deploying custom otc vimrc "
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/vim/vimrc /etc/vim/vimrc
 

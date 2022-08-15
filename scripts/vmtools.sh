@@ -50,6 +50,9 @@ function install_virtualbox_tools {
     rm -rf /tmp/vbox;
     rm -f $HOME_DIR/*.iso;
     apt-get remove -y build-essential
+    
+    echo "==> "echo "==> Adding user "openthinclient" to vboxsf group"
+    sudo usermod -a -G vboxsf openthinclient    
 }
 
 echo "$PACKER_BUILDER_TYPE"

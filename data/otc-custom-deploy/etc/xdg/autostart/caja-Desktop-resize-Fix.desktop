@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=caja-desktop-resize-fix
+Exec=/usr/local/bin/caja-Desktop-resize-Fix

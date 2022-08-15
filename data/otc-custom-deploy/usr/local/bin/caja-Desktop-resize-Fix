@@ -1,0 +1,27 @@
+#!/bin/bash
+
+LAST_GEOMETRY=
+reset_pid=
+
+reset_desktop_window() {
+    sleep .3
+    win=$(xdotool search --classname desktop_window)
+    xdotool windowunmap $win
+    xprop -id $win -format _NET_WM_WINDOW_TYPE 32a -set _NET_WM_WINDOW_TYPE "_NET_WM_WINDOW_TYPE_DEFAULT"
+    xprop -id $win -format _NET_WM_WINDOW_TYPE 32a -remove WM_NORMAL_HINTS
+    xdotool windowsize $win 100% 100%
+    xprop -id $win -format _NET_WM_WINDOW_TYPE 32a -set _NET_WM_WINDOW_TYPE "_NET_WM_WINDOW_TYPE_DESKTOP"
+    xdotool windowmap $win
+}
+
+xprop -root -spy | while IFS= read -r line; do
+    GEOMETRY=$(echo $line | grep '_NET_DESKTOP_GEOMETRY(CARDINAL) =')
+    [ -z "$GEOMETRY" ] && continue
+    [ "$GEOMETRY" == "$LAST_GEOMETRY" ] && continue
+    [ -z "$LAST_GEOMETRY" ]; IS_INIT=$?
+    LAST_GEOMETRY=$GEOMETRY
+    [ $IS_INIT -eq 0 ] && continue;
+    ps -p $reset_pid > /dev/null 2>&1 && kill $reset_pid
+    reset_desktop_window &
+    reset_pid=$!
+done

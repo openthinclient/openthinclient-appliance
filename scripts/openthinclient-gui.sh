@@ -53,8 +53,7 @@ echo -ne "==> LightDM-openthinclient-greeter [2/4] deployed \r"
 sleep 0.3
 
 mkdir -p /usr/local/share/openthinclient-greeter/
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-greeter/openthinclient-greeter.* /usr/local/share/openthinclient-greeter/
-chmod +x /usr/local/share/openthinclient-greeter/openthinclient-greeter.*
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient-greeter/* /usr/local/share/openthinclient-greeter/
 echo -ne "==> LightDM-openthinclient-greeter [3/4] deployed \r"
 sleep 0.3
 

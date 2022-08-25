@@ -110,7 +110,7 @@
         </child>
         <child>
           <object class="GtkBox">
-            <property name="width_request">500</property>
+            <property name="width_request">400</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">center</property>
@@ -203,7 +203,7 @@
                         <property name="can_focus">False</property>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
+                        <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
@@ -243,7 +243,7 @@
                         <property name="input_purpose">password</property>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
+                        <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
@@ -256,95 +256,10 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkLabel" id="error_label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_bottom">10</property>
-                    <property name="homogeneous">True</property>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="margin_right">2</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <object class="GtkLabel" id="label_lang">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="margin_bottom">3</property>
-                            <property name="label" translatable="yes">Language:</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBoxText" id="language_cb">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_right">5</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="margin_left">2</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <object class="GtkLabel" id="label_keyboard">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="margin_bottom">3</property>
-                            <property name="label" translatable="yes">Keyboard:</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="layout_cb">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="has_entry">True</property>
-                            <property name="entry_text_column">0</property>
-                            <child internal-child="entry">
-                              <object class="GtkEntry" id="layout_entry_field">
-                                <property name="can_focus">True</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
+                    <property name="margin_bottom">5</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -353,43 +268,114 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="error_label">
-                    <property name="name">errorLabel</property>
+                  <object class="GtkGrid">
+                    <property name="width_request">400</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_top">10</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkBox">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="column_spacing">5</property>
+                    <child>
+                      <object class="GtkButton" id="layout_choose">
+                        <property name="label" translatable="yes">Choose</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="margin_left">8</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_keyboard">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="margin_left">8</property>
+                        <property name="margin_top">3</property>
+                        <property name="label" translatable="yes">Keyboard</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">center</property>
+                        <child>
+                          <object class="GtkToggleButton" id="button_en">
+                            <property name="label" translatable="yes">EN</property>
+                            <property name="name">button-en</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="halign">end</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkToggleButton" id="button_de">
+                            <property name="label" translatable="yes">DE</property>
+                            <property name="name">button-de</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="halign">end</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_lang">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="margin_top">3</property>
+                        <property name="label" translatable="yes">Language</property>
+                        <property name="justify">center</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
                     <child>
                       <object class="GtkMenuButton">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="focus_on_click">False</property>
                         <property name="receives_default">True</property>
-                        <property name="halign">end</property>
-                        <property name="margin_top">30</property>
+                        <property name="halign">start</property>
                         <property name="popup">menu1</property>
                         <child>
                           <object class="GtkImage">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="stock">gtk-quit</property>
+                            <property name="icon_name">system-log-out</property>
                           </object>
                         </child>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">0</property>
                       </packing>
                     </child>
                     <child>
@@ -399,21 +385,26 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="halign">start</property>
-                        <property name="margin_top">30</property>
+                        <property name="halign">end</property>
+                        <property name="margin_left">30</property>
+                        <property name="hexpand">True</property>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="pack_type">end</property>
-                        <property name="position">1</property>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">0</property>
                       </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">5</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>

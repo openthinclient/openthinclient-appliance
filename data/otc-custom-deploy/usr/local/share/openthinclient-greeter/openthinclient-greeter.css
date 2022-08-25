@@ -25,4 +25,18 @@ button {
   box-shadow: none;
 }
 
-/* #4097ed #bf6812 */
+#other_box {
+  box-shadow: 5px 5px 5px black;
+  border: 1px solid black;
+}
+
+#button-en {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#button-de {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: none;
+}

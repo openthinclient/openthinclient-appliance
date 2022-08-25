@@ -11,29 +11,38 @@ from gi.repository import Gdk
 from gi.repository import LightDM
 from time import strftime
 import configparser
-import datetime
 import subprocess
 import requests
 
+settings = Gtk.Settings.get_default()
+settings.set_property("gtk-icon-theme-name", "ContrastHigh")
+
+SERVER_STATUS_URL = "http://localhost:8080/api/v2/server-status"
+
 UI_FILE_LOCATION = "/usr/local/share/openthinclient-greeter/openthinclient-greeter.ui"
+UI_LAYOUT_CHOOSER_FILE_LOCATION = "/usr/local/share/openthinclient-greeter/openthinclient-greeter2.ui"
 CSS_FILE_LOCATION = "/usr/local/share/openthinclient-greeter/openthinclient-greeter.css"
 
 translation = {
-    "label_lang": ["Language:", "Sprache:"],
-    "label_keyboard": ["Keyboard:", "Tastatur:"],
+    "label_lang": ["Language / Sprache", "Sprache / Language"],
+    "label_keyboard": ["Keyboard", "Tastatur"],
     "label_user": ["User:", "Benutzer:"],
     "password_label": ["Password:", "Passwort:"],
     "login_button": ["Login", "Einloggen"],
     "reboot_button": ["Reboot", "Neustarten"],
     "poweroff_button": ["Power Off", "Ausschalten"],
-    "label_manager": ["openthinclient-Management server", "openthinclient-Management Server"],
+    "label_manager": [
+        "openthinclient-Management server",
+        "openthinclient-Management Server"
+    ],
     "manager_states": {
         "ACTIVE": "AKTIV",
         "STARTING": "STARTET",
         "RESTARTING": "NEUSTART",
         "UPDATING": "AKTUALISIERT",
         "INACTIVE": "INAKTIV"
-    }
+    },
+    "search": ["Search", "Suchen"]
 }
 
 manager_state = None
@@ -41,7 +50,7 @@ manager_state = None
 clock = None
 user_cb = None
 greeter = None
-login_clicked = None
+login_clicked = False
 password_entry = None
 password_label = None
 errorLabel = None
@@ -51,14 +60,19 @@ manager_icon = None
 lang_code = None
 login_no = 0
 
-layoutEntry = None
-layout_cb = None
+layout_search = None
+layout_tree = None
+layout_choose = None
+layout_short = None
+layout_text = None
 layoutStore = Gtk.ListStore(str)
 
-builder = None
+lang_button_en = None
+lang_button_de = None
 
-popupTime = None
-intervalRunning = False
+second_window = None
+
+builder = None
 
 current_lang = "en"
 
@@ -77,30 +91,68 @@ def write_cache():
     with open(str(state_file), 'w') as file:
         cache.write(file)
 
+
 def set_language(lang="en"):
     index = 1 if lang == "de" else 0
 
     global current_lang
     current_lang = lang
 
-    builder.get_object("label_lang").set_text(translation["label_lang"][index])
-    builder.get_object("label_keyboard").set_text(translation["label_keyboard"][index])
-    builder.get_object("label_user").set_text(translation["label_user"][index])
-    builder.get_object("password_label").set_text(translation["password_label"][index])
-    builder.get_object("label_manager").set_text(translation["label_manager"][index])
-    builder.get_object("login_button").set_label(translation["login_button"][index])
-    builder.get_object("reboot_button").set_label(translation["reboot_button"][index])
-    builder.get_object("poweroff_button").set_label(translation["poweroff_button"][index])
+    label_lang_text      = get_translation_text("label_lang", index)
+    label_keyboard_text  = get_translation_text("label_keyboard", index)
+    label_user_text      = get_translation_text("label_user", index)
+    password_label_text  = get_translation_text("password_label", index)
+    label_manager_text   = get_translation_text("label_manager", index)
+    login_button_text    = get_translation_text("login_button", index)
+    reboot_button_text   = get_translation_text("reboot_button", index)
+    poweroff_button_text = get_translation_text("poweroff_button", index)
+
+    builder.get_object("label_lang").set_text(label_lang_text)
+    builder.get_object("label_keyboard").set_text(label_keyboard_text)
+    builder.get_object("label_user").set_text(label_user_text)
+    builder.get_object("password_label").set_text(password_label_text)
+    builder.get_object("label_manager").set_text(label_manager_text)
+    builder.get_object("login_button").set_label(login_button_text)
+    builder.get_object("reboot_button").set_label(reboot_button_text)
+    builder.get_object("poweroff_button").set_label(poweroff_button_text)
 
     translate_manager_state()
+
+    current_layout = cache.get("greeter", "last-layout", fallback="English (US)")
+    layout_choose.set_label(str(layout_short))
+    layout_choose.set_tooltip_text(str(layout_text))
+
+
+def get_translation_text(key, index):
+    if translation.get(key, None) is not None:
+        return translation[key][index]
+    else:
+        try:
+            return str(key)
+        except:
+            return "translation not found"
+
 
 def translate_manager_state():
     if manager_state is None: return
 
-    if current_lang == "de":
-        builder.get_object("manager_state_label").set_text(translation["manager_states"][manager_state])
-    else:
-        builder.get_object("manager_state_label").set_text(manager_state)
+    try:
+        if current_lang == "de":
+            manager_state_text = translation["manager_states"][manager_state]
+            builder.get_object("manager_state_label").set_text(manager_state_text)
+        else:
+            builder.get_object("manager_state_label").set_text(manager_state)
+
+            in_keys = manager_state in translation["manager_states"].keys()
+            in_values = manager_state in translation["manager_states"].values()
+
+            if not in_keys and not in_values:
+                raise KeyError
+    except KeyError:
+        if current_lang == "de":
+            builder.get_object("manager_state_label").set_text("UNBEKANNT")
+        else:
+            builder.get_object("manager_state_label").set_text("UNKNOWN")
 
 
 def update_clock():
@@ -110,13 +162,16 @@ def update_clock():
 
     return True
 
+
 def poweroff_click_handler(widget, data=None):
     if LightDM.get_can_shutdown():
         LightDM.shutdown()
 
+
 def reboot_click_handler(widget, data=None):
     if LightDM.get_can_restart():
         LightDM.restart()
+
 
 def fill_with_users(user_cb):
     user_id = 0
@@ -129,7 +184,8 @@ def fill_with_users(user_cb):
 
     user_cb.set_active(user_id)
 
-def fill_with_layouts(layout_cb):
+
+def fill_layout_store():
     layout_id = 0
     last_layout = cache.get("greeter", "last-layout", fallback="English (US)")
 
@@ -144,62 +200,28 @@ def fill_with_layouts(layout_cb):
         if layout == last_layout:
             layout_id = id
 
-    layout_cb.set_model(layoutStore)
-    layout_cb.set_active(layout_id)
 
-def fill_with_languages(lang_cb):
-    lang_id = 0
-    last_lang = cache.get("greeter", "last-lang", fallback="en_US.utf8")
+def set_layout(layout_text_):
+    global layout_short
+    global layout_text
 
-    for id, lang in enumerate(LightDM.get_languages()):
-        lang_cb.append_text(lang.get_name())
-        if lang.get_code() == last_lang:
-            lang_id = id
-
-    lang_cb.set_active(lang_id)
-
-def execute_layout_filter():
-    layout_input = layoutEntry.get_text().upper()
-
-    filteredStore = Gtk.ListStore(str)
-
-    for layout in layoutStore:
-        if not layout[0].upper().startswith(layout_input): continue
-
-        filteredStore.append([layout[0]])
-
-    layout_cb.set_model(filteredStore)
-
-def layout_change_handler(widget, data=None):
     layout_obj = None
 
     for layout in LightDM.get_layouts():
-        if layout.get_description().upper() == layoutEntry.get_text().upper():
+        if layout.get_description().upper() == layout_text_.upper():
             layout_obj = layout
             break
 
     if layout_obj is None:
         return
 
+    layout_short = layout_obj.get_name().split("\t")[0].upper()
+    layout_text = layout_obj.get_description()
+
     cache.set("greeter", "last-layout", layout_obj.get_description())
+
     LightDM.set_layout(layout_obj)
 
-def language_change_handler(widget, data=None):
-    global lang_code
-    lang_obj = None
-
-    for lang in LightDM.get_languages():
-        if lang.get_name() == lang_cb.get_active_text():
-            lang_obj = lang
-            break
-
-    lang_code = lang_obj.get_code()
-    cache.set("greeter", "last-lang", lang_code)
-
-    if lang_code == "de_DE.utf8":
-        set_language("de")
-    elif lang_code == "en_US.utf8":
-        set_language("en")
 
 def user_change_handler(widget, data=None):
     global login_clicked
@@ -211,11 +233,11 @@ def user_change_handler(widget, data=None):
     if greeter.get_in_authentication():
         greeter.cancel_authentication()
 
-
     set_password_visibility(True)
     password_entry.set_text("")
 
     greeter.authenticate(username)
+
 
 def login_click_handler(widget, data=None):
     global login_clicked
@@ -232,6 +254,7 @@ def login_click_handler(widget, data=None):
     errorLabel.set_text("")
     greeter.authenticate(username)
 
+
 def set_password_visibility(visible):
     password_entry.set_sensitive(visible)
     password_label.set_sensitive(visible)
@@ -241,6 +264,7 @@ def set_password_visibility(visible):
     else:
         password_entry.hide()
         password_label.hide()
+
 
 def authentication_complete(greeter):
     if not login_clicked:
@@ -252,10 +276,12 @@ def authentication_complete(greeter):
         else:
             display_error_message("Login failed")
 
+
 def show_prompt(greeter, text, prompt_type=None, **kwargs):
     if login_clicked:
         greeter.respond(password_entry.get_text())
         password_entry.set_text("")
+
 
 def start_session():
     if lang_code is not None:
@@ -265,8 +291,10 @@ def start_session():
 
     greeter.start_session_sync("")
 
+
 def show_message(greeter, text, message_type=None, **kwargs):
     errorLabel.set_text(text)
+
 
 def display_error_message(text, duration=5000):
     errorLabel.set_text("Login failed")
@@ -285,29 +313,10 @@ def display_error_message(text, duration=5000):
 
     GLib.timeout_add(duration, inner)
 
-def layout_entry_changed(widget, data=None):
-    global intervalRunning
-    global popupTime
 
-    popupTime = datetime.datetime.now() + datetime.timedelta(milliseconds=750)
+def layout_search_changed(widget, data=None):
+    execute_layout_filter()
 
-    if not intervalRunning:
-        intervalRunning = True
-        GLib.timeout_add(100, layout_entry_timeout_func)
-
-def layout_entry_timeout_func():
-    global popupTime
-
-    if popupTime is None:
-        return True
-
-    if datetime.datetime.now() >= popupTime:
-        execute_layout_filter()
-        if len(layout_cb.get_model()) > 1:
-            layout_cb.popup()
-        popupTime = None
-
-    return True
 
 def set_manager_state():
     if manager_label is None: return False
@@ -315,7 +324,7 @@ def set_manager_state():
     global manager_state
 
     try:
-        resp = requests.get("http://localhost:8080/api/v2/server-status", allow_redirects=False)
+        resp = requests.get(SERVER_STATUS_URL, allow_redirects=False)
         if resp.status_code == 302:
             state = "ACTIVE"
         else:
@@ -329,10 +338,97 @@ def set_manager_state():
         if state == "ACTIVE":
             manager_icon.set_from_icon_name("gtk-yes", manager_icon.get_icon_name()[1])
         else:
-            manager_icon.set_from_icon_name("gtk-no", manager_icon.get_icon_name()[1])
+            manager_icon.set_from_icon_name("view-refresh", manager_icon.get_icon_name()[1])
 
         translate_manager_state()
     return True
+
+
+def show_layout_chooser(*_):
+    global layout_tree
+    global second_window
+
+    builder2 = Gtk.Builder()
+    builder2.add_from_file(UI_LAYOUT_CHOOSER_FILE_LOCATION)
+
+    fill_layout_store()
+
+    layout_tree = builder2.get_object("tree")
+    layout_tree.set_search_entry(builder2.get_object("search"))
+    layout_tree.set_model(layoutStore)
+    tree_column = Gtk.TreeViewColumn("", Gtk.CellRendererText(), text=0)
+    layout_tree.append_column(tree_column)
+    layout_tree.set_expander_column(tree_column)
+
+    layout_tree.connect("row-activated", handle_set_layout)
+
+    button_choose = builder2.get_object("button_choose")
+    button_choose.connect("clicked", handle_set_layout)
+
+    button_cancel = builder2.get_object("button_cancel")
+    button_cancel.connect("clicked", lambda _ : second_window.close())
+
+    layout_search = builder2.get_object("search")
+    layout_search.connect("activate", handle_set_layout)
+
+
+    second_window = builder2.get_object("window")
+    second_window.set_modal(True)
+    second_window.resize(second_window.get_size()[0], screen.get_height() * 0.8)
+
+    vertical_center_position = (screen.get_width() / 2) - (second_window.get_size()[0] / 2)
+    second_window.move(vertical_center_position, screen.get_height() * 0.1)
+    second_window.show()
+
+
+def handle_set_layout(*_):
+    cursor = layout_tree.get_cursor()
+
+    if cursor[0] is None:
+        return
+
+    index = cursor[0].get_indices()[0]
+
+    layout_text = list(layout_tree.get_model()[index])[0]
+
+    set_layout(layout_text)
+
+    second_window.close()
+    layout_choose.set_label(f"{layout_short}")
+    layout_choose.set_tooltip_text(f"{layout_text}")
+
+
+def button_en_clicked(_):
+    if lang_button_en.get_active() == True:
+        lang_button_de.set_active(False)
+    elif lang_button_de.get_active() == False:
+        lang_button_en.set_active(True)
+        return
+
+    language_change_handler("en")
+
+
+def button_de_clicked(_):
+    if lang_button_de.get_active() == True:
+        lang_button_en.set_active(False)
+    elif lang_button_en.get_active() == False:
+        lang_button_de.set_active(True)
+        return
+
+    language_change_handler("de")
+
+
+def language_change_handler(lang="en"):
+    global lang_code
+
+    lang_code = "de_DE.utf8" if lang == "de" else "en_US.utf8"
+    cache.set("greeter", "last-lang", lang_code)
+
+    if lang_code == "de_DE.utf8":
+        set_language("de")
+    elif lang_code == "en_US.utf8":
+        set_language("en")
+
 
 if __name__ == "__main__":
     builder = Gtk.Builder()
@@ -344,13 +440,15 @@ if __name__ == "__main__":
     cursor = Gdk.Cursor(Gdk.CursorType.LEFT_PTR)
     builder.add_from_file(UI_FILE_LOCATION)
 
-    set_language("en")
-
     cssProvider = Gtk.CssProvider()
     cssProvider.load_from_path(CSS_FILE_LOCATION)
     styleContext = Gtk.StyleContext()
     screen = Gdk.Screen.get_default()
-    styleContext.add_provider_for_screen(screen, cssProvider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
+    styleContext.add_provider_for_screen(
+        screen,
+        cssProvider,Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+    )
 
     poweroffButton = builder.get_object("poweroff_button")
     poweroffButton.connect("activate", poweroff_click_handler)
@@ -371,20 +469,30 @@ if __name__ == "__main__":
     user_cb.connect("changed", user_change_handler)
     fill_with_users(user_cb)
 
-    layout_cb = builder.get_object("layout_cb")
-    layout_cb.connect("changed", layout_change_handler)
-    layoutEntry = builder.get_object("layout_entry_field")
-    fill_with_layouts(layout_cb)
-    layoutEntry.connect("changed", layout_entry_changed)
+    layout_choose = builder.get_object("layout_choose")
+    layout_choose.connect("clicked", show_layout_chooser)
 
+    layout = cache.get("greeter", "last-layout", fallback="English (US)")
+    set_layout(layout)
+    del layout
 
-    lang_cb = builder.get_object("language_cb")
-    lang_cb.connect("changed", language_change_handler)
-    fill_with_languages(lang_cb)
+    lang_button_de = builder.get_object("button_de")
+    lang_button_de.connect("clicked", button_de_clicked)
+    lang_button_en = builder.get_object("button_en")
+    lang_button_en.connect("clicked", button_en_clicked)
+
+    lang_code = cache.get("greeter", "last-lang", fallback="en_US.utf8")
+    if lang_code == "de_DE.utf8":
+        lang_button_de.set_active(True)
+        set_language("de")
+    else:
+        lang_button_en.set_active(True)
+        set_language("en")
 
     ipLabel = builder.get_object("ip_label")
 
-    ip = subprocess.run("hostname -I", capture_output=True, shell=True).stdout.decode().strip()
+    process = subprocess.run("hostname -I", capture_output=True, shell=True)
+    ip = process.stdout.decode().strip()
     ipLabel.set_text(f"IP: {ip}")
 
     manager_label = builder.get_object("manager_state_label")
@@ -410,5 +518,7 @@ if __name__ == "__main__":
         user_cb.grab_focus()
 
     window.show()
-    window.fullscreen()
+
+    GLib.timeout_add(100, lambda *_ : user_change_handler(None) and False)
+
     GLib.MainLoop().run()

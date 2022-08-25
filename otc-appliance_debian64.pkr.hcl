@@ -126,7 +126,7 @@ variable "virtualbox_guest_os_type" {
 
 variable "virtualbox_hardware_clock" {
   type    = string
-  default = "UTC"
+  default = "on"
 }
 
 variable "virtualbox_gpu_controller" {
@@ -209,11 +209,17 @@ source "virtualbox-iso" "vbox" {
   output_directory    = "builds/output-${var.vm_name}-virtualbox-iso"
 
   guest_os_type       = "${var.virtualbox_guest_os_type}"
-  rtc_time_base       = "${var.virtualbox_hardware_clock}"
-  gpu_controller      = "${var.virtualbox_gpu_controller}"
   post_shutdown_delay = "30s"
-  vboxmanage          = [["modifyvm", "{{ .Name }}", "--vram", "32"], ["modifyvm", "{{ .Name }}", "--description", "${var.vm_description}"]]
-  vboxmanage_post     = [["modifyvm", "{{ .Name }}", "--vram", "32"], ]
+  vboxmanage          = [
+    ["modifyvm", "{{ .Name }}", "--vram", "32"],
+    ["modifyvm", "{{ .Name }}", "--description", "${var.vm_description}"]
+    ]
+  vboxmanage_post     = [
+    ["modifyvm", "{{ .Name }}", "--vram", "32"],
+    ["modifyvm", "{{ .Name }}", "--rtcuseutc", "${var.virtualbox_hardware_clock}"],
+    ["modifyvm", "{{ .Name }}", "--graphicscontroller", "${var.virtualbox_gpu_controller}"],
+    ["modifyvm", "{{ .Name }}", "--nic1", "${var.vmx_post_connectiontype}"]
+    ]
 }
 
 source "vmware-iso" "vmware" {

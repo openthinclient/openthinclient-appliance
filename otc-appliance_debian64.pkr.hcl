@@ -66,12 +66,12 @@ variable "dir" {
 
 variable "iso_checksum" {
   type    = string
-  default = "7892981e1da216e79fb3a1536ce5ebab157afdd20048fe458f2ae34fbc26c19b"
+  default = "d490a35d36030592839f24e468a5b818c919943967012037d6ab3d65d030ef7f"
 }
 
 variable "iso_url" {
   type    = string
-  default = "https://cdimage.debian.org/cdimage/release/current/amd64/iso-cd/debian-11.3.0-amd64-netinst.iso"
+  default = "https://cdimage.debian.org/cdimage/release/current/amd64/iso-cd/debian-11.4.0-amd64-netinst.iso"
 }
 
 variable "no_proxy" {

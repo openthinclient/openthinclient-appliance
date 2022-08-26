@@ -61,7 +61,7 @@ variable "port_min" {
 
 variable "dir" {
   type    = string
-  default = "debian_64"
+  default = "debian"
 }
 
 variable "iso_checksum" {

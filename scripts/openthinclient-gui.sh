@@ -124,7 +124,7 @@ dbus-launch dconf load / < ${DCONF_CONFIG}
 
 echo "==> Setting openthinclient appliance desktop background"
 dbus-launch gsettings writable org.mate.background picture-filename
-dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg'
+dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/otc_2022_gold_8000x4500.png'
 
 echo "==> disable unwanted <Ctrl><Alt><Delete> restart inside mate desktop environment"
 dbus-launch dconf write /org/mate/settings-daemon/plugins/media-keys/power "''"

@@ -163,8 +163,8 @@ else
 fi
 
 echo "==> Deploying openthinclient grub background image"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/grub_background/desktopB_1920x1200.png /boot/grub/desktopB_1920x1200.png
-echo 'GRUB_BACKGROUND="/boot/grub/desktopB_1920x1200.png"' >> /etc/default/grub 
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/backgrounds/default.png /boot/grub/ 
+echo 'GRUB_BACKGROUND="/boot/grub/default.png"' >> /etc/default/grub 
 
 
 if [ $PACKER_BUILDER_TYPE == 'hyperv-iso' ]; then

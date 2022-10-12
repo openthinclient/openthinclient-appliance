@@ -178,10 +178,12 @@ echo "==> Deploying openthinclient grub color configuration"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/grub.d/05_debian_theme /etc/grub.d/05_debian_theme
 chown root:root /etc/grub.d/05_debian_theme
 chmod 755 /etc/grub.d/05_debian_theme
+dos2unix /etc/grub.d/05_debian_theme
 
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/grub.d/40_otc-shrinker /etc/grub.d/40_otc-shrinker
 chown root:root /etc/grub.d/40_otc-shrinker
 chmod 755 /etc/grub.d/40_otc-shrinker
+dos2unix /etc/grub.d/40_otc-shrinker
 
 echo "==> Installing zerofree package for otc-shrinker script"
 apt-get install -y zerofree

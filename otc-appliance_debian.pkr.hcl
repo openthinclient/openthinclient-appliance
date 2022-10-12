@@ -1,7 +1,7 @@
 
 variable "appliance_version" {
   type    = string
-  default = "2021.2"
+  default = "2022.1"
 }
 
 variable "vm_description" {
@@ -11,7 +11,7 @@ variable "vm_description" {
 
 variable "vm_name" {
   type    = string
-  default = "openthinclient-Appliance-2021.2"
+  default = "openthinclient-Appliance-2022.1"
 }
 
 variable "headless" {
@@ -176,7 +176,7 @@ source "hyperv-iso" "hyperv" {
   ssh_timeout        = "${var.ssh_timeout}"
   shutdown_command   = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
   output_directory   = "builds/output-${var.vm_name}-hyperv-iso"
-
+  
   enable_secure_boot = false
   generation         = 2
   disk_block_size    = 1

@@ -146,17 +146,20 @@ variable "vmx_post_connectiontype" {
 
 source "hyperv-iso" "hyperv" {
   boot_command       = [
-  "<esc><wait>",
-  "install <wait>",
-  "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
-  "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-  "keyboard-configuration/xkb-keymap=us <wait>",
-  "netcfg/get_hostname=${var.hostname} <wait>",
-  "netcfg/get_domain=${var.hostname} <wait>",
-  "fb=false debconf/frontend=noninteractive ",
-  "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
-  "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
-  "<enter><wait>"
+  "c",
+  "linux /install.amd/vmlinuz ",
+  "auto ",
+  "locale=en_US.UTF-8 ",
+  "country=US ",
+  "language=en ",
+  "keymap=us ",
+  "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_hypv.cfg ",
+  "hostname=${var.hostname} ",
+  "domain=${var.hostname} ",
+  "interface=auto ",
+  "vga=788 noprompt ---<enter>",
+  "initrd /install.amd/initrd.gz<enter>",
+  "boot<enter>"
   ]
   vm_name            = "${var.vm_name}"
   headless           = "${var.headless}"
@@ -175,7 +178,7 @@ source "hyperv-iso" "hyperv" {
   output_directory   = "builds/output-${var.vm_name}-hyperv-iso"
 
   enable_secure_boot = false
-  generation         = 1
+  generation         = 2
   disk_block_size    = 1
 }
 

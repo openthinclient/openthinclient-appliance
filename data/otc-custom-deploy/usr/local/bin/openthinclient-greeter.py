@@ -325,7 +325,8 @@ def set_manager_state():
 
     try:
         resp = requests.get(SERVER_STATUS_URL, allow_redirects=False)
-        if resp.status_code == 302:
+
+        if resp.text == "UP":
             state = "ACTIVE"
         else:
             state = resp.text

@@ -185,7 +185,8 @@ source "hyperv-iso" "hyperv" {
 source "virtualbox-iso" "vbox" {
   boot_command        = [
   "<esc><wait>",
-  "install <wait>", "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_vmbx.cfg ",
+  "install <wait>",
+  "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_vmbx.cfg ",
   "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
   "keyboard-configuration/xkb-keymap=us <wait>",
   "netcfg/get_hostname=${var.hostname} <wait>",

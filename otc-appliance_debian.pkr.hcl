@@ -134,6 +134,16 @@ variable "virtualbox_gpu_controller" {
   default = "vmsvga"
 }
 
+variable "virtualbox_network_type" {
+  type    = string
+  default = "bridged"
+}
+
+variable "virtualbox_bridge_adapter" {
+  type    = string
+  default = "Please choose your physical network interface!"
+}
+
 variable "vmware_guest_os_type" {
   type    = string
   default = "ubuntu-64"
@@ -222,7 +232,8 @@ source "virtualbox-iso" "vbox" {
     ["modifyvm", "{{ .Name }}", "--vram", "32"],
     ["modifyvm", "{{ .Name }}", "--rtcuseutc", "${var.virtualbox_hardware_clock}"],
     ["modifyvm", "{{ .Name }}", "--graphicscontroller", "${var.virtualbox_gpu_controller}"],
-    ["modifyvm", "{{ .Name }}", "--nic1", "${var.vmx_post_connectiontype}"]
+    ["modifyvm", "{{ .Name }}", "--nic1", "${var.virtualbox_network_type}"],
+    ["modifyvm", "{{ .Name }}", "--bridgeadapter1", "${var.virtualbox_bridge_adapter}"]
     ]
 }
 

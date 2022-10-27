@@ -58,29 +58,29 @@ Helpful commands:
 This is the second command that should be executed to check that
  a template is valid.
 ```
-otc-appliance_debian.pkr.hclpacker validate otc-appliance_debian.pkr.hcl
+packer validate otc-appliance_debian.pkr.hcl
 ```
 
 #### VirtualBox
 
 ```
-otc-appliance_debian.pkr.hclpacker build -only=virtualbox-iso.vbox otc-appliance_debian.pkr.hcl 
+packer build -only=virtualbox-iso.vbox otc-appliance_debian.pkr.hcl 
 ```
 
 #### VMware
 
 ```
-otc-appliance_debian.pkr.hclpacker build -only=vmware-iso.vmware otc-appliance_debian.pkr.hcl 
+packer build -only=vmware-iso.vmware otc-appliance_debian.pkr.hcl 
 ```
 
 #### Hyper-V
 
 ```
-otc-appliance_debian.pkr.hclpacker build -only=hyperv-iso.hyperv otc-appliance_debian.pkr.hcl 
+packer build -only=hyperv-iso.hyperv otc-appliance_debian.pkr.hcl 
 ```
 
-#### VirtualBox and VMware 
+#### VirtualBox and VMware
 
 ```
-otc-appliance_debian.pkr.hclpacker build -except=hyperv-iso.hyperv otc-appliance_debian.pkr.hcl
+packer build -except=hyperv-iso.hyperv otc-appliance_debian.pkr.hcl
 ```

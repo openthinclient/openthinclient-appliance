@@ -36,7 +36,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("dos2unix", "7.4"),
     ("dnsutils", "1:9"),
     ("unattended-upgrades", "2.8"),
-    ("openjdk-11-jre", "11.0.15"),
+    ("openjdk-11-jre", "11"),
     ("icedtea-netx", "1.8.4"),
     ("liblightdm-gobject-dev", "1.26.0-7")
 ])
@@ -52,7 +52,7 @@ def test_basic_packages_installed(host, name, version):
     ("dconf-editor", "3.38"),
     ("xserver-xorg", "1:7"),
     ("gnome-system-tools", "3.0"),
-    ("firefox-esr", "91"),
+    ("firefox-esr", "102"),
     ("pluma", "1.2"),
     ("mate-desktop-environment-core", "1.24"),
     ("lightdm", "1.26"),
@@ -272,8 +272,7 @@ def test_otc_desktop_icons_present(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
-    "/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg",
-    "/usr/local/share/openthinclient/backgrounds/desktopB_1920x1200.png",
+    "/usr/local/share/openthinclient/backgrounds/default.jpg",
     "/usr/local/share/openthinclient/icons/openthinclient_advisor.png",
     "/usr/local/share/openthinclient/icons/openthinclient_features.png",
     "/usr/local/share/openthinclient/icons/openthinclient_manager.png",
@@ -304,7 +303,7 @@ def test_basic_system_information(host):
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "11.0.15"),
+    ("/usr/bin/java -version", "11.0.16"),
 ])
 def test_java_version(executable, expected_output, host):
     with host.sudo():
@@ -326,7 +325,7 @@ def test_sysctl_values(sysctl_option, expected_output, host):
 
 @pytest.mark.parametrize("executable,expected_output", [
     ("dbus-launch gsettings get org.mate.background picture-filename",
-     "'/usr/local/share/openthinclient/backgrounds/2019_1_magenta_2560x1440.jpg'\n"),
+     "'/usr/local/share/openthinclient/backgrounds/default.png'\n"),
 ])
 def test_mate_desktop_settings(executable, expected_output, host):
     cmd = host.run(executable)

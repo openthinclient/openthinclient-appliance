@@ -272,7 +272,7 @@ def test_otc_desktop_icons_present(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
-    "/usr/local/share/openthinclient/backgrounds/default.jpg",
+    "/usr/local/share/openthinclient/backgrounds/default.png",
     "/usr/local/share/openthinclient/icons/openthinclient_advisor.png",
     "/usr/local/share/openthinclient/icons/openthinclient_features.png",
     "/usr/local/share/openthinclient/icons/openthinclient_manager.png",

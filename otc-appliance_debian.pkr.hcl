@@ -185,7 +185,7 @@ source "hyperv-iso" "hyperv" {
   ssh_password       = "${var.ssh_pass}"
   ssh_timeout        = "${var.ssh_timeout}"
   shutdown_command   = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
-  output_directory   = "builds/${var.vm_name}-hyperv-iso"
+  output_directory   = "builds/${var.vm_name}-hyperv"
   
   enable_secure_boot = false
   generation         = 2
@@ -220,7 +220,7 @@ source "virtualbox-iso" "vbox" {
   ssh_username        = "${var.ssh_name}"
   ssh_wait_timeout    = "${var.ssh_timeout}"
   shutdown_command    = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
-  output_directory    = "builds/${var.vm_name}-virtualbox-iso"
+  output_directory    = "builds/${var.vm_name}-virtualbox"
 
   guest_os_type       = "${var.virtualbox_guest_os_type}"
   post_shutdown_delay = "30s"
@@ -265,7 +265,7 @@ source "vmware-iso" "vmware" {
   ssh_username     = "${var.ssh_name}"
   ssh_wait_timeout = "${var.ssh_timeout}"
   shutdown_command = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
-  output_directory = "builds/${var.vm_name}-vmware-iso"
+  output_directory = "builds/${var.vm_name}-vmware"
 
   guest_os_type    = "${var.vmware_guest_os_type}"
   vmx_data_post = {

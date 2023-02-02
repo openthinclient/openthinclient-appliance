@@ -309,7 +309,7 @@ def test_java_version(executable, expected_output, host):
     with host.sudo():
         cmd = host.run(executable)
         reported_version = re.findall('openjdk version "(.+)"', cmd.stderr)
-        assert reported_version[0].startsWith(expected_output)
+        assert reported_version[0].startswith(expected_output)
 
 
 @pytest.mark.parametrize("sysctl_option,expected_output", [

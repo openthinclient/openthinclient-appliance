@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -f /var/run/reboot-required ]
+then
+    if $LANG == "de_DE.UTF-8"
+    then
+        echo "[Info] Neustart erforderlich!"
+    else
+        echo "[Info] Reboot required!"
+    fi
+else
+    echo ""
+fi

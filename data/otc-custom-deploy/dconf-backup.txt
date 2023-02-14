@@ -121,6 +121,18 @@ interval=360
 show-icon=false
 command='hostname -I'
 
+[org/mate/panel/objects/object_2]
+applet-iid='CommandAppletFactory::CommandApplet'
+toplevel-id='top'
+position=550
+object-type='applet'
+panel-right-stick=false
+
+[org/mate/panel/objects/object_2/prefs]
+interval=3600
+show-icon=false
+command='tcos-reboot-required'
+
 [org/mate/panel/objects/menu-bar]
 locked=true
 toplevel-id='top'

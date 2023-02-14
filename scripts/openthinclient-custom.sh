@@ -118,6 +118,11 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/tcos-ascii /usr/local/bin/tcos-asc
 dos2unix /usr/local/bin/tcos-ascii
 chmod +x /usr/local/bin/tcos-ascii
 
+echo "==> Copying custom tcos-reboot-required script to /usr/local/bin"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/tcos-reboot-required /usr/local/bin/tcos-reboot-required
+dos2unix /usr/local/bin/tcos-reboot-required
+chmod +x /usr/local/bin/tcos-reboot-required
+
 echo "==> Copying custom sbin scripts to /usr/local/sbin"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/sbin/openthinclient* /usr/local/sbin/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/sbin/zerofree.sh /usr/local/sbin/

@@ -27,7 +27,7 @@ Unattended-Upgrade::Origins-Pattern {
         // Software will be the latest available for the named release,
         // but the Debian release itself will not be automatically upgraded.
         "origin=Debian,codename=${distro_codename}-updates";
-//      "origin=Debian,codename=${distro_codename}-proposed-updates";
+        "origin=Debian,codename=${distro_codename}-proposed-updates";
         "origin=Debian,codename=${distro_codename},label=Debian";
         "origin=Debian,codename=${distro_codename},label=Debian-Security";
         "origin=Debian,codename=${distro_codename}-security,label=Debian-Security";
@@ -68,7 +68,7 @@ Unattended-Upgrade::Package-Blacklist {
 // unattended-upgrades will automatically run 
 //   dpkg --force-confold --configure -a
 // The default is true, to ensure updates keep getting installed
-//Unattended-Upgrade::AutoFixInterruptedDpkg "true";
+Unattended-Upgrade::AutoFixInterruptedDpkg "true";
 
 // Split the upgrade into the smallest possible chunks so that
 // they can be interrupted with SIGTERM. This makes the upgrade
@@ -101,14 +101,14 @@ Unattended-Upgrade::Package-Blacklist {
 
 // Remove unused automatically installed kernel-related packages
 // (kernel images, kernel headers and kernel version locked tools).
-//Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
 
 // Do automatic removal of newly unused dependencies after the upgrade
 //Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
 
 // Do automatic removal of unused packages after the upgrade
 // (equivalent to apt-get autoremove)
-//Unattended-Upgrade::Remove-Unused-Dependencies "false";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
 
 // Automatically reboot *WITHOUT CONFIRMATION* if
 //  the file /var/run/reboot-required is found after the upgrade

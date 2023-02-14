@@ -53,7 +53,7 @@ computer-icon-visible=false
 trash-icon-visible=false
 
 [org/mate/panel/general]
-object-id-list=['menu-bar', 'notification-area', 'clock', 'show-desktop', 'window-list', 'workspace-switcher', 'otc-manager', 'otc-restart', 'firefox', 'object_0', 'object_1']
+object-id-list=['menu-bar', 'notification-area', 'clock', 'show-desktop', 'window-list', 'workspace-switcher', 'otc-manager', 'otc-restart', 'firefox', 'object_0', 'object_1', 'object_2']
 toplevel-id-list=['top', 'bottom']
 
 [org/mate/panel/toplevels/bottom]
@@ -89,9 +89,9 @@ panel-right-stick=false
 applet-iid='ClockAppletFactory::ClockApplet'
 locked=true
 toplevel-id='top'
-position=826
+position=1
 object-type='applet'
-panel-right-stick=false
+panel-right-stick=true
 
 [org/mate/panel/objects/clock/prefs]
 format='24-hour'
@@ -100,9 +100,9 @@ custom-format=''
 [org/mate/panel/objects/object_0]
 applet-iid='MultiLoadAppletFactory::MultiLoadApplet'
 toplevel-id='top'
-position=937
+position=2
 object-type='applet'
-panel-right-stick=false
+panel-right-stick=true
 
 [org/mate/panel/objects/object_0/prefs]
 view-memload=true
@@ -112,9 +112,9 @@ view-loadavg=true
 [org/mate/panel/objects/object_1]
 applet-iid='CommandAppletFactory::CommandApplet'
 toplevel-id='top'
-position=597
+position=3
 object-type='applet'
-panel-right-stick=false
+panel-right-stick=true
 
 [org/mate/panel/objects/object_1/prefs]
 interval=360
@@ -205,7 +205,7 @@ timeout=120
 slowkeys-enable=false
 
 [org/mate/desktop/background]
-picture-filename='/usr/local/share/openthinclient/backgrounds/desktopB_1920x1200.png'
+picture-filename='/usr/local/share/openthinclient/backgrounds/default.png'
 
 [org/mate/desktop/session]
 session-start=1516991722

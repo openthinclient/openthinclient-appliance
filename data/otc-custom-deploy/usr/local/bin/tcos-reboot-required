@@ -4,9 +4,9 @@ if [ -f /var/run/reboot-required ]
 then
     if [ $LANG == "de_DE.UTF-8" ]
     then
-        echo "[Info] Neustart erforderlich!"
+        echo -e "\\U2139 Neustart erforderlich!"
     else
-        echo "[Info] Reboot required!"
+        echo -e "\\U2139 Reboot required!"
     fi
 else
     echo ""

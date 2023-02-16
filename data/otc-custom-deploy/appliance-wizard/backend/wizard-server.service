@@ -1,0 +1,10 @@
+[Unit]
+Description=Appliance Wizard backend server
+ConditionPathExists=/var/appliance-wizard/RUN.FLAG
+
+[Service]
+Type=simple
+ExecStart=/usr/local/share/appliance-wizard/backend/start.sh
+
+[Install]
+WantedBy=multi-user.target

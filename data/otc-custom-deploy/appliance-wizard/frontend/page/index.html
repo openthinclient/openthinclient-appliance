@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Appliance Wizard</title>
+  </head>
+  <body>
+    <div id="pages">
+      <div id="welcome-page" class="center page">
+        <h1 id="welcome" i18n="welcome.headline">Wilkommen in der Appliance</h1>
+        <p id="welcome-info" i18n="welcome.info">Nachfolgend können Sie ein Benutzerpasswort, die Zeitzone und Proxy-Einstellungen festlegen.
+        <div class="nav-button-container">
+          <button class="nav-button" type="button" i18n="welcome.button_text" action="next">
+            Einrichtung beginnen  ➜
+          </button>
+        </div>
+      </div>
+      <div id="password-container" class="center page">
+        <div id="password">
+          <span class="headline" i18n="password.headline">Passwort festlegen</span>
+          <form action="set_password">
+            <label for="pass" i18n="password.new_password">Neues Passwort</label>
+            <input id="pass" type="password" class="pw-entry" />
+            <label for="pass_check" i18n="password.repeat">Passwort wiederholen</label>
+            <input id="pass_check" type="password" class="pw-entry" />
+            <button type="submit" class="nav-button" i18n="password.save">Passwort setzen ➜</button>
+            <span class="err" id="pass-err"></span>
+          </form>
+        </div>
+      </div>
+      <div id="timezone-container" class="center page">
+        <div>
+          <span class="headline" i18n="timezone.headline">Zeitzone festlegen</span>
+          <select focus-on-enter id="timezone-select" class="inject-timezones">
+          </select>
+          <div class="nav-button-container">
+            <button class="nav-button" type="button" action="back"><span class="left-arrow">➜</span></button>
+            <button class="nav-button" type="button" action="set_timezone" i18n="timezone.save">Festlegen ➜</button>
+          </div>
+        </div>
+        <span class="err" id="zone-err"></span>
+      </div>
+      <div id="proxy" class="center page">
+        <div>
+          <span class="headline" i18n="proxy.headline">Proxy-Einstellungen</span>
+          <label for="proxy_mode_select" i18n="proxy.mode">Proxy mode</label>
+          <select focus-on-enter default="none" action="update_proxy_form" id="proxy_mode_select">
+            <option value="none" i18n="proxy.mode.no_proxy">No proxy</option>
+            <option value="manual" i18n="proxy.mode.manual">Manual configuration</option>
+            <option value="auto" i18n="proxy.mode.auto">Automatic configuration</option>
+          </select>
+          <div id="proxy_dynamic_form">
+            <div class="dynamic_form" proxy_mode_form="manual">
+              <table class="proxy_type">
+                <tr>
+                  <td i18n="proxy.manual.http">HTTP-Proxy</td>
+                  <td><input type="text" id="proxy_http_host" i18n-placeholder="proxy.manual.placeholder.hostname" placeholder="Hostname / IP"></td>
+                  <td><input type="number" id="proxy_http_port" i18n-placeholder="proxy.manual.placeholder.port" placeholder="Port"></td></tr>
+                <tr>
+                  <td i18n="proxy.manual.https">HTTPS-Proxy</td>
+                  <td><input type="text" id="proxy_https_host" i18n-placeholder="proxy.manual.placeholder.hostname" placeholder="Hostname / IP"></td>
+                  <td><input type="number" id="proxy_https_port" i18n-placeholder="proxy.manual.placeholder.port" placeholder="Port"></td></tr>
+                <tr>
+                  <td i18n="proxy.manual.ftp">FTP-Proxy</td>
+                  <td><input type="text" id="proxy_ftp_host" i18n-placeholder="proxy.manual.placeholder.hostname" placeholder="Hostname / IP"></td>
+                  <td><input type="number" id="proxy_ftp_port" i18n-placeholder="proxy.manual.placeholder.port" placeholder="Port"></td></tr>
+                <tr>
+                  <td i18n="proxy.manual.socket">SOCKET-Proxy</td>
+                  <td><input type="text" id="proxy_socket_host" i18n-placeholder="proxy.manual.placeholder.hostname" placeholder="Hostname / IP"></td>
+                  <td><input type="number" id="proxy_socket_port" i18n-placeholder="proxy.manual.placeholder.port" placeholder="Port"></td></tr>
+              </table>
+            </div>
+            <div class="dynamic_form" proxy_mode_form="auto">
+              <label i18n="proxy.auto.address">Address for automatic configuration:</label>
+              <input id="proxy_auto_address" type="text">
+            </div>
+          </div>
+          <div class="nav-button-container">
+            <button class="nav-button" type="button" action="back"><span class="left-arrow">➜</span></button>
+            <button class="nav-button" type="button" action="set_proxy" i18n="proxy.save">Festlegen ➜</button>
+          </div>
+        </div>
+      </div>
+      <div id="finished-container" class="center page">
+        <span id="finished" i18n="finished.headline">Die Einrichtung ist abgeschlossen!</span>
+        <div class="nav-button-container">
+          <button class="nav-button" type="button" action="back"><span class="left-arrow">➜</span></button>
+          <button class="nav-button" type="button" action="quit" i18n="finished.quit">Beenden</button>
+        </div>
+      </div>
+    </div>
+    <div id="navbar">
+      <div class="otc-logo"></div>
+      <select id="lang" lang="select">
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+      </select>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

@@ -74,6 +74,16 @@ variable "iso_url" {
   default = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.6.0-amd64-netinst.iso"
 }
 
+variable "nodejs_checksum" {
+  type    = string
+  default = "fae6b7b88242c5a160b04b133aaf61b4ab9dae9af7fdf6bdc5ab4a7c700f56a32e475773117824ba95bc855f281f260453c031901f3f30ab023b9b82b72ad831"
+}
+
+variable "nodejs_url" {
+  type    = string
+  default = "https://nodejs.org/dist/v18.14.0/node-v18.14.0-linux-x64.tar.xz"
+}
+
 variable "no_proxy" {
   type    = string
   default = "${env("no_proxy")}"
@@ -299,6 +309,8 @@ build {
       "OTC_DEFAULT_PASS=${var.otc_manager_default_pass}",
       "OTC_INSTALL_HOME=${var.otc_manager_install_home}",
       "OTC_INSTALL_PATH=${var.otc_manager_install_path}",
+      "NODEJS_URL=${var.nodejs_url}",
+      "NODEJS_CHECKSUM=${var.nodejs_checksum}",
       "http_proxy=${var.http_proxy}",
       "https_proxy=${var.https_proxy}",
       "no_proxy=${var.no_proxy}"

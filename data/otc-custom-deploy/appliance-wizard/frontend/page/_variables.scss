@@ -1,0 +1,24 @@
+:root {
+  --nav-button-border-color: black;
+  --nav-button-background-color: black;
+  --nav-button-color: white;
+  --nav-button-inverse-color: black;
+  --nav-button-inverse-background-color: white;
+  --welcome-background: linear-gradient(150deg, green, blue);
+  --finished-background: var(--welcome-background);
+  --background-color: white;
+  --text-color: black;
+  --navbar-background-color: #222;
+  --logo-normal-color: white;
+  --logo-hover-color: orange;
+  --input-background-color: white;
+  --input-color: black;
+  --input-border-color: #111;
+  --lang-button-background-color: white;
+  --lang-button-color: black;
+  --lang-button-border-color: #111;
+  --input-border-width: 1px;
+  --nav-button-border-width: 1px;
+}
+
+//@import './dark_variables.scss';

@@ -1,0 +1,8 @@
+[Unit]
+Description=Start wizard server if run flag is created
+
+[Path]
+PathExists=/var/appliance-wizard/RUN.FLAG
+
+[Install]
+WantedBy=multi-user.target

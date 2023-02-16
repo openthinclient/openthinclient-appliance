@@ -72,6 +72,38 @@ echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
 chmod +x /home/openthinclient/Desktop/*.desktop
 
+echo "==> Deploying appliance wizard [0/5]:"
+echo "==> Appliance wizard: Download nodejs [1/5]"
+wget -q -O ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz ${NODEJS_URL}
+
+echo "==> Appliance wizard: Unpack nodejs [2/5]"
+tar -xf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz -C ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard
+NODE_DIR=`tar -tf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz | head -n 1`
+PATH=$PATH:${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/${NODE_DIR}bin
+
+echo "==> Appliance wizard: Build frontend [3/5]"
+cd ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page
+npm install
+npm run build
+
+echo "==> Appliance wizard: Install dependencies [4/5]"
+apt-get install -y gir1.2-webkit2-4.0
+
+echo "==> Appliance wizard: Deploy wizard [5/5]"
+mkdir -p /usr/local/share/appliance-wizard
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/backend /usr/local/share/appliance-wizard
+mv /usr/local/share/appliance-wizard/backend/wizard-server.service /etc/systemd/system/wizard-server.service
+mv /usr/local/share/appliance-wizard/backend/wizard-server.path /etc/systemd/system/wizard-server.path
+mkdir -p /usr/local/share/appliance-wizard/frontend
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/browser /usr/local/share/appliance-wizard/frontend
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/browser/wizard-start.desktop /etc/xdg/autostart/wizard-start.desktop
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page/dist /usr/local/share/appliance-wizard/backend
+mv /usr/local/share/appliance-wizard/backend/dist /usr/local/share/appliance-wizard/backend/assets
+mkdir -p /var/appliance-wizard
+touch /var/appliance-wizard/RUN.FLAG
+systemctl enable wizard-server.service
+systemctl enable wizard-server.path
+
 echo "==> Installing dconf packages"
 apt-get install -y dconf-editor dconf-cli
 

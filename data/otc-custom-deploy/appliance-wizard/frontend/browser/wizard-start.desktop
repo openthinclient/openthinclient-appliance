@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=wizard
+Exec=/usr/local/share/appliance-wizard/frontend/browser/start.sh
+Hidden=false
+X-MATE-Autostart-enabled=true

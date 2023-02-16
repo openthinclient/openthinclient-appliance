@@ -314,10 +314,6 @@ def display_error_message(text, duration=5000):
     GLib.timeout_add(duration, inner)
 
 
-def layout_search_changed(widget, data=None):
-    execute_layout_filter()
-
-
 def set_manager_state():
     if manager_label is None: return False
 

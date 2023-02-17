@@ -119,7 +119,7 @@ panel-right-stick=true
 [org/mate/panel/objects/object_1/prefs]
 interval=360
 show-icon=false
-command='hostname -I'
+command='tcos-ip'
 
 [org/mate/panel/objects/object_2]
 applet-iid='CommandAppletFactory::CommandApplet'

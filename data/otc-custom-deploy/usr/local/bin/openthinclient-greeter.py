@@ -57,6 +57,7 @@ errorLabel = None
 reboot_label = None
 manager_label = None
 manager_icon = None
+ip_label = None
 
 lang_code = None
 login_no = 0
@@ -124,6 +125,7 @@ def set_language(lang="en"):
     layout_choose.set_tooltip_text(str(layout_text))
 
     load_reboot_required()
+    load_ip()
 
 
 def get_translation_text(key, index):
@@ -441,6 +443,16 @@ def load_reboot_required():
     reboot_label.set_text(message)
         
 
+def load_ip():
+    if current_lang == "de":
+        cmd = "LANG=de_DE.UTF-8 tcos-ip"
+    else:
+        cmd = "LANG=en_US.UTF-8 tcos-ip"
+    process = subprocess.run(cmd, capture_output=True, shell=True)
+    ip = process.stdout.decode().strip()
+    ip_label.set_text(ip)
+
+
 if __name__ == "__main__":
     builder = Gtk.Builder()
     greeter = LightDM.Greeter()
@@ -487,6 +499,8 @@ if __name__ == "__main__":
     set_layout(layout)
     del layout
 
+    ip_label = builder.get_object("ip_label")
+
     lang_button_de = builder.get_object("button_de")
     lang_button_de.connect("clicked", button_de_clicked)
     lang_button_en = builder.get_object("button_en")
@@ -503,12 +517,6 @@ if __name__ == "__main__":
     else:
         lang_button_en.set_active(True)
         set_language("en")
-
-    ipLabel = builder.get_object("ip_label")
-
-    process = subprocess.run("hostname -I", capture_output=True, shell=True)
-    ip = process.stdout.decode().strip()
-    ipLabel.set_text(f"IP: {ip}")
 
     manager_label = builder.get_object("manager_state_label")
     manager_icon = builder.get_object("manager_icon")

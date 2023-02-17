@@ -161,6 +161,10 @@ dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share
 echo "==> disable unwanted <Ctrl><Alt><Delete> restart inside mate desktop environment"
 dbus-launch dconf write /org/mate/settings-daemon/plugins/media-keys/power "''"
 
+echo "==> Installing tcos-ip script"
+apt-get install -y fonts-noto-color-emoji
+cp ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/tcos-ip /usr/local/bin/tcos-ip
+
 #echo "==> Adding openthinclient manager icon to top panel"
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ object-type '"launcher"'
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ toplevel-id 'top'

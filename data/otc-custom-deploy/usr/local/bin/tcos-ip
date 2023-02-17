@@ -1,0 +1,15 @@
+#!/bin/bash
+
+ip=`hostname -I | sed -e 's/ /\n/g' | grep -E -e "([0-9]+\.){3,3}[0-9]+"`
+
+if [ "$ip" = "" ];
+then
+    if [ "$LANG" = "de_DE.UTF-8" ];
+    then
+        echo "⛔ keine IP"
+    else
+        echo "⛔ no IP"
+    fi
+else
+    echo "IP: $ip"
+fi

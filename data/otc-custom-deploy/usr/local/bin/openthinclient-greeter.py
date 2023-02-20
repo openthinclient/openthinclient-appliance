@@ -302,7 +302,10 @@ def show_message(greeter, text, message_type=None, **kwargs):
 
 
 def display_error_message(text, duration=5000):
-    errorLabel.set_text("Login failed")
+    if current_lang == "de":
+        errorLabel.set_text("Login fehlgeschlagen")
+    else:
+        errorLabel.set_text("Login failed")
 
     global login_no
     login_no += 1

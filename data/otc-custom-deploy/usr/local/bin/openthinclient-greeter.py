@@ -54,6 +54,7 @@ login_clicked = False
 password_entry = None
 password_label = None
 errorLabel = None
+reboot_label = None
 manager_label = None
 manager_icon = None
 
@@ -121,6 +122,8 @@ def set_language(lang="en"):
     current_layout = cache.get("greeter", "last-layout", fallback="English (US)")
     layout_choose.set_label(str(layout_short))
     layout_choose.set_tooltip_text(str(layout_text))
+
+    load_reboot_required()
 
 
 def get_translation_text(key, index):
@@ -427,6 +430,17 @@ def language_change_handler(lang="en"):
         set_language("en")
 
 
+def load_reboot_required():
+    if current_lang == "de":
+        cmd = "LANG=de_DE.UTF-8 tcos-reboot-required"
+    else:
+        cmd = "LANG=en_US.UTF-8 tcos-reboot-required"
+
+    process = subprocess.run(cmd, capture_output=True, shell=True)
+    message = process.stdout.decode().strip()
+    reboot_label.set_text(message)
+        
+
 if __name__ == "__main__":
     builder = Gtk.Builder()
     greeter = LightDM.Greeter()
@@ -477,6 +491,10 @@ if __name__ == "__main__":
     lang_button_de.connect("clicked", button_de_clicked)
     lang_button_en = builder.get_object("button_en")
     lang_button_en.connect("clicked", button_en_clicked)
+
+    reboot_label = builder.get_object("reboot_label")
+    load_reboot_required()
+    GLib.timeout_add(30000, load_reboot_required)
 
     lang_code = cache.get("greeter", "last-lang", fallback="en_US.utf8")
     if lang_code == "de_DE.utf8":

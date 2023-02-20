@@ -6,9 +6,9 @@ if [ "$ip" = "" ];
 then
     if [ "$LANG" = "de_DE.UTF-8" ];
     then
-        echo "⛔ keine IP"
+        echo -e "\\U26D4 keine IP"
     else
-        echo "⛔ no IP"
+        echo -e "\\U26D4 no IP"
     fi
 else
     echo "IP: $ip"

@@ -123,6 +123,12 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/tcos-reboot-required /usr/local/bi
 dos2unix /usr/local/bin/tcos-reboot-required
 chmod +x /usr/local/bin/tcos-reboot-required
 
+echo "==> Installing custom tcos-ip script"
+apt-get install -y fonts-noto-color-emoji
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/tcos-ip /usr/local/bin/tcos-ip
+dos2unix /usr/local/bin/tcos-ip
+chmod +x /usr/local/bin/tcos-ip
+
 echo "==> Copying custom sbin scripts to /usr/local/sbin"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/sbin/openthinclient* /usr/local/sbin/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/sbin/zerofree.sh /usr/local/sbin/

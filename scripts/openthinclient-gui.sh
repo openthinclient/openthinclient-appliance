@@ -72,24 +72,21 @@ echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
 chmod +x /home/openthinclient/Desktop/*.desktop
 
-echo "==> Deploying appliance wizard [0/5]:"
-echo "==> Appliance wizard: Download nodejs [1/5]"
+echo "==> Deploying appliance wizard [0/4]:"
+echo "==> Appliance wizard: Download nodejs [1/4]"
 wget -q -O ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz ${NODEJS_URL}
 
-echo "==> Appliance wizard: Unpack nodejs [2/5]"
+echo "==> Appliance wizard: Unpack nodejs [2/4]"
 tar -xf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz -C ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard
 NODE_DIR=`tar -tf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz | head -n 1`
 PATH=$PATH:${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/${NODE_DIR}bin
 
-echo "==> Appliance wizard: Build frontend [3/5]"
+echo "==> Appliance wizard: Build frontend [3/4]"
 cd ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page
 npm install
 npm run build
 
-echo "==> Appliance wizard: Install dependencies [4/5]"
-apt-get install -y gir1.2-webkit2-4.0
-
-echo "==> Appliance wizard: Deploy wizard [5/5]"
+echo "==> Appliance wizard: Deploy wizard [4/4]"
 mkdir -p /usr/local/share/appliance-wizard
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/backend /usr/local/share/appliance-wizard
 mv /usr/local/share/appliance-wizard/backend/wizard-server.service /etc/systemd/system/wizard-server.service
@@ -101,6 +98,10 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page/dist /usr/local/s
 mv /usr/local/share/appliance-wizard/backend/dist /usr/local/share/appliance-wizard/backend/assets
 mkdir -p /var/appliance-wizard
 touch /var/appliance-wizard/RUN.FLAG
+dos2unix /usr/local/share/appliance-wizard/backend/start.sh
+chmod +x /usr/local/share/appliance-wizard/backend/start.sh
+dos2unix /usr/local/share/appliance-wizard/frontend/browser/start.sh
+chmod +x /usr/local/share/appliance-wizard/frontend/browser/start.sh
 systemctl enable wizard-server.service
 systemctl enable wizard-server.path
 
@@ -160,10 +161,6 @@ dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share
 
 echo "==> disable unwanted <Ctrl><Alt><Delete> restart inside mate desktop environment"
 dbus-launch dconf write /org/mate/settings-daemon/plugins/media-keys/power "''"
-
-echo "==> Installing tcos-ip script"
-apt-get install -y fonts-noto-color-emoji
-cp ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/tcos-ip /usr/local/bin/tcos-ip
 
 #echo "==> Adding openthinclient manager icon to top panel"
 #dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ object-type '"launcher"'

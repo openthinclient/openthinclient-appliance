@@ -170,6 +170,20 @@ $nav-button-margin: 0.5em;
 
 #password {
   min-width: 30%;
+
+  .headline {
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  .note {
+    color: grey;
+    font-size: 0.8em;
+    text-align: center;
+
+    margin-bottom: 2em;
+    display: block;
+  }
 }
 
 #pass_length_note {

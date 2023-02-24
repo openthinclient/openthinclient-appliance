@@ -42,6 +42,7 @@ data/teamviewer_linux.deb
 ### exclude integration testing cache folder
 .cache
 .pytest_cache
+__pycache__
 
 ### exclude vagrant files
 .vagrant

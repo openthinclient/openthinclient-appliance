@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=openthinclient-caja-desktop-fix
+Exec=/usr/local/bin/openthinclient-caja-desktop-fix

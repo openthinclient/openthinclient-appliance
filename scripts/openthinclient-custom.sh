@@ -101,17 +101,16 @@ if ! [ -d $OTCLOCALSHARE ]; then
 fi
 
 echo "==> Copying custom bin scripts to /usr/local/bin"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/caja-Desktop-resize-Fix /usr/local/bin/caja-Desktop-resize-Fix
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient-vmversion /usr/local/bin/openthinclient-vmversion
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient* /usr/local/bin/
 
 echo "==> Setting executable bit for custom bin scripts in /usr/local/bin"
 chmod +x /usr/local/bin/caja-Desktop-resize-Fix
 chmod +x /usr/local/bin/openthinclient*
 dos2unix /usr/local/bin/openthinclient*
 
-echo "==> Copying caja-Desktop-resize-Fix.desktop to /etc/xdg/autostart"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/xdg/autostart/caja-Desktop-resize-Fix.desktop /etc/xdg/autostart/caja-Desktop-resize-Fix.desktop
-chown root:root /etc/xdg/autostart/caja-Desktop-resize-Fix.desktop
+echo "==> Copying openthinclient-caja-desktop-fix.desktop to /etc/xdg/autostart"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/xdg/autostart/openthinclient-caja-desktop-fix.desktop /etc/xdg/autostart/openthinclient-caja-desktop-fix.desktop
+chown root:root /etc/xdg/autostart/openthinclient-caja-desktop-fix.desktop
 
 echo "==> Copying custom tcos-ascii script to /usr/local/bin"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/tcos-ascii /usr/local/bin/tcos-ascii

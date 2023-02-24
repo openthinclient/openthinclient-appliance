@@ -60,6 +60,12 @@ echo "$PACKER_BUILDER_TYPE"
 
 case "$PACKER_BUILDER_TYPE" in
 
+hyperv-iso)
+    echo "Installing Hyper-V-Daemons"
+    apt-get install -y hyperv-daemons
+    install_open_vm_tools
+    ;;
+
 virtualbox-iso|virtualbox-ovf)
     install_virtualbox_tools
     install_open_vm_tools
@@ -89,7 +95,7 @@ qemu)
 
 *)
     echo "Unknown Packer Builder Type >> $PACKER_BUILDER_TYPE << selected.";
-    echo "Known are virtualbox-iso|virtualbox-ovf|vmware-iso|vmware-vmx|parallels-iso|parallels-pvm.";
+    echo "Known are: > hyperv-iso <> virtualbox-iso <> mware-iso <> parallels-iso <";
     ;;
 
 esac

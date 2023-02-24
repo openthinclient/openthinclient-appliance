@@ -104,6 +104,12 @@ dos2unix /usr/local/share/appliance-wizard/backend/start.sh
 chmod +x /usr/local/share/appliance-wizard/backend/start.sh
 dos2unix /usr/local/share/appliance-wizard/frontend/browser/start.sh
 chmod +x /usr/local/share/appliance-wizard/frontend/browser/start.sh
+
+chown root:root /usr/local/share/appliance-wizard -R
+chown root:root /etc/systemd/system/wizard-server.service
+chown root:root /etc/systemd/system/wizard-server.path
+chown root:root /etc/xdg/autostart/wizard-start.desktop
+
 systemctl enable wizard-server.service
 systemctl enable wizard-server.path
 

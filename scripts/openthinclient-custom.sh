@@ -2,6 +2,7 @@
 # Filename:     openthinclient-custom.sh
 # Purpose:      install openthinclient custom scripts and needed packages
 #------------------------------------------------------------------------------
+export DEBIAN_FRONTEND="noninteractive"
 
 # set custom deploy path
 OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy

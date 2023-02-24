@@ -2,6 +2,7 @@
 # Filename:     openthinclient-gui.sh
 # Purpose:      install openthinclient custom GUI and related packages
 #------------------------------------------------------------------------------
+export DEBIAN_FRONTEND="noninteractive"
 
 INSTALL="apt-get install -y"
 UPDATE="apt-get update"
@@ -83,6 +84,7 @@ PATH=$PATH:${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/${NODE_DIR}bin
 
 echo "==> Appliance wizard: Build frontend [3/4]"
 cd ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page
+npm config set update-notifier false
 npm install
 npm run build
 

@@ -2,6 +2,7 @@
 # Filename:     vmtools.sh
 # Purpose:      install specific vm tools dependent on packer build type
 #------------------------------------------------------------------------------
+export DEBIAN_FRONTEND="noninteractive"
 
 # set a default HOME_DIR environment variable if not set
 HOME_DIR="${HOME_DIR:-/home/openthinclient}";
@@ -52,7 +53,7 @@ function install_virtualbox_tools {
     apt-get remove -y build-essential
     
     echo "==> "echo "==> Adding user "openthinclient" to vboxsf group"
-    sudo usermod -a -G vboxsf openthinclient    
+    usermod -a -G vboxsf openthinclient    
 }
 
 echo "$PACKER_BUILDER_TYPE"

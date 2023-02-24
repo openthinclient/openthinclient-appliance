@@ -2,6 +2,7 @@
 # Filename:     openthinclient-vnc.sh
 # Purpose:      install openthinclient custom VNC server and related packages
 #------------------------------------------------------------------------------
+export DEBIAN_FRONTEND="noninteractive"
 
 INSTALL="apt-get install -y"
 UPDATE="apt-get update"

@@ -82,8 +82,8 @@ if [ -f "/etc/udev/rules.d/70-persistent-net.rules" ]; then
 fi
 
 echo "==> Removing pipewire and xdg-desktop-portal"
-apt remove -y pipewire && apt autopurge -y 
-apt remove -y xdg-desktop-portal && apt autopurge -y
+apt-get purge -y pipewire 
+apt-get purge -y xdg-desktop-portal
 
 echo "==> Cleanup apt cache"
 apt-get -y autoremove --purge

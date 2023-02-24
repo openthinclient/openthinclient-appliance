@@ -76,7 +76,7 @@ fi
 echo "==> Cleaning up tmp"
 rm -rf /tmp/*
 
-echo "==> remove udev network rules to cleanup old interfaces"
+echo "==> Remove udev network rules to cleanup old interfaces"
 if [ -f "/etc/udev/rules.d/70-persistent-net.rules" ]; then
     rm /etc/udev/rules.d/70-persistent-net.rules
 fi

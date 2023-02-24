@@ -105,7 +105,6 @@ echo "==> Copying custom bin scripts to /usr/local/bin"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/openthinclient* /usr/local/bin/
 
 echo "==> Setting executable bit for custom bin scripts in /usr/local/bin"
-chmod +x /usr/local/bin/caja-Desktop-resize-Fix
 chmod +x /usr/local/bin/openthinclient*
 dos2unix /usr/local/bin/openthinclient*
 

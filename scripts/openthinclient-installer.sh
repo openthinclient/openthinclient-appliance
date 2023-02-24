@@ -35,7 +35,8 @@ if [ -f "$OTC_INSTALLER_FULLPATH" ]; then
 
     echo "==> Checking for existing manager installation to prepare-home"
 	if [ -f ${OTC_INSTALL_PATH}bin/managerctl ]; then
-        echo "==> Running managerctl install with predefined variables and mySQL database backend"
+	    
+        echo "==> Running managerctl install with predefined variables"
 	    $OTC_INSTALL_PATH/bin/managerctl prepare-home \
 	    --admin-password $OTC_DEFAULT_PASS \
 	    --home $OTC_INSTALL_HOME \

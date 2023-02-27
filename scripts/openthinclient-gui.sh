@@ -41,6 +41,7 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/icons/ $OTCLOCALS
 
 echo "==> Deploying openthinclient LightDM/GTK-greeter configuration"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf
+chown root:root /etc/lightdm/lightdm.conf
 
 echo -ne "==> LightDM-openthinclient-greeter [0/4] deploying\r"
 mkdir -p /usr/local/share/lightdm/greeters/
@@ -134,25 +135,6 @@ apt-get install -y evince
 echo "==> Installing arandr"
 apt-get install -y arandr
 
-
-# workaround
-#/etc/init.d/lightdm start
-
-#xhost
-#export DISPLAY=:0
-#env
-#env |grep DISPLAY
-
-#xhost +
-#export DISPLAY=:0.0
-
-# get object-id-list
-#DISPLAY=:0 dbus-launch gsettings get org.mate.panel object-id-list
-#DISPLAY=:0 dbus-launch gsettings get org.mate.panel toplevel-id-list
-#dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list
-#gsettings get org.mate.panel object-id-list
-#gsettings list-recursively org.mate.panel
-
 echo "==> Reading desktop configuration via dconf"
 dbus-launch dconf dump /
 echo "==> End Reading desktop configuration via dconf"
@@ -169,32 +151,6 @@ dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share
 
 echo "==> disable unwanted <Ctrl><Alt><Delete> restart inside mate desktop environment"
 dbus-launch dconf write /org/mate/settings-daemon/plugins/media-keys/power "''"
-
-#echo "==> Adding openthinclient manager icon to top panel"
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ object-type '"launcher"'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ toplevel-id 'top'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ launcher-location '"/home/openthinclient/Desktop/openthinclient Legacy WebStart Manager.desktop"'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ position '20'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-manager/ panel-right-stick 'false'
-##dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-manager' ]"
-#dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-manager' ]"
-#
-#echo "==> Adding openthinclient restart icon to top panel"
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ toplevel-id 'top'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ launcher-location '"/home/openthinclient/Desktop/openthinclient service restart.desktop"'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ position '30'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ panel-right-stick 'false'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/otc-restart/ object-type '"launcher"'
-#dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'otc-restart' ]"
-#
-#echo "==> Adding firefox icon to top panel"
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ toplevel-id 'top'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ launcher-location '"/usr/share/applications/firefox-esr.desktop"'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ position '40'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ panel-right-stick 'false'
-#dbus-launch --exit-with-session gsettings set org.mate.panel.object:/org/mate/panel/objects/firefox/ object-type '"launcher"'
-#dbus-launch --exit-with-session gsettings set org.mate.panel object-id-list "`dbus-launch --exit-with-session gsettings get org.mate.panel object-id-list | sed 's/]$//g'`, 'firefox' ]"
-
 
 # FIX config dir - Temp workaround
 OTC_HOME_CONFIG_DIR=/home/openthinclient/.config/

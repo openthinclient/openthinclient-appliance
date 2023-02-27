@@ -28,8 +28,8 @@ def test_cups_listening(host, proto, hostname, port):
 ])
 def test_service_running(host, service_name):
     service = host.service(service_name)
-    assert service.is_running
     assert service.is_enabled
+    assert service.is_running
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -39,7 +39,7 @@ def test_service_running(host, service_name):
 def test_cupsd_config_content(host, filename, content):
     with host.sudo():
         filen = host.file(filename)
+        assert filen.exists
         assert filen.contains(content)
         assert filen.user == "root"
         assert filen.group == "lp"
-        assert filen.exists is True

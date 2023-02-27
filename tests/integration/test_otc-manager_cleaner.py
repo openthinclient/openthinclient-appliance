@@ -52,7 +52,7 @@ class Test_OTC_Cleaner(object):
     def test_if_bash_history_files_are_deleted(self, host, filename):
         with host.sudo():
             file_name = host.file(filename)
-            assert file_name.exists is False
+            assert not file_name.exists
 
     @pytest.mark.parametrize("filename", [
         "/var/log/apt/eipp.log.xz",
@@ -64,11 +64,11 @@ class Test_OTC_Cleaner(object):
     def test_if_var_log_files_are_deleted(self, host, filename):
         with host.sudo():
             logfile = host.file(filename)
-            assert logfile.exists is False
+            assert not logfile.exists
 
     def test_udev_persistent_net_rules_exists(self, host):
         filen = host.file("/etc/udev/rules.d/70-persistent-net.rules")
-        assert filen.exists is False
+        assert not filen.exists
 
     @pytest.mark.parametrize("service_name", [
         "openthinclient-manager",
@@ -76,19 +76,18 @@ class Test_OTC_Cleaner(object):
     def test_openthinclient_manager_service_not_running(self, host, service_name):
         time.sleep(30)
         service = host.service(service_name)
-        assert service.is_running is False
+        assert not service.is_running
         assert service.is_enabled
 
     @pytest.mark.parametrize("proto,port", [
         ("tcp", "10389"),
         ("tcp", "8080"),
     ])
-    @pytest.mark.last
     def test_socket_openthinclient_manager_tcp_not_listening_ipv4_ipv6(self, host, proto, port):
         time.sleep(30)
         socketoptions = '{0}://{1}'.format(proto, port)
         socket = host.socket(socketoptions)
-        assert socket.is_listening is False
+        assert not socket.is_listening
 
     @pytest.mark.parametrize("filename,content", [
         (OTC_INSTALL_HOME + ".otc-manager-home.meta", "<server-id>"),
@@ -96,14 +95,15 @@ class Test_OTC_Cleaner(object):
     def test_otc_manager_metadata_file_for_server_id_not_present(self, host, filename, content):
         time.sleep(30)
         filen = host.file(filename)
-        assert filen.contains(content) is False
-        assert filen.exists is True
-
+        assert filen.exists
+        assert not filen.contains(content)
+        
     @pytest.mark.parametrize("filename,content", [
         (OTC_INSTALL_HOME + "directory/service.xml", "<accessControlEnabled>false</accessControlEnabled>"),
     ])
     def test_otc_manager_access_control_enabled_false(self, host, filename, content):
         time.sleep(30)
         filen = host.file(filename)
-        assert filen.contains(content) is True
-        assert filen.exists is True
+        assert filen.exists
+        assert filen.contains(content)
+        

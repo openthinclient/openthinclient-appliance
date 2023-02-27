@@ -20,37 +20,37 @@ otc_manager_install_path = "/opt/otc-manager/"
 def test_openthinclient_manager_service_running(host, service_name):
     time.sleep(20)
     service = host.service(service_name)
-    assert service.is_running
     assert service.is_enabled
+    assert service.is_running
 
 
 def test_openthinclient_manager_file(host):
     managerbin = host.file(otc_manager_install_path + "bin/openthinclient-manager")
+    assert managerbin.exists
     assert managerbin.user == "root"
     assert managerbin.group == "root"
-    assert managerbin.exists is True
 
 
 def test_openthinclient_install_directory(host):
     directory = host.file(otc_manager_install_path)
+    assert directory.is_directory
     assert directory.user == "root"
     assert directory.group == "root"
-    assert directory.is_directory is True
 
 
 def test_openthinclient_home_directory(host):
     directory = host.file("/home/openthinclient/otc-manager-home/")
+    assert directory.is_directory
     assert directory.user == "openthinclient"
     assert directory.group == "openthinclient"
-    assert directory.is_directory is True
 
 
 def test_openthinclient_legcacy_install_dir_symlink(host):
     directory = host.file("/opt/openthinclient")
+    assert directory.is_symlink
+    assert directory.linked_to == otc_manager_install_path.rstrip("/")
     assert directory.user == "root"
     assert directory.group == "root"
-    assert directory.is_symlink is True
-    assert directory.linked_to == otc_manager_install_path.rstrip("/")
 
 
 @pytest.mark.parametrize("executable,expected_output", [
@@ -71,9 +71,9 @@ def test_if_openthinclient_package_cache_dir_contains_deb_files(executable, expe
 ])
 def test_if_otc_manager_default_install_packages_exists(host, filename):
     file = host.file(filename)
+    assert file.exists
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists is True
 
 
 @pytest.mark.parametrize("proto,port", [
@@ -92,9 +92,9 @@ def test_socket_openthinclient_manager_tcp_listening_ipv4_ipv6(host, proto, port
 ])
 def test_otc_manager_appliance_properties_exists(host, filename):
     file = host.file(filename)
+    assert file.exists
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -102,7 +102,7 @@ def test_otc_manager_appliance_properties_exists(host, filename):
 ])
 def test_otc_manager_appliance_installation_flag_file_not_present(host, filename):
     file = host.file(filename)
-    assert file.exists is False
+    assert not file.exists
 
 
 @pytest.mark.parametrize("filename", [
@@ -113,9 +113,9 @@ def test_otc_manager_appliance_installation_flag_file_not_present(host, filename
 ])
 def test_otc_manager_service_files_exists(host, filename):
     file = host.file(filename)
+    assert file.exists
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -128,9 +128,9 @@ def test_otc_manager_service_files_exists(host, filename):
 ])
 def test_otc_manager_home_directories_permissions(host, filename):
     folder = host.file(filename)
+    assert folder.exists
     assert folder.user == "openthinclient"
     assert folder.group == "openthinclient"
-    assert folder.exists is True
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -139,8 +139,8 @@ def test_otc_manager_home_directories_permissions(host, filename):
 def test_otc_manager_metadata_file_for_server_id_present(host, filename, content):
     time.sleep(5)
     filen = host.file(filename)
-    assert filen.exists is True
-    assert filen.contains(content) is True
+    assert filen.exists
+    assert filen.contains(content)
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -149,5 +149,5 @@ def test_otc_manager_metadata_file_for_server_id_present(host, filename, content
 ])
 def test_otc_manager_metadata_file_for_privacy_notice_present(host, filename, content):
     filen = host.file(filename)
-    assert filen.exists is True
-    assert filen.contains(content) is True
+    assert filen.exists
+    assert filen.contains(content)

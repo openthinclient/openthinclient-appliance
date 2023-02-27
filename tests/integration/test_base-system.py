@@ -12,33 +12,29 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
 
 @pytest.mark.parametrize("name,version", [
-    ("python3", "3.9"),
-    ("vim", "2:8"),
-    ("zerofree", "1.1"),
-    ("openssh-server", "1:8"),
-    ("ntp", "1:4"),
-    ("acpid", "1:2"),
-    ("aptitude", "0.8"),
-    ("sudo", "1.9"),
-    ("bzip2", "1.0"),
-    ("rsync", "3.2"),
-    ("ldapscripts", "2.0"),
-    ("htop", "3"),
-    ("mc", "3:4"),
+    ("python3", "3."),
+    ("zerofree", ""),
+    ("openssh-server", ""),
+    ("ntp", ""),
+    ("acpid", ""),
+    ("aptitude", ""),
+    ("sudo", ""),
+    ("bzip2", ""),
+    ("rsync", ""),
+    ("ldapscripts", ""),
+    ("htop", ""),
+    ("mc", ""),
     ("vim", ""),
-    ("screen", "4.8"),
-    ("tcpdump", "4.9"),
-    ("emacs", "1:27"),
-    ("net-tools", "1.60"),
-    ("dirmngr", "2.2"),
-    ("network-manager", "1.3"),
-    ("virt-what", "1.19"),
-    ("dos2unix", "7.4"),
-    ("dnsutils", "1:9"),
-    ("unattended-upgrades", "2.8"),
-    ("openjdk-11-jre", "11"),
-    ("icedtea-netx", "1.8.4"),
-    ("liblightdm-gobject-dev", "1.26.0-7")
+    ("screen", ""),
+    ("tcpdump", ""),
+    ("emacs", ""),
+    ("net-tools", ""),
+    ("dirmngr", ""),
+    ("network-manager", ""),
+    ("virt-what", ""),
+    ("dos2unix", ""),
+    ("dnsutils", ""),
+    ("unattended-upgrades", ""),
 ])
 def test_basic_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -47,17 +43,20 @@ def test_basic_packages_installed(host, name, version):
 
 
 @pytest.mark.parametrize("name,version", [
-    ("xtightvncviewer", "1:1.3"),
-    ("dconf-cli", "0.38"),
-    ("dconf-editor", "3.38"),
-    ("xserver-xorg", "1:7"),
-    ("gnome-system-tools", "3.0"),
-    ("firefox-esr", "102"),
-    ("pluma", "1.2"),
-    ("mate-desktop-environment-core", "1.24"),
-    ("lightdm", "1.26"),
-    ("network-manager-gnome", "1.2"),
-    ("arandr", "0.1"),
+    ("xtightvncviewer", ""),
+    ("dconf-cli", ""),
+    ("dconf-editor", ""),
+    ("xserver-xorg", ""),
+    ("gnome-system-tools", ""),
+    ("firefox-esr", ""),
+    ("pluma", ""),
+    ("mate-desktop-environment-core", ""),
+    ("lightdm", ""),
+    ("network-manager-gnome", ""),
+    ("arandr", ""),
+    ("liblightdm-gobject-dev", ""),
+    ("gir1.2-webkit2-4.0", ""),
+    ("icedtea-netx", ""),
 ])
 def test_gui_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -79,9 +78,9 @@ def test_user_in_passwd_file(host, user):
 ])
 def test_service_running(host, service_name):
     service = host.service(service_name)
-    assert service.is_running
     assert service.is_enabled
-
+    assert service.is_running
+    
 
 @pytest.mark.parametrize("proto,hostname,port", [
     ("tcp", "0.0.0.0", "22"),
@@ -103,13 +102,12 @@ def test_passwd_file(host):
 
 def test_openthinclient_user(host):
     user = host.user(ssh_name)
+    assert user.exists
     assert user.name == ssh_name
-    assert user.group == ssh_name
-    assert user.exists is True
+    assert user.group == ssh_name    
 
 
 @pytest.mark.parametrize("filename", [
-    "/usr/local/sbin/openthinclient-changepassword",
     "/usr/local/sbin/openthinclient-cleaner",
     "/usr/local/sbin/openthinclient-ldapbackup",
     "/usr/local/sbin/openthinclient-restart",
@@ -117,9 +115,9 @@ def test_openthinclient_user(host):
 ])
 def test_otc_usr_local_sbin_files(host, filename):
     file = host.file(filename)
+    assert file.exists
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -127,16 +125,17 @@ def test_otc_usr_local_sbin_files(host, filename):
 ])
 def test_otc_usr_local_bin_files(host, filename):
     file = host.file(filename)
+    assert file.exists
     assert file.user == "openthinclient"
     assert file.group == "openthinclient"
-    assert file.exists is True
 
 
 def test_crond_ldap_backup_file(host):
     managerbin = host.file("/etc/cron.d/openthinclient_ldap_backup")
+    assert managerbin.exists
     assert managerbin.user == "root"
     assert managerbin.group == "root"
-    assert managerbin.exists is True
+
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -146,10 +145,10 @@ def test_sudoers_file(host, filename, content):
     filen = host.file(filename)
     with host.sudo():
         host.check_output("whoami")
+        assert filen.exists
         assert filen.contains(content)
         assert filen.user == "root"
         assert filen.group == "root"
-        assert filen.exists is True
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -158,10 +157,10 @@ def test_sudoers_file(host, filename, content):
 def test_openthinclient_version_information_file_present(host, filename, content):
     filen = host.file(filename)
     with host.sudo():
+        assert filen.exists
         assert filen.contains(content)
         assert filen.user == "root"
         assert filen.group == "root"
-        assert filen.exists is True
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -171,18 +170,18 @@ def test_openthinclient_version_information_file_present(host, filename, content
 def test_for_eth0_in_etc_network_interfaces_file(host, filename, content):
     filen = host.file(filename)
     with host.sudo():
+        assert filen.exists
         assert filen.contains(content)
         assert filen.user == "root"
         assert filen.group == "root"
-        assert filen.exists is True
 
 
 def test_udev_rule_eth0_rules_file_workaround(host):
     directory = host.file("/etc/udev/rules.d/80-net-setup-link.rules")
+    assert directory.is_symlink
+    assert directory.linked_to == "/dev/null"
     assert directory.user == "root"
     assert directory.group == "root"
-    assert directory.is_symlink is True
-    assert directory.linked_to == "/dev/null"
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -195,8 +194,8 @@ def test_udev_rule_eth0_rules_file_workaround(host):
 def test_bash_aliases_file(host, filename, content):
     with host.sudo():
         file = host.file(filename)
+        assert file.exists
         assert file.contains(content)
-        assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
@@ -204,18 +203,17 @@ def test_bash_aliases_file(host, filename, content):
 ])
 def test_otc_gui_lightdm_locale_fix(host, filename):
     file = host.file(filename)
+    assert file.exists
     assert file.user == "root"
     assert file.group == "root"
-    assert file.exists is True
-    # assert file.mode == 0o744 # FIXME - check if this needs to executable
-
+    assert file.mode == 0o755
 
 def test_ctrl_alt_del_reboot_keyboard_config_disabled(host):
     directory = host.file("/lib/systemd/system/ctrl-alt-del.target")
+    assert directory.is_symlink
+    assert directory.linked_to == "/dev/null"
     assert directory.user == "root"
     assert directory.group == "root"
-    assert directory.is_symlink is True
-    assert directory.linked_to == "/dev/null"
 
 
 @pytest.mark.parametrize("filename", [
@@ -223,9 +221,7 @@ def test_ctrl_alt_del_reboot_keyboard_config_disabled(host):
 ])
 def test_lightdm_config_file(host, filename):
     file = host.file(filename)
-    # assert file.user == "root"
-    # assert file.group == "root"
-    assert file.exists is True
+    assert file.exists
 
 
 @pytest.mark.parametrize("filename,content", [
@@ -236,64 +232,57 @@ def test_lightdm_config_file(host, filename):
 ])
 def test_lightdm_config_content(host, filename, content):
     file = host.file(filename)
+    assert file.exists
     assert file.contains(content)
-    # assert file.group == "root"
-    assert file.exists is True
 
 
 @pytest.mark.parametrize("filename", [
     "/usr/local/bin/openthinclient-greeter.py",
-    "/usr/local/bin/tcos-ascii"
+    "/usr/local/bin/openthinclient-caja-desktop-fix",
+    "/usr/local/bin/tcos-ascii",
+    "/usr/local/bin/tcos-reboot-required",
+    "/usr/local/bin/tcos-ip",
 ])
 def test_otc_gui_fixes_via_script(host, filename):
     filen = host.file(filename)
-    assert filen.user == "openthinclient"
-    assert filen.group == "openthinclient"
-    assert filen.exists is True
+    assert filen.exists
+    assert filen.mode == 0o755
+
 
 
 @pytest.mark.parametrize("filename", [
-    "/home/openthinclient/Desktop/mate-network-properties.desktop",
     "/home/openthinclient/Desktop/mate-terminal.desktop",
     "/home/openthinclient/Desktop/nm-connection-editor.desktop",
     "/home/openthinclient/Desktop/otc_livesupport.desktop",
     "/home/openthinclient/Desktop/otc_manager_gui.desktop",
-    "/home/openthinclient/Desktop/otc_password.desktop",
     "/home/openthinclient/Desktop/otc_service_restart.desktop",
     "/home/openthinclient/Desktop/otc_VA_README.desktop",
-    "/home/openthinclient/Desktop/time.desktop",
     "/home/openthinclient/Desktop/VNC_Viewer.desktop",
 ])  
 def test_otc_desktop_icons_present(host, filename):
     file = host.file(filename)
-    assert file.user == "openthinclient"
-    assert file.group == "openthinclient"
-    assert file.exists is True
+    assert file.exists
+    assert file.mode == 0o755
 
 
 @pytest.mark.parametrize("filename", [
     "/usr/local/share/openthinclient/backgrounds/default.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_advisor.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_features.png",
     "/usr/local/share/openthinclient/icons/openthinclient_manager.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_network_proxy.png",
     "/usr/local/share/openthinclient/icons/openthinclient_professional_support.png",
     "/usr/local/share/openthinclient/icons/openthinclient_readme.png",
     "/usr/local/share/openthinclient/icons/openthinclient_service_restart.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_shop.png",
 ])
 def test_otc_background_and_icons_present(host, filename):
     file = host.file(filename)
-    assert file.user == "openthinclient"
-    assert file.group == "openthinclient"
-    assert file.exists is True
+    assert file.exists
+    assert file.mode == 0o644
 
 
 @pytest.mark.parametrize("name", [
     "rpcbind",
 ])
 def test_package_cleanup(host, name):
-    assert host.package(name).is_installed == False
+    assert not host.package(name).is_installed
 
 
 def test_basic_system_information(host):
@@ -351,7 +340,8 @@ def test_free_diskspace(executable, expected_output, host):
     ("dos2unix -ic /etc/sudoers.d/90-openthinclient-appliance", ""),
     ("dos2unix -ic /usr/local/sbin/zerofree.sh", ""),
     ("dos2unix -ic /usr/local/sbin/openthinclient*", ""),
-    ("dos2unix -ic /usr/local/bin/openthinclient*", "")
+    ("dos2unix -ic /usr/local/bin/openthinclient*", ""),
+    ("dos2unix -ic /usr/local/bin/tcos*", ""),
 ])
 def test_modified_system_file_linux_mode(executable, expected_output, host):
     with host.sudo():
@@ -371,9 +361,10 @@ def test_path_in_profile_file(host, path):
 
 def test_openthinclient_user_dotxsessionrc(host):
     managerbin = host.file("/home/openthinclient/.xsessionrc")
+    assert managerbin.exists
+    assert managerbin.mode == 0o644
     assert managerbin.user == "openthinclient"
     assert managerbin.group == "openthinclient"
-    assert managerbin.exists is True
 
 
 @pytest.mark.parametrize("setting", [

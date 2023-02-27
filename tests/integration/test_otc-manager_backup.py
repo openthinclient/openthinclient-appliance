@@ -32,5 +32,6 @@ class Test_OTC_Backup(object):
         files = host.file(OTC_BACKUP_DIR).listdir()
         for filename in files:
             filen = host.file(OTC_BACKUP_DIR + filename)
-            assert filen.contains(content) is True
-            assert filen.exists is True
+            assert filen.exists
+            assert filen.contains(content)
+            

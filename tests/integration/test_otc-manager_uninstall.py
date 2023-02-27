@@ -3,15 +3,7 @@ import pytest
 otc_manager_install_path = "/opt/otc-manager/"
 
 
-@pytest.mark.last
 class Test_OTCManager_Uninstall(object):
-    # def setup(self):
-    # ssh_name = "openthinclient"
-    # ssh_pass = "0pen%TC"
-    # otc_manager_database_user = "openthinclient"
-    # otc_manager_database_pass = "openthinclient"
-    # otc_manager_default_pass = "0pen%TC"
-    # otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
     @pytest.mark.parametrize("executable", [
         (otc_manager_install_path + "uninstall -q"),
@@ -26,12 +18,11 @@ class Test_OTCManager_Uninstall(object):
     ])
     def test_openthinclient_manager_service_is_not_running(self, host, service_name):
         service = host.service(service_name)
-        assert service.is_running is False
-        # assert service.is_enabled is False
+        assert not service.is_running
 
     def test_openthinclient_manager_file_not_exists(self, host):
         managerbin = host.file(otc_manager_install_path + "/bin/openthinclient-manager")
-        assert managerbin.exists is False
+        assert not managerbin.exists
 
     @pytest.mark.parametrize("filename", [
         (otc_manager_install_path + "bin/openthinclient-manager"),
@@ -42,7 +33,7 @@ class Test_OTCManager_Uninstall(object):
     ])
     def test_if_otc_manager_exuectable_files_exist(self, host, filename):
         filen = host.file(filename)
-        assert filen.exists is False
+        assert not filen.exists
 
     @pytest.mark.parametrize("directory", [
         (otc_manager_install_path + ".install4j/"),
@@ -51,7 +42,7 @@ class Test_OTCManager_Uninstall(object):
     ])
     def test_openthinclient_install_subdirectory_after_uninstall(self, host, directory):
         directory = host.file(directory)
-        assert directory.is_directory is False
+        assert not directory.is_directory
 
     def test_openthinclient_install_directory_after_uninstall(self, host):
         dir_content = host.run("ls -ld $(find " + otc_manager_install_path + " )")
@@ -59,4 +50,4 @@ class Test_OTCManager_Uninstall(object):
         print(dir_content.stdout)
 
         directory = host.file(otc_manager_install_path)
-        assert directory.is_directory is False
+        assert not directory.is_directory

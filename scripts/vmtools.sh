@@ -95,7 +95,7 @@ qemu)
 
 *)
     echo "Unknown Packer Builder Type >> $PACKER_BUILDER_TYPE << selected.";
-    echo "Known are: > hyperv-iso <> virtualbox-iso <> mware-iso <> parallels-iso <";
+    echo "Known are: > hyperv-iso <> virtualbox-iso <> vmware-iso <> parallels-iso <";
     ;;
 
 esac

@@ -7,15 +7,11 @@ export DEBIAN_FRONTEND="noninteractive"
 # set a default HOME_DIR environment variable if not set
 HOME_DIR="${HOME_DIR:-/home/openthinclient}";
 
-#env | sort
-#set +u
 
 function install_open_vm_tools {
     echo "==> Installing Open VM Tools"
     # Install open-vm-tools. Due to --no-intall-recommends require all packages
     apt-get install -y open-vm-tools open-vm-tools-dev open-vm-tools-desktop
-    # Add /mnt/hgfs if you want shared folders with Vagrant
-    # mkdir /mnt/hgfs
     rm -f $HOME_DIR/*.iso;
 }
 
@@ -25,7 +21,6 @@ function install_vmware_tools {
     mkdir -p /tmp/vmfusion-archive;
     mount -o loop $HOME_DIR/linux.iso /tmp/vmfusion;
     tar xzf /tmp/vmfusion/VMwareTools-*.tar.gz -C /tmp/vmfusion-archive;
-    #/tmp/vmfusion-archive/vmware-tools-distrib/vmware-install.pl --force-install;
 	  /tmp/vmfusion-archive/vmware-tools-distrib/vmware-install.pl -d;
     umount /tmp/vmfusion;
     rm -rf  /tmp/vmfusion;

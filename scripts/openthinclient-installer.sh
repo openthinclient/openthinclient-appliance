@@ -3,23 +3,12 @@
 # Purpose:      install new version of the openthinclient software package
 #------------------------------------------------------------------------------
 
-
 OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name '*.sh' ! -name '*with_JRE.sh' -type f)
-#OTC_INSTALLER_NAME=otc-manager_unix.sh
-#OTC_INSTALLER_FULLPATH=/tmp/installers/${OTC_INSTALLER_NAME}
-
 OTC_INSTALLER_VARFILE=/tmp/data/installer/unattended-linux.varfile.txt
-
-# Please sync the following settings with the unattended linux-varfile
 OTC_INSTALL_PATH=/opt/otc-manager/
-#echo ${OTC_INSTALL_PATH}
-#echo $OTC_INSTALL_PATH
 
 # location of the home working directory
 OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
-
-# Please uncomment password for openthinclient manager for local testing
-#OTC_DEFAULT_PASS=0pen%TC
 
 echo "==> Installing new openthinclient manager"
 if [ -f "$OTC_INSTALLER_FULLPATH" ]; then

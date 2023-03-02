@@ -167,7 +167,6 @@ if [ -f ${VERSION_FILE} ]; then
     echo "Operating system:" >>  ${VERSION_FILE}
     lsb_release -d -s >>  ${VERSION_FILE}
     echo "===================" >>  ${VERSION_FILE}
-    #${OTC_INSTALL_PATH}bin/managerctl ls-distributions -v >>  ${VERSION_FILE}
 else
     echo "==> Populating openthinclient VM information failed. File not found"
 fi

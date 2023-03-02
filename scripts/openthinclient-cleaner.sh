@@ -7,8 +7,6 @@ DISK_USAGE_BEFORE_CLEANUP=$(df -h)
 
 # Please sync these with the unattended linux-varfile
 OTC_INSTALL_PATH=/opt/otc-manager/
-#echo ${OTC_INSTALL_PATH}
-#echo $OTC_INSTALL_PATH
 
 # location of the home working directory
 OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
@@ -132,29 +130,3 @@ echo ${DISK_USAGE_BEFORE_CLEANUP}
 
 echo "==> Disk usage after cleanup"
 df -h
-
-## zero out swap and mkswap again
-#swapSpace=$(swapon -s | tail -n 1 | awk '{print $1}')
-#echo $swapSpace | grep -qv Filename && (
-#    swapoff $swapSpace
-#    dd if=/dev/zero of=$swapSpace
-#    mkswap -f $swapSpace
-#)
-#
-## shrink root fs
-## are we inside a vmware guest-host?
-#which vmware-toolbox-cmd &> /dev/null
-#if [ $? -eq 0 ]; then
-#    echo "It seems we're inside an VMware-Guest. Will now use vmware-tools to shrink harddisc."
-#    vmware-toolbox-cmd disk shrink /boot
-#else 
-#    echo "No VMware tools could be found. I guess we're inside some other type of virtual host."
-#    echo "Do you want to reboot the system and fill your unused harddisc space with zeros?"
-#    echo "You'll need to do so if you want to shrink your HD. [y/N]"
-#    read goon
-#    if [ "$goon" = "y" ]; then
-#	grub-reboot shrink-disc-$(uname -r)
-#	reboot -f
-#    fi
-#fi
-

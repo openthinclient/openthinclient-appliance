@@ -251,8 +251,6 @@ def test_otc_gui_fixes_via_script(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
-    "/home/openthinclient/Desktop/mate-terminal.desktop",
-    "/home/openthinclient/Desktop/nm-connection-editor.desktop",
     "/home/openthinclient/Desktop/otc_livesupport.desktop",
     "/home/openthinclient/Desktop/otc_manager_gui.desktop",
     "/home/openthinclient/Desktop/otc_service_restart.desktop",

@@ -45,7 +45,7 @@ if [ -f "$OTC_INSTALLER_FULLPATH" ]; then
         echo "==> removing rpcbind package"
         apt-get remove -y --purge rpcbind nfs-common
 
-        echo "==> Creating .appliance.properties file to activate noVNC"
+        echo "==> Creating FLAG file for openthinclient-management"
         touch ${OTC_INSTALL_HOME}.appliance.properties
         chown openthinclient:openthinclient ${OTC_INSTALL_HOME}.appliance.properties
 

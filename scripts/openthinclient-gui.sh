@@ -187,8 +187,8 @@ tar xvfz ${OTC_CUSTOM_DEPLOY_PATH}/dotjava.tar.gz -C /home/openthinclient/
 chown openthinclient:openthinclient /home/openthinclient/.java/ -R
 chmod 700 /home/openthinclient/.java/
 
-echo "==> Installing xtightvncviewer with --no-install-recommends"
-apt-get install -y --no-install-recommends xtightvncviewer
+echo "==> Installing tigervnc-viewer with --no-install-recommends"
+apt-get install -y --no-install-recommends tigervnc-viewer
 
 echo "==> Installing pluma texteditor with --no-install-recommends"
 apt-get install -y --no-install-recommends pluma

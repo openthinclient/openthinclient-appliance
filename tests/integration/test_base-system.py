@@ -43,7 +43,7 @@ def test_basic_packages_installed(host, name, version):
 
 
 @pytest.mark.parametrize("name,version", [
-    ("xtightvncviewer", ""),
+    ("tigervnc-viewer", ""),
     ("dconf-cli", ""),
     ("dconf-editor", ""),
     ("xserver-xorg", ""),
@@ -255,7 +255,6 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/otc_manager_gui.desktop",
     "/home/openthinclient/Desktop/otc_service_restart.desktop",
     "/home/openthinclient/Desktop/otc_VA_README.desktop",
-    "/home/openthinclient/Desktop/VNC_Viewer.desktop",
 ])  
 def test_otc_desktop_icons_present(host, filename):
     file = host.file(filename)

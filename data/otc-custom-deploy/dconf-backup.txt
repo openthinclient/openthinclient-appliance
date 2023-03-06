@@ -53,7 +53,7 @@ computer-icon-visible=false
 trash-icon-visible=false
 
 [org/mate/panel/general]
-object-id-list=['menu-bar', 'notification-area', 'clock', 'show-desktop', 'window-list', 'workspace-switcher', 'otc-manager', 'otc-restart', 'firefox', 'terminal', 'object_0', 'object_1', 'object_2']
+object-id-list=['menu-bar', 'notification-area', 'clock', 'show-desktop', 'window-list', 'workspace-switcher', 'otc-manager', 'otc-restart', 'chromium', 'terminal', 'object_0', 'object_1', 'object_2']
 toplevel-id-list=['top', 'bottom']
 
 [org/mate/panel/toplevels/bottom]
@@ -78,8 +78,8 @@ position=0
 object-type='applet'
 panel-right-stick=true
 
-[org/mate/panel/objects/firefox]
-launcher-location='/usr/share/applications/firefox-esr.desktop'
+[org/mate/panel/objects/chromium]
+launcher-location='/usr/share/applications/chromium.desktop'
 toplevel-id='top'
 position=40
 object-type='launcher'
@@ -131,7 +131,7 @@ command='tcos-ip'
 [org/mate/panel/objects/object_2]
 applet-iid='CommandAppletFactory::CommandApplet'
 toplevel-id='top'
-position=550
+position=675
 object-type='applet'
 panel-right-stick=false
 

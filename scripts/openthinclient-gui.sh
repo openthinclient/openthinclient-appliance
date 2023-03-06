@@ -161,31 +161,27 @@ if ! [ -d $OTC_HOME_CONFIG_DIR ]; then
 	# chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
 fi
 chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
+echo "==> Installing chromium web browser with --no-install-recommends"
+apt-get install -y --no-install-recommends chromium
 
-echo "==> Installing firefox web browser with --no-install-recommends"
-apt-get install -y --no-install-recommends firefox-esr
+echo "==> Installing chromium web browser language packs with --no-install-recommends"
+apt-get install -y --no-install-recommends chromium-l10n
 
-echo "==> Installing firefox web browser german language file with --no-install-recommends"
-apt-get install -y --no-install-recommends firefox-esr-l10n-de
-
-
-if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/mozilla/ ]; then
-  echo "==> Deploying custom openthinclient mozilla settings"
-	chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
-	cp -a ${OTC_CUSTOM_DEPLOY_PATH}/mozilla/ /home/openthinclient/
-  mv /home/openthinclient/mozilla /home/openthinclient/.mozilla
-  chown openthinclient:openthinclient /home/openthinclient/.mozilla/ -R
-  chmod 700 /home/openthinclient/.mozilla/
-  # Fix mozilla cache dir
-  chown openthinclient:openthinclient /home/openthinclient/.cache/ -R
-else
-  echo "==> Deploying custom openthinclient mozilla settings failed"
-fi
+echo "==> Creating chromium managed policies directory"
+mkdir -p /etc/chromium/policies/managed/
+echo "==> Deploying chromium browser managed policies"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/chromium/policies/managed/*.json /etc/chromium/policies/managed/
+chown root:root /etc/chromium/policies/managed/ -R
 
 echo "==> Deploying .java default settings for the openthinclient manager"
 tar xvfz ${OTC_CUSTOM_DEPLOY_PATH}/dotjava.tar.gz -C /home/openthinclient/
 chown openthinclient:openthinclient /home/openthinclient/.java/ -R
 chmod 700 /home/openthinclient/.java/
+# Validity: [from: Aug 17 00:00:00 UTC 2022 to: 15 Aug 23:59:59 2025]
+echo "==> Deploying openthinclient-Livesupport trusted certificate"
+mkdir -p /home/openthinclient/.config/icedtea-web/security/
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/live-support-cert/trusted.certs /home/openthinclient/.config/icedtea-web/security/
+chmod 600 /home/openthinclient/.config/icedtea-web/security/trusted.certs
 
 echo "==> Installing tigervnc-viewer with --no-install-recommends"
 apt-get install -y --no-install-recommends tigervnc-viewer

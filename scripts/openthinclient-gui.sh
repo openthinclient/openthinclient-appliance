@@ -152,15 +152,6 @@ dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share
 echo "==> disable unwanted <Ctrl><Alt><Delete> restart inside mate desktop environment"
 dbus-launch dconf write /org/mate/settings-daemon/plugins/media-keys/power "''"
 
-# FIX config dir - Temp workaround
-OTC_HOME_CONFIG_DIR=/home/openthinclient/.config/
-
-if ! [ -d $OTC_HOME_CONFIG_DIR ]; then
-	echo "==> $OTC_HOME_CONFIG_DIR will be created"
-	mkdir $OTC_HOME_CONFIG_DIR
-	# chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
-fi
-chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
 echo "==> Installing chromium web browser with --no-install-recommends"
 apt-get install -y --no-install-recommends chromium
 
@@ -184,5 +175,16 @@ apt-get install -y --no-install-recommends tigervnc-viewer
 
 echo "==> Installing pluma texteditor with --no-install-recommends"
 apt-get install -y --no-install-recommends pluma
+
+# FIX config dir - Temp workaround
+OTC_HOME_CONFIG_DIR=/home/openthinclient/.config/
+
+if [ -d $OTC_HOME_CONFIG_DIR ]; then
+    chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
+else
+    echo "==> $OTC_HOME_CONFIG_DIR will be created"
+    mkdir $OTC_HOME_CONFIG_DIR
+    chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
+fi
 
 exit 0

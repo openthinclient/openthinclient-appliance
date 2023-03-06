@@ -173,10 +173,6 @@ echo "==> Deploying chromium browser managed policies"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/chromium/policies/managed/*.json /etc/chromium/policies/managed/
 chown root:root /etc/chromium/policies/managed/ -R
 
-echo "==> Deploying .java default settings for the openthinclient manager"
-tar xvfz ${OTC_CUSTOM_DEPLOY_PATH}/dotjava.tar.gz -C /home/openthinclient/
-chown openthinclient:openthinclient /home/openthinclient/.java/ -R
-chmod 700 /home/openthinclient/.java/
 # Validity: [from: Aug 17 00:00:00 UTC 2022 to: 15 Aug 23:59:59 2025]
 echo "==> Deploying openthinclient-Livesupport trusted certificate"
 mkdir -p /home/openthinclient/.config/icedtea-web/security/

@@ -47,7 +47,7 @@ function install_virtualbox_tools {
     rm -f $HOME_DIR/*.iso;
     apt-get remove -y build-essential
     
-    echo "==> "echo "==> Adding user "openthinclient" to vboxsf group"
+    echo "==> Adding user "openthinclient" to vboxsf group"
     usermod -a -G vboxsf openthinclient    
 }
 
@@ -56,7 +56,7 @@ echo "$PACKER_BUILDER_TYPE"
 case "$PACKER_BUILDER_TYPE" in
 
 hyperv-iso)
-    echo "Installing Hyper-V-Daemons"
+    echo "==> Installing Hyper-V-Daemons"
     apt-get install -y hyperv-daemons
     install_open_vm_tools
     ;;

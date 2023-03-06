@@ -33,9 +33,6 @@ if [ -d "/home/openthinclient/otc-manager-home/" ]; then
     rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
     rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
 
-    # remove nfs db from manager home
-    rm /home/openthinclient/otc-manager-home/nfs/nfs-paths.db*
-
     # remove homes
     rm -rf /home/openthinclient/otc-manager-home/nfs/home/*
 

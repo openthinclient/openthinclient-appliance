@@ -3,9 +3,6 @@
 # Purpose:      adapt message of the day to show some useful information
 #------------------------------------------------------------------------------
 
-#echo "==> Recording box generation date"
-#date > /etc/otc_box_build_date
-
 echo "==> Customizing message of the day"
 MOTD_FILE=/etc/motd
 BANNER_WIDTH=64

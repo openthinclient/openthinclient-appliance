@@ -135,21 +135,21 @@ apt-get install -y evince
 echo "==> Installing arandr"
 apt-get install -y arandr
 
-echo "==> Reading desktop configuration via dconf"
+echo "==> Reading desktop configuration"
 sudo -u openthinclient dbus-launch dconf dump /
 echo "==> End Reading desktop configuration via dconf"
 
-echo "==> Setting preconfigured desktop configuration via dconf"
+echo "==> Setting preconfigured desktop configuration"
 DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-backup.txt"
 
-echo "dbus-launch dconf load / < $DCONF_CONFIG"
+echo "==> Loading preconfigured desktop configuration"
 sudo -u openthinclientdbus-launch dconf load / < ${DCONF_CONFIG}
 
 echo "==> Setting openthinclient appliance desktop background"
 sudo -u openthinclient dbus-launch gsettings writable org.mate.background picture-filename
 sudo -u openthinclient dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/default.png'
 
-echo "==> disable unwanted <Ctrl><Alt><Delete> restart inside mate desktop environment"
+echo "==> Disable key shortcut <Ctrl><Alt><Delete> in Mate-desktop environment"
 sudo -u openthinclient dbus-launch dconf write /org/mate/settings-daemon/plugins/media-keys/power "''"
 
 echo "==> Installing chromium web browser with --no-install-recommends"
@@ -158,9 +158,9 @@ apt-get install -y --no-install-recommends chromium
 echo "==> Installing chromium web browser language packs with --no-install-recommends"
 apt-get install -y --no-install-recommends chromium-l10n
 
-echo "==> Creating chromium managed policies directory"
+echo "==> Creating chromium web browser managed policies directory"
 mkdir -p /etc/chromium/policies/managed/
-echo "==> Deploying chromium browser managed policies"
+echo "==> Deploying chromium web browser managed policy"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/chromium/policies/managed/*.json /etc/chromium/policies/managed/
 chown root:root /etc/chromium/policies/managed/ -R
 

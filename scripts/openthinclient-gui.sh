@@ -160,9 +160,14 @@ apt-get install -y --no-install-recommends chromium-l10n
 
 echo "==> Creating chromium web browser managed policies directory"
 mkdir -p /etc/chromium/policies/managed/
+
 echo "==> Deploying chromium web browser managed policy"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/chromium/policies/managed/*.json /etc/chromium/policies/managed/
 chown root:root /etc/chromium/policies/managed/ -R
+
+echo "==> Deploying chromium web browser master preferences file"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/chromium/master_preferences /etc/chromium/
+chown root:root /etc/chromium/ -R
 
 # Validity: [from: Aug 17 00:00:00 UTC 2022 to: 15 Aug 23:59:59 2025]
 echo "==> Deploying openthinclient-Livesupport trusted certificate"

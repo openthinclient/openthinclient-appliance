@@ -1,12 +1,12 @@
 {
     "AutoOpenFileTypes": ["jnlp"],
     "BookmarkBarEnabled": false,
-    "ClearBrowsingDataOnExitList": ["browsing_history"],
     "ComponentUpdatesEnabled": false,
     "DefaultBrowserSettingEnabled": false,
     "ForcedLanguages": ["en-US","de-DE"],
     "HomepageLocation": "https://www.openthinclient.com",
     "MetricsReportingEnabled": false,
+    "PasswordManagerEnabled": true,
     "SafeBrowsingExtendedReportingEnabled": false,
     "SpellcheckEnabled": true,
     "SpellcheckLanguage": ["en-US", "de"],

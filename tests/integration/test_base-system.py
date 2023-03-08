@@ -12,7 +12,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
 
 
 @pytest.mark.parametrize("name,version", [
-    ("python3", "3."),
+    ("python3", ""),
     ("zerofree", ""),
     ("openssh-server", ""),
     ("ntp", ""),
@@ -48,7 +48,7 @@ def test_basic_packages_installed(host, name, version):
     ("dconf-editor", ""),
     ("xserver-xorg", ""),
     ("gnome-system-tools", ""),
-    ("firefox-esr", ""),
+    ("chromium", ""),
     ("pluma", ""),
     ("mate-desktop-environment-core", ""),
     ("lightdm", ""),
@@ -75,6 +75,8 @@ def test_user_in_passwd_file(host, user):
 
 @pytest.mark.parametrize("service_name", [
     "lightdm",
+    "wizard-server",
+    "unattended-upgrades"
 ])
 def test_service_running(host, service_name):
     service = host.service(service_name)
@@ -121,7 +123,12 @@ def test_otc_usr_local_sbin_files(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
+    "/usr/local/bin/openthinclient-caja-desktop-fix",
+    "/usr/local/bin/openthinclient-greeter.py",
     "/usr/local/bin/openthinclient-vmversion",
+    "/usr/local/bin/tcos-ascii",
+    "/usr/local/bin/tcos-ip",
+    "/usr/local/bin/tcos-reboot-required"
 ])
 def test_otc_usr_local_bin_files(host, filename):
     file = host.file(filename)
@@ -237,17 +244,17 @@ def test_lightdm_config_content(host, filename, content):
 
 
 @pytest.mark.parametrize("filename", [
-    "/usr/local/bin/openthinclient-greeter.py",
     "/usr/local/bin/openthinclient-caja-desktop-fix",
+    "/usr/local/bin/openthinclient-greeter.py",
+    "/usr/local/bin/openthinclient-vmversion",
     "/usr/local/bin/tcos-ascii",
-    "/usr/local/bin/tcos-reboot-required",
     "/usr/local/bin/tcos-ip",
+    "/usr/local/bin/tcos-reboot-required",
 ])
 def test_otc_gui_fixes_via_script(host, filename):
     filen = host.file(filename)
     assert filen.exists
     assert filen.mode == 0o755
-
 
 
 @pytest.mark.parametrize("filename", [

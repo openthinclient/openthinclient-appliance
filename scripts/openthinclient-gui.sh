@@ -136,21 +136,21 @@ echo "==> Installing arandr"
 apt-get install -y arandr
 
 echo "==> Reading desktop configuration via dconf"
-dbus-launch dconf dump /
+sudo -u openthinclient dbus-launch dconf dump /
 echo "==> End Reading desktop configuration via dconf"
 
 echo "==> Setting preconfigured desktop configuration via dconf"
 DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-backup.txt"
 
 echo "dbus-launch dconf load / < $DCONF_CONFIG"
-dbus-launch dconf load / < ${DCONF_CONFIG}
+sudo -u openthinclientdbus-launch dconf load / < ${DCONF_CONFIG}
 
 echo "==> Setting openthinclient appliance desktop background"
-dbus-launch gsettings writable org.mate.background picture-filename
-dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/default.png'
+sudo -u openthinclient dbus-launch gsettings writable org.mate.background picture-filename
+sudo -u openthinclient dbus-launch gsettings set org.mate.background picture-filename '/usr/local/share/openthinclient/backgrounds/default.png'
 
 echo "==> disable unwanted <Ctrl><Alt><Delete> restart inside mate desktop environment"
-dbus-launch dconf write /org/mate/settings-daemon/plugins/media-keys/power "''"
+sudo -u openthinclient dbus-launch dconf write /org/mate/settings-daemon/plugins/media-keys/power "''"
 
 echo "==> Installing chromium web browser with --no-install-recommends"
 apt-get install -y --no-install-recommends chromium

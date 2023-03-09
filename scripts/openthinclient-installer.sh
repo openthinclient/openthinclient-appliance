@@ -31,7 +31,7 @@ if [ -f "$OTC_INSTALLER_FULLPATH" ]; then
 	    --home $OTC_INSTALL_HOME \
 	    --dist-source http://archive.openthinclient.org/openthinclient/v2022/first-start-profiles/distributions.xml
 	            
-        echo "==> removing rpcbind package"
+        echo "==> Removing rpcbind package"
         apt-get remove -y --purge rpcbind nfs-common
 
         echo "==> Creating FLAG file for openthinclient-management"

@@ -85,7 +85,7 @@ echo "==> Adding sbin paths for openthinclient user"
 echo 'export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"' > /home/openthinclient/.profile
 echo 'if [ -r ~/.profile ]; then . ~/.profile; fi' > /home/openthinclient/.xsessionrc
 
-echo "==> turn off screen blanking inside openthinclient VM"
+echo "==> Turning off screen blanking inside openthinclient VM"
 cat <<EOF >> /home/openthinclient/.xsessionrc
 # Turn off screen blanking
 xset s off && xset -dpms
@@ -200,7 +200,7 @@ apt-get install -y zerofree
 echo "==> Updating grub configuration"
 update-grub
 
-echo "==> setting nofile limits"
+echo "==> Setting nofile limits"
 cat <<EOF >> /etc/security/limits.conf
 *               -   nofile  	65535
 openthinclient	-  	nofile  	65535

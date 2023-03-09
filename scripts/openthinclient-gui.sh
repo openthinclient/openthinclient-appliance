@@ -137,7 +137,6 @@ apt-get install -y arandr
 
 echo "==> Reading desktop configuration"
 sudo -u openthinclient dbus-launch dconf dump /
-echo "==> End Reading desktop configuration via dconf"
 
 echo "==> Setting preconfigured desktop configuration"
 DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-backup.txt"
@@ -185,6 +184,7 @@ apt-get install -y --no-install-recommends pluma
 OTC_HOME_CONFIG_DIR=/home/openthinclient/.config/
 
 if [ -d $OTC_HOME_CONFIG_DIR ]; then
+    echo "==> Setting ownership for $OTC_HOME_CONFIG_DIR to user \"openthinclient\""
     chown openthinclient:openthinclient ${OTC_HOME_CONFIG_DIR} -R
 else
     echo "==> $OTC_HOME_CONFIG_DIR will be created"

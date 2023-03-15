@@ -103,7 +103,7 @@ find /var/log/ -name "*\.0" -type f -delete
 find /var/log/ -name "*\.[0-9]*\.gz" -type f -delete
 
 echo "==> Disk usage before cleanup"
-echo ${DISK_USAGE_BEFORE_CLEANUP}
+echo "${DISK_USAGE_BEFORE_CLEANUP}"
 
 echo "==> Disk usage after cleanup"
 df -h

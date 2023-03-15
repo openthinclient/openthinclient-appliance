@@ -1,4 +1,4 @@
-#!/usr/bin/env bash 
+#!/bin/bash 
 # Filename:     print-server.sh
 # Purpose:      install print server for openthinclient usage
 #------------------------------------------------------------------------------
@@ -25,5 +25,5 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/cups/cupsd.conf /etc/cups/cupsd.conf
 echo "==> Setting correct permissions for custom cupsd.conf configuration"
 chown root:lp /etc/cups/cupsd.conf
 
-echo "==> Adding user "openthinclient" to lpadmin group"
+echo "==> Adding user openthinclient to lpadmin group"
 usermod -a -G lpadmin openthinclient

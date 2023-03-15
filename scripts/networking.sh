@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -eux
+#!/bin/bash -eux
 # Filename:     networking.sh
 # Purpose:      configure basic network settings
 #-----------------------

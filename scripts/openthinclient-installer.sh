@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -eux
+#!/bin/bash -eux
 # Filename:     openthinclient-installer.sh
 # Purpose:      install new version of the openthinclient software package
 #------------------------------------------------------------------------------
@@ -13,13 +13,13 @@ OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
 echo "==> Installing new openthinclient manager"
 if [ -f "$OTC_INSTALLER_FULLPATH" ]; then
 	echo "==> $OTC_INSTALLER_FULLPATH exists. Continue with installation"
-	echo $OTC_INSTALLER_FULLPATH
+	echo "$OTC_INSTALLER_FULLPATH"
 
 	echo "==> Setting chmod +x for the installer binary: $OTC_INSTALLER_FULLPATH"
-	chmod +x $OTC_INSTALLER_FULLPATH
+	chmod +x "$OTC_INSTALLER_FULLPATH"
 
 	echo "==> Starting unattended installation with preconfigured varfile: $OTC_INSTALLER_VARFILE"
-	echo $OTC_INSTALLER_FULLPATH -q -varfile $OTC_INSTALLER_VARFILE -Vservice.start=false
+	echo "$OTC_INSTALLER_FULLPATH" -q -varfile $OTC_INSTALLER_VARFILE -Vservice.start=false
 	$OTC_INSTALLER_FULLPATH -q -varfile $OTC_INSTALLER_VARFILE -Vservice.start=false
 
     echo "==> Checking for existing manager installation to prepare-home"
@@ -54,10 +54,12 @@ if [ -f "$OTC_INSTALLER_FULLPATH" ]; then
 
     else
 	    echo "==> $OTC_INSTALL_PATH doesn't exist. Installation was not successful"
+        exit 1
     fi
 
 else
 	echo "==> $OTC_INSTALLER_FULLPATH doesn't exist. Installation can't be executed"
+    exit 1
 fi
 
 exit 0

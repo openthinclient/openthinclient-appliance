@@ -1,4 +1,4 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 # Filename:     vmtools.sh
 # Purpose:      install specific vm tools dependent on packer build type
 #------------------------------------------------------------------------------
@@ -12,42 +12,42 @@ function install_open_vm_tools {
     echo "==> Installing Open VM Tools"
     # Install open-vm-tools. Due to --no-intall-recommends require all packages
     apt-get install -y open-vm-tools open-vm-tools-dev open-vm-tools-desktop
-    rm -f $HOME_DIR/*.iso;
+    rm -f "$HOME_DIR"/*.iso;
 }
 
 function install_vmware_tools {
     echo "==> Installing VMware Tools"
     mkdir -p /tmp/vmfusion;
     mkdir -p /tmp/vmfusion-archive;
-    mount -o loop $HOME_DIR/linux.iso /tmp/vmfusion;
+    mount -o loop "$HOME_DIR"/linux.iso /tmp/vmfusion;
     tar xzf /tmp/vmfusion/VMwareTools-*.tar.gz -C /tmp/vmfusion-archive;
 	  /tmp/vmfusion-archive/vmware-tools-distrib/vmware-install.pl -d;
     umount /tmp/vmfusion;
     rm -rf  /tmp/vmfusion;
     rm -rf  /tmp/vmfusion-archive;
-    rm -f $HOME_DIR/*.iso;
+    rm -f "$HOME_DIR"/*.iso;
 }
 
 function install_virtualbox_tools {
-    echo "=> Installing virtualbox tools"
-	  apt-get install -y --no-install-recommends build-essential linux-headers-`uname -r` dkms
+    echo "==> Installing virtualbox tools"
+	  apt-get install -y --no-install-recommends build-essential linux-headers-"$(uname -r)" dkms
     mkdir -p /tmp/vbox;
-    VBOX_VERSION="`cat /home/openthinclient/.vbox_version`";
+    VBOX_VERSION="$(cat /home/openthinclient/.vbox_version)";
     VBOX_ISO=$HOME_DIR/VBoxGuestAdditions_${VBOX_VERSION}.iso
-    if [ ! -f $VBOX_ISO ] ; then
-    wget -q http://download.virtualbox.org/virtualbox/${VBOX_VERSION}/VBoxGuestAdditions_${VBOX_VERSION}.iso \
-        -O $VBOX_ISO
+    if [ ! -f "$VBOX_ISO" ] ; then
+    wget -q http://download.virtualbox.org/virtualbox/"${VBOX_VERSION}"/VBoxGuestAdditions_"${VBOX_VERSION}".iso \
+        -O "$VBOX_ISO"
     fi
-    mount -o loop $HOME_DIR/VBoxGuestAdditions_${VBOX_VERSION}.iso /tmp/vbox;
+    mount -o loop "$HOME_DIR"/VBoxGuestAdditions_"${VBOX_VERSION}".iso /tmp/vbox;
     sh /tmp/vbox/VBoxLinuxAdditions.run \
         || echo "VBoxLinuxAdditions.run exited $? and is suppressed." \
             "For more read https://www.virtualbox.org/ticket/12479";
     umount /tmp/vbox;
     rm -rf /tmp/vbox;
-    rm -f $HOME_DIR/*.iso;
+    rm -f "$HOME_DIR"/*.iso;
     apt-get remove -y build-essential
     
-    echo "==> Adding user "openthinclient" to vboxsf group"
+    echo "==> Adding user openthinclient to vboxsf group"
     usermod -a -G vboxsf openthinclient    
 }
 
@@ -56,7 +56,7 @@ echo "$PACKER_BUILDER_TYPE"
 case "$PACKER_BUILDER_TYPE" in
 
 hyperv-iso)
-    echo "==> Installing Hyper-V-Daemons"
+    echo "==> Installing Hyper-V daemons"
     apt-get install -y hyperv-daemons
     install_open_vm_tools
     ;;
@@ -72,7 +72,7 @@ vmware-iso|vmware-vmx)
 
 parallels-iso|parallels-pvm)
     mkdir -p /tmp/parallels;
-    mount -o loop $HOME_DIR/prl-tools-lin.iso /tmp/parallels;
+    mount -o loop "$HOME_DIR"/prl-tools-lin.iso /tmp/parallels;
     /tmp/parallels/install --install-unattended-with-deps \
       || (code="$?"; \
           echo "Parallels tools installation exited $code, attempting" \
@@ -81,7 +81,7 @@ parallels-iso|parallels-pvm)
           exit $code);
     umount /tmp/parallels;
     rm -rf /tmp/parallels;
-    rm -f $HOME_DIR/*.iso;
+    rm -f "$HOME_DIR"/*.iso;
     ;;
 
 qemu)

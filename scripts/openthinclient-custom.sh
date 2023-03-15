@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Filename:     openthinclient-custom.sh
 # Purpose:      install openthinclient custom scripts and needed packages
 #------------------------------------------------------------------------------
@@ -6,8 +6,6 @@ export DEBIAN_FRONTEND="noninteractive"
 
 # set custom deploy path
 OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
-
-OTC_INSTALL_PATH=/opt/otc-manager/
 
 echo "==> Deploying LDAP backup"
 mkdir -p /etc/skel_ldap/
@@ -82,7 +80,7 @@ chown openthinclient:openthinclient /home/openthinclient/.bash_profile
 
 
 echo "==> Adding sbin paths for openthinclient user"
-echo 'export PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"' > /home/openthinclient/.profile
+echo "export PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin" > /home/openthinclient/.profile
 echo 'if [ -r ~/.profile ]; then . ~/.profile; fi' > /home/openthinclient/.xsessionrc
 
 echo "==> Turning off screen blanking inside openthinclient VM"
@@ -144,14 +142,6 @@ chown root:root /etc/cron.d/openthinclient_ldap_backup
 chmod +x /etc/cron.d/openthinclient_ldap_backup
 dos2unix /etc/cron.d/openthinclient_ldap_backup
 
-echo "==> Deploying openthinclient-documentation directory"
-if [ -d ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/documentation/ ]; then
-    cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/documentation/ /usr/local/share/openthinclient/documentation/
-else
-    echo "==> Deploying openthinclient-documentation directory failed"
-fi
-
-
 echo "==> Creating openthinclient vm version information"
 VERSION_FILE="/usr/local/share/openthinclient/openthinclient-vm-version"
 touch $VERSION_FILE
@@ -159,14 +149,16 @@ touch $VERSION_FILE
 echo "==> Populating openthinclient vm version information"
 if [ -f ${VERSION_FILE} ]; then
     echo "==> Populating already existing openthinclient vm version ${VERSION_FILE}"
-    echo "===================" >>  ${VERSION_FILE}
     PLATFORM_MSG=$(printf 'openthinclient %s' "$OTC_APPLIANCE_VERSION")
-    BUILT_MSG=$(printf 'built %s' $(date +%Y-%m-%d))
-    printf '%s%-30s%10s\n' " " "${PLATFORM_MSG}" "${BUILT_MSG}" >> ${VERSION_FILE}
-    echo "===================" >>  ${VERSION_FILE}
-    echo "Operating system:" >>  ${VERSION_FILE}
-    lsb_release -d -s >>  ${VERSION_FILE}
-    echo "===================" >>  ${VERSION_FILE}
+    BUILT_MSG=$(printf 'built %s' "$(date +%Y-%m-%d)")
+    {
+        echo "==================="
+        printf '%s%-30s%10s\n' " " "${PLATFORM_MSG}" "${BUILT_MSG}"
+        echo "==================="
+        echo "Operating system:"
+        lsb_release -d -s
+        echo "==================="
+    } >>  ${VERSION_FILE}
 else
     echo "==> Populating openthinclient VM information failed. File not found"
 fi
@@ -176,7 +168,7 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/backgrounds/defau
 echo 'GRUB_BACKGROUND="/boot/grub/default.png"' >> /etc/default/grub 
 
 
-if [ $PACKER_BUILDER_TYPE == 'hyperv-iso' ]; then
+if [ "$PACKER_BUILDER_TYPE" == "hyperv-iso" ]; then
   echo "Installing custom kernel grub configuration for Hyper-V"
   sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="quiet"/GRUB_CMDLINE_LINUX_DEFAULT="quiet video=hyperv_fb:1600x900"/g' /etc/default/grub
 else

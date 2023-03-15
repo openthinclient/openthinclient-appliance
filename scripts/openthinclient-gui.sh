@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Filename:     openthinclient-gui.sh
 # Purpose:      install openthinclient custom GUI and related packages
 #------------------------------------------------------------------------------
@@ -76,15 +76,15 @@ chmod +x /home/openthinclient/Desktop/*.desktop
 
 echo "==> Deploying appliance wizard [0/4]:"
 echo "==> Appliance wizard: Download nodejs [1/4]"
-wget -q -O ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz ${NODEJS_URL}
+wget -q -O ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz "${NODEJS_URL}"
 
 echo "==> Appliance wizard: Unpack nodejs [2/4]"
 tar -xf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz -C ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard
-NODE_DIR=`tar -tf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz | head -n 1`
+NODE_DIR=$(tar -tf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz | head -n 1)
 PATH=$PATH:${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/${NODE_DIR}bin
 
 echo "==> Appliance wizard: Build frontend [3/4]"
-cd ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page
+cd ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page || exit
 npm config set update-notifier false
 npm install
 npm run build

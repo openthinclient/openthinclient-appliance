@@ -3,13 +3,9 @@
     "BookmarkBarEnabled": false,
     "ComponentUpdatesEnabled": false,
     "DefaultBrowserSettingEnabled": false,
-    "ForcedLanguages": ["en-US","de-DE"],
-    "HomepageLocation": "https://www.openthinclient.com",
     "MetricsReportingEnabled": false,
     "PasswordManagerEnabled": true,
     "SafeBrowsingExtendedReportingEnabled": false,
-    "SpellcheckEnabled": true,
-    "SpellcheckLanguage": ["en-US", "de"],
     "SyncDisabled": true,    
     "UserFeedbackAllowed": false
 }

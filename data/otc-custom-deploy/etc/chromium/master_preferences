@@ -10,7 +10,7 @@
      "suppress_first_run_default_browser_prompt": true
   },
   "browser": {
-     "show_home_button": true,
+     "show_home_button": false,
      "has_seen_welcome_page" : true,
      "check_default_browser" : false
   },
@@ -65,5 +65,5 @@
   "default_apps": "noinstall",
   "hide_web_store_icon": true,
   "homepage_is_newtabpage": false,
-  "homepage": "https://www.openthinclient.com"
+  "homepage": "http://localhost:8080"
 }

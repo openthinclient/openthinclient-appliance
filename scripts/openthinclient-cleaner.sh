@@ -97,30 +97,10 @@ if [ -f "/root/.bash_history" ]; then
 	rm /root/.bash_history
 fi
 
-clean_logs() {
-    echo $1
-    echo $2
-    for i in `find ${1} -name ${2} -type f`
-    do
-        >$i
-    	ls -la $i
-    	#rm $i
-    done
-}
-
-clean_logs "/var/log/" "*\.log\.*"
-clean_logs "/var/log/" "*\.0"
-clean_logs "/var/log/" "*\.[0-9]*\.gz"
-
-# clean logs
-for i in `find /var/log/ -name "*log" -type f`
-do
-	>$i
-done
-
-find /var/log/ -name "*\.log\.*" -type f | xargs rm
-find /var/log/ -name "*\.0" -type f | xargs rm
-find /var/log/ -name "*\.[0-9]*\.gz" -type f | xargs rm
+echo "==> Cleanup /var/log/"
+find /var/log/ -name "*\.log\.*" -type f -delete
+find /var/log/ -name "*\.0" -type f -delete
+find /var/log/ -name "*\.[0-9]*\.gz" -type f -delete
 
 echo "==> Disk usage before cleanup"
 echo ${DISK_USAGE_BEFORE_CLEANUP}

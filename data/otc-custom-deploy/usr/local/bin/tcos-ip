@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ip=`hostname -I | sed -e 's/ /\n/g' | grep -E -e "([0-9]+\.){3,3}[0-9]+"`
+ip=$(hostname -I | sed -e 's/ /\n/g' | grep -E -e "([0-9]+\.){3,3}[0-9]+")
 
 if [ "$ip" = "" ];
 then

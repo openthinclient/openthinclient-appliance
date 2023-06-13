@@ -66,12 +66,12 @@ variable "dir" {
 
 variable "iso_checksum" {
   type    = string
-  default = "224cd98011b9184e49f858a46096c6ff4894adff8945ce89b194541afdfd93b73b4666b0705234bd4dff42c0a914fdb6037dd0982efb5813e8a553d8e92e6f51"
+  default = "b462643a7a1b51222cd4a569dad6051f897e815d10aa7e42b68adc8d340932d861744b5ea14794daa5cc0ccfa48c51d248eda63f150f8845e8055d0a5d7e58e6"
 }
 
 variable "iso_url" {
   type    = string
-  default = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.6.0-amd64-netinst.iso"
+  default = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.0.0-amd64-netinst.iso"
 }
 
 variable "nodejs_checksum" {
@@ -196,7 +196,7 @@ source "hyperv-iso" "hyperv" {
   ssh_timeout        = "${var.ssh_timeout}"
   shutdown_command   = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
   output_directory   = "builds/${var.vm_name}-hyperv"
-  
+
   enable_secure_boot = false
   generation         = 2
   disk_block_size    = 1

@@ -13,7 +13,7 @@ BUDIR=/var/backups/openthinclient
 [ ! -d $BUDIR ] && mkdir -p $BUDIR
 
 # generate name of backup file
-FILENAME=$BUDIR/otc-ldapbackup-`date +%d.%m.%y_%H-%M`.ldiff
+FILENAME=$BUDIR/otc-ldapbackup-$(date +%d.%m.%y_%H-%M).ldiff
 
 ldapsearch -H ldap://localhost:10389 -x -b ou=openthinclient,dc=openthinclient,dc=org -D uid=admin,ou=system -w"${Password}" > "$FILENAME" || "$LOGGER" -p info "Automatic openthinclient LDAP backup failed"
 

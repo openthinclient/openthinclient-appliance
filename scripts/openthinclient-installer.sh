@@ -3,7 +3,7 @@
 # Purpose:      install new version of the openthinclient software package
 #------------------------------------------------------------------------------
 
-OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name '*.sh' ! -name '*with_JRE.sh' -type f)
+OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name 'openthin*.sh' -type f)
 OTC_INSTALLER_VARFILE=/tmp/data/installer/unattended-linux.varfile.txt
 OTC_INSTALL_PATH=/opt/otc-manager/
 
@@ -24,13 +24,13 @@ if [ -f "$OTC_INSTALLER_FULLPATH" ]; then
 
     echo "==> Checking for existing manager installation to prepare-home"
 	if [ -f ${OTC_INSTALL_PATH}bin/managerctl ]; then
-	    
+
         echo "==> Running managerctl install with predefined variables"
 	    $OTC_INSTALL_PATH/bin/managerctl prepare-home \
-	    --admin-password $OTC_DEFAULT_PASS \
+	    --admin-password "$OTC_DEFAULT_PASS" \
 	    --home $OTC_INSTALL_HOME \
 	    --dist-source http://archive.openthinclient.org/openthinclient/v2022/first-start-profiles/distributions.xml
-	            
+
         echo "==> Removing rpcbind package"
         apt-get remove -y --purge rpcbind nfs-common
 

@@ -82,7 +82,7 @@ def test_service_running(host, service_name):
     service = host.service(service_name)
     assert service.is_enabled
     assert service.is_running
-    
+
 
 @pytest.mark.parametrize("proto,hostname,port", [
     ("tcp", "0.0.0.0", "22"),
@@ -106,7 +106,7 @@ def test_openthinclient_user(host):
     user = host.user(ssh_name)
     assert user.exists
     assert user.name == ssh_name
-    assert user.group == ssh_name    
+    assert user.group == ssh_name
 
 
 @pytest.mark.parametrize("filename", [
@@ -262,7 +262,7 @@ def test_otc_gui_fixes_via_script(host, filename):
     "/home/openthinclient/Desktop/otc_manager_gui.desktop",
     "/home/openthinclient/Desktop/otc_service_restart.desktop",
     "/home/openthinclient/Desktop/otc_VA_README.desktop",
-])  
+])
 def test_otc_desktop_icons_present(host, filename):
     file = host.file(filename)
     assert file.exists

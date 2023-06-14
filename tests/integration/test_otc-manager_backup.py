@@ -34,4 +34,3 @@ class Test_OTC_Backup(object):
             filen = host.file(OTC_BACKUP_DIR + filename)
             assert filen.exists
             assert filen.contains(content)
-            

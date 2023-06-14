@@ -15,7 +15,7 @@ BUDIR=/var/backups/openthinclient
 # generate name of backup file
 FILENAME=$BUDIR/otc-ldapbackup-`date +%d.%m.%y_%H-%M`.ldiff
 
-ldapsearch -p 10389 -h localhost -x -b ou=openthinclient,dc=openthinclient,dc=org -D uid=admin,ou=system -w${Password} > $FILENAME || $LOGGER -p info "Automatic openthinclient LDAP backup failed"
+ldapsearch -H ldap://localhost:10389 -x -b ou=openthinclient,dc=openthinclient,dc=org -D uid=admin,ou=system -w"${Password}" > "$FILENAME" || "$LOGGER" -p info "Automatic openthinclient LDAP backup failed"
 
 # delete backup files older than 100 days
 find $BUDIR  -mtime +100 -exec rm {} \;

@@ -292,11 +292,11 @@ def test_package_cleanup(host, name):
 def test_basic_system_information(host):
     assert host.system_info.type == "linux"
     assert host.system_info.distribution == "debian"
-    assert host.system_info.codename == "bullseye"
+    assert host.system_info.codename == "bookworm"
 
 
 @pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "11."),
+    ("/usr/bin/java -version", "17."),
 ])
 def test_java_version(executable, expected_output, host):
     with host.sudo():

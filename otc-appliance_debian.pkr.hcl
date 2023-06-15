@@ -11,7 +11,7 @@ variable "vm_description" {
 
 variable "vm_name" {
   type    = string
-  default = "openthinclient-Appliance-2022.1.3"
+  default = "openthinclient-Appliance-2022.1.4"
 }
 
 variable "headless" {

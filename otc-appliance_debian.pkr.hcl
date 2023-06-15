@@ -1,7 +1,7 @@
 
 variable "appliance_version" {
   type    = string
-  default = "2022.1.3"
+  default = "2022.1.4"
 }
 
 variable "vm_description" {

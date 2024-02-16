@@ -87,6 +87,7 @@ PATH=$PATH:${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/${NODE_DIR}bin
 echo "==> Appliance wizard: Build frontend [3/4]"
 cd ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page || exit
 npm config set update-notifier false
+npm audit fix
 npm install
 npm run build
 

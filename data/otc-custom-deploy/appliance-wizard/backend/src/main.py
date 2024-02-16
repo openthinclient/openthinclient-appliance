@@ -53,6 +53,7 @@ def term_frontend(server):
 def destroy(server):
     try:
         os.remove("/var/appliance-wizard/RUN.FLAG")
+        subprocess.run(["umount", "/etc/lightdm/lightdm.conf"])
     except:
         server.respond(
             500,

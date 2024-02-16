@@ -77,6 +77,7 @@ chmod +x /home/openthinclient/Desktop/*.desktop
 echo "==> Deploying appliance wizard [0/4]:"
 echo "==> Appliance wizard: Download nodejs [1/4]"
 wget -q -O ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz "${NODEJS_URL}"
+dos2unix ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz
 
 echo "==> Appliance wizard: Unpack nodejs [2/4]"
 tar -xf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz -C ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard
@@ -92,6 +93,9 @@ npm run build
 echo "==> Appliance wizard: Deploy wizard [4/4]"
 mkdir -p /usr/local/share/appliance-wizard
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/backend /usr/local/share/appliance-wizard
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/configure-first-start-autologin.service /etc/systemd/system/configure-first-start-autologin.service
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/configure-first-start-autologin.py /usr/local/bin/configure-first-start-autologin.py
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm-first-start-override.conf /etc/lightdm/lightdm-firststart-override.conf
 mv /usr/local/share/appliance-wizard/backend/wizard-server.service /etc/systemd/system/wizard-server.service
 mv /usr/local/share/appliance-wizard/backend/wizard-server.path /etc/systemd/system/wizard-server.path
 mkdir -p /usr/local/share/appliance-wizard/frontend
@@ -101,16 +105,20 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page/dist /usr/local/s
 mv /usr/local/share/appliance-wizard/backend/dist /usr/local/share/appliance-wizard/backend/assets
 mkdir -p /var/appliance-wizard
 touch /var/appliance-wizard/RUN.FLAG
+dos2unix /usr/local/bin/configure-first-start-autologin.py
+chmod +x /usr/local/bin/configure-first-start-autologin.py
 dos2unix /usr/local/share/appliance-wizard/backend/start.sh
 chmod +x /usr/local/share/appliance-wizard/backend/start.sh
 dos2unix /usr/local/share/appliance-wizard/frontend/browser/start.sh
 chmod +x /usr/local/share/appliance-wizard/frontend/browser/start.sh
 
+chown root:root /etc/lightdm/lightdm-firststart-override.conf
 chown root:root /usr/local/share/appliance-wizard -R
 chown root:root /etc/systemd/system/wizard-server.service
 chown root:root /etc/systemd/system/wizard-server.path
 chown root:root /etc/xdg/autostart/wizard-start.desktop
 
+systemctl enable configure-first-start-autologin.service
 systemctl enable wizard-server.service
 systemctl enable wizard-server.path
 

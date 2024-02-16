@@ -92,9 +92,6 @@ npm run build
 echo "==> Appliance wizard: Deploy wizard [4/4]"
 mkdir -p /usr/local/share/appliance-wizard
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/backend /usr/local/share/appliance-wizard
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/configure-first-start-autologin.service /etc/systemd/system/configure-first-start-autologin.service
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/configure-first-start-autologin.py /usr/local/bin/configure-first-start-autologin.py
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/lightdm/lightdm-firststart-override.conf /etc/lightdm/lightdm-firststart-override.conf
 mv /usr/local/share/appliance-wizard/backend/wizard-server.service /etc/systemd/system/wizard-server.service
 mv /usr/local/share/appliance-wizard/backend/wizard-server.path /etc/systemd/system/wizard-server.path
 mkdir -p /usr/local/share/appliance-wizard/frontend
@@ -114,11 +111,8 @@ chown root:root /etc/systemd/system/wizard-server.service
 chown root:root /etc/systemd/system/wizard-server.path
 chown root:root /etc/xdg/autostart/wizard-start.desktop
 
-chmod +x /usr/local/bin/configure-first-start-autologin.py
-
 systemctl enable wizard-server.service
 systemctl enable wizard-server.path
-systemctl enable configure-first-start-autologin.service
 
 echo "==> Installing dconf packages"
 apt-get install -y dconf-editor dconf-cli

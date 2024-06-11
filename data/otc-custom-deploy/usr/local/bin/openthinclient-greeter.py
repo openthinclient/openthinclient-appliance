@@ -181,8 +181,9 @@ def reboot_click_handler(widget, data=None):
 def fill_with_users(user_cb):
     user_id = 0
     last_user = cache.get("greeter", "last-user", fallback=None)
+    users = LightDM.UserList().get_instance().get_users()
 
-    for id, user in enumerate(LightDM.UserList().get_users()):
+    for id, user in enumerate(users):
         user_cb.append_text(user.get_name())
         if user.get_name() == last_user:
             user_id = id

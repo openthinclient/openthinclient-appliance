@@ -53,7 +53,6 @@ def term_frontend(server):
 def destroy(server):
     try:
         os.remove("/var/appliance-wizard/RUN.FLAG")
-        subprocess.run(["umount", "/etc/lightdm/lightdm.conf"])
     except:
         server.respond(
             500,
@@ -158,7 +157,7 @@ def setup_post_endpoints():
 if __name__ == "__main__":
     print(f"Server running at http://{HOST}:{PORT}")
     print(f"User id: {os.getuid()}")
-
+    
     setup_post_endpoints()
 
     try:

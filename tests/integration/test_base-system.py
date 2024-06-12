@@ -258,10 +258,10 @@ def test_otc_gui_fixes_via_script(host, filename):
 
 
 @pytest.mark.parametrize("filename", [
-    "/home/openthinclient/Desktop/otc_livesupport.desktop",
-    "/home/openthinclient/Desktop/otc_manager_gui.desktop",
-    "/home/openthinclient/Desktop/otc_service_restart.desktop",
-    "/home/openthinclient/Desktop/otc_VA_README.desktop",
+    "/home/openthinclient/Desktop/openthinclient_support.desktop",
+    "/home/openthinclient/Desktop/openthinclient_server.desktop",
+    "/home/openthinclient/Desktop/openthinclient_restart.desktop",
+    "/home/openthinclient/Desktop/openthinclient_readme.desktop",
 ])
 def test_otc_desktop_icons_present(host, filename):
     file = host.file(filename)
@@ -271,10 +271,10 @@ def test_otc_desktop_icons_present(host, filename):
 
 @pytest.mark.parametrize("filename", [
     "/usr/local/share/openthinclient/backgrounds/default.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_manager.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_professional_support.png",
+    "/usr/local/share/openthinclient/icons/openthinclient_server.png",
+    "/usr/local/share/openthinclient/icons/openthinclient_support.png",
     "/usr/local/share/openthinclient/icons/openthinclient_readme.png",
-    "/usr/local/share/openthinclient/icons/openthinclient_service_restart.png",
+    "/usr/local/share/openthinclient/icons/openthinclient_restart.png",
 ])
 def test_otc_background_and_icons_present(host, filename):
     file = host.file(filename)

@@ -1,17 +1,17 @@
 
 variable "appliance_version" {
   type    = string
-  default = "2022.1.4"
+  default = "2024.1-BETA"
 }
 
 variable "vm_description" {
   type    = string
-  default = "openthinclient is a Free Open Source Thin Client Solution consisting of a Linux based operating system along with a comprehensive Java based management GUI and server component. It is intended for environments where a medium to large number of Thin Clients must be supported and managed efficiently. Offering flexibility unheard of in the world of proprietary Thin Client Solutions, openthinclient empowers developers and integrators to create advanced Thin Client solutions... for free. www.openthinclient.org"
+  default = ""
 }
 
 variable "vm_name" {
   type    = string
-  default = "openthinclient-Appliance-2022.1.4"
+  default = "openthinclient-Appliance-2024.1-BETA"
 }
 
 variable "headless" {

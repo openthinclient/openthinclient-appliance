@@ -1,8 +1,7 @@
-#!/usr/bin/env xdg-open
 [Desktop Entry]
 Version=1.0
 Type=Application
-Exec=chromium %u https://wiki.openthinclient.org/display/OMD/Virtual+Appliance
+Exec=chromium %u https://docs.openthinclient.com/books/installation/page/virtual-appliance
 Icon=/usr/local/share/openthinclient/icons/openthinclient_readme.png
 Name=README
 Comment=README for openthinclient-Virtual Appliance

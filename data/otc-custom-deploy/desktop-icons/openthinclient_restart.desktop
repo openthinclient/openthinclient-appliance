@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=mate-terminal -e "sudo /usr/local/sbin/openthinclient-restart"
+Icon=/usr/local/share/openthinclient/icons/openthinclient_restart.png
+Name[de_DE]=openthinclient-Management-Server neu starten
+Name[en_US]=openthinclient-Management-Server restart
+Terminal=false

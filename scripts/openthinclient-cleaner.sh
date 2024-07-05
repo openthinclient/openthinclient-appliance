@@ -4,106 +4,98 @@
 #------------------------------------------------------------------------------
 
 DISK_USAGE_BEFORE_CLEANUP=$(df -h)
+OTC_INSTALL_PATH="/opt/otc-manager/"
+OTC_INSTALL_HOME="/home/openthinclient/otc-manager-home/"
+OTC_SERVICE="openthinclient-manager"
+OTC_CACHE_DIR="${OTC_INSTALL_HOME}nfs/root/var/cache/archives/"
+OTC_LOG_DIR="${OTC_INSTALL_HOME}logs/"
+OTC_BACKUPS_DIR="/var/backups/openthinclient/"
+JDK_CACHE_DIR="/var/cache/oracle-jdk8-installer/"
+DHCP_DIR="/var/lib/dhcp"
+TMP_DIR="/tmp"
+UDEV_RULES="/etc/udev/rules.d/70-persistent-net.rules"
+OTC_BASH_HISTORY="/home/openthinclient/.bash_history"
+ROOT_BASH_HISTORY="/root/.bash_history"
+LOG_DIR="/var/log/"
 
-# Please sync these with the unattended linux-varfile
-OTC_INSTALL_PATH=/opt/otc-manager/
+log_message() {
+    echo "==> $1"
+}
 
-# location of the home working directory
-OTC_INSTALL_HOME=/home/openthinclient/otc-manager-home/
+cleanup_directory() {
+    local dir=$1
+    if [ -d "$dir" ]; then
+        rm -rf "${dir:?}"/*
+        log_message "Cleaned up ${dir}"
+    fi
+}
 
-#------------------------------------------------------------------------------
-# openthinclient specific cleanup
+stop_service() {
+    local service=$1
+    if systemctl is-active --quiet "${service}"; then
+        log_message "Stopping the ${service} server before cleaning up"
+        systemctl stop "${service}"
+        sleep 30
+        log_message "Making sure the ${service} server is stopped"
+        systemctl status "${service}"
+    else
+        log_message "${service} is not active or not found"
+    fi
+}
 
-if [ -f "/etc/systemd/system/openthinclient-manager.service" ]; then
-    echo "==> Stopping the openthinclient server before cleaning up"
-    service openthinclient-manager stop
+cleanup_apt() {
+    apt-get -y autoremove --purge
+    apt-get -y autoclean
+    apt-get -y clean
+}
 
-    # wait for shutdown
-    sleep 60
-    echo "==> Making sure the openthinclient server is stopped"
-    service openthinclient-manager status
-fi
+cleanup_logs() {
+    find ${LOG_DIR} -name "*\.log\.*" -type f -delete
+    find ${LOG_DIR} -name "*\.0" -type f -delete
+    find ${LOG_DIR} -name "*\.[0-9]*\.gz" -type f -delete
+    log_message "Cleaned up logs in ${LOG_DIR}"
+}
 
-if [ -d "/home/openthinclient/otc-manager-home/" ]; then
-
-    # remove all downloaded openthinclient dpkg packages
-    find  /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/ -name "*.deb" -exec rm {} \;
-
-    # remove cache files
-    rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/1/*
-    rm -rf /home/openthinclient/otc-manager-home/nfs/root/var/cache/archives/2/*
-
-    # remove homes
-    rm -rf /home/openthinclient/otc-manager-home/nfs/home/*
-
-    # Remove unique server id
-    ${OTC_INSTALL_PATH}bin/managerctl rm-server-id --home ${OTC_INSTALL_HOME}
-
-    # disable accessControlEnabledto to generate custom password on next restart
-    sed -i 's#<accessControlEnabled>true</accessControlEnabled>#<accessControlEnabled>false</accessControlEnabled>#' ${OTC_INSTALL_HOME}directory/service.xml
-
-    # remove old logfiles from manager home
-    rm -rf /home/openthinclient/otc-manager-home/logs/*
-
-    # Remove unique server id
-    ${OTC_INSTALL_PATH}bin/managerctl rm-server-id --home ${OTC_INSTALL_HOME}
-fi
-
-# delete ldap backups
-if [ -d "/var/backups/openthinclient/ " ]; then
-    find /var/backups/openthinclient/ -print -name "*\.ldiff\.*" -type f -exec rm -rf {} \;
-fi
-
-# Cleaning up oracle-jdk8-installer cache dir
-echo "==> Cleaning up /var/cache/oracle-jdk8-installer folder"
-if [ -d "/var/cache/oracle-jdk8-installer/" ]; then
-    rm -rf /var/cache/oracle-jdk8-installer/*
-fi
-
-#------------------------------------------------------------------------------
-# general
-
-echo "==> Cleaning up leftover dhcp leases"
-if [ -d "/var/lib/dhcp" ]; then
-    rm /var/lib/dhcp/*
-fi
-
-echo "==> Cleaning up tmp"
-rm -rf /tmp/*
-
-echo "==> Remove udev network rules to cleanup old interfaces"
-if [ -f "/etc/udev/rules.d/70-persistent-net.rules" ]; then
-    rm /etc/udev/rules.d/70-persistent-net.rules
-fi
-
-echo "==> Removing pipewire and xdg-desktop-portal"
-apt-get purge -y pipewire 
-apt-get purge -y xdg-desktop-portal
-
-echo "==> Cleanup apt cache"
-apt-get -y autoremove --purge
-apt-get -y clean
-apt-get -y autoclean
-
-# clean history
-echo "==> Delete openthinclient .bash_history file if exists"
-if [ -f "/home/openthinclient/.bash_history" ]; then
-    rm /home/openthinclient/.bash_history
-fi
-
-# clean root history
-echo "==> Clean /root/.bash_history file if exists"
-if [ -f "/root/.bash_history" ]; then
-	rm /root/.bash_history
-fi
-
-echo "==> Cleanup /var/log/"
-find /var/log/ -name "*\.log\.*" -type f -delete
-find /var/log/ -name "*\.0" -type f -delete
-find /var/log/ -name "*\.[0-9]*\.gz" -type f -delete
-
-echo "==> Disk usage before cleanup"
+log_message "Disk usage before cleanup"
 echo "${DISK_USAGE_BEFORE_CLEANUP}"
 
-echo "==> Disk usage after cleanup"
+stop_service ${OTC_SERVICE}
+
+if [ -d "${OTC_INSTALL_HOME}" ]; then
+    find ${OTC_CACHE_DIR} -name "*.deb" -exec rm {} \;
+    cleanup_directory "${OTC_CACHE_DIR}1"
+    cleanup_directory "${OTC_CACHE_DIR}2"
+    cleanup_directory "${OTC_INSTALL_HOME}nfs/home"
+    ${OTC_INSTALL_PATH}bin/managerctl rm-server-id --home ${OTC_INSTALL_HOME}
+    sed -i 's#<accessControlEnabled>true</accessControlEnabled>#<accessControlEnabled>false</accessControlEnabled>#' ${OTC_INSTALL_HOME}directory/service.xml
+    cleanup_directory "${OTC_LOG_DIR}"
+fi
+
+if [ -d "${OTC_BACKUPS_DIR}" ]; then
+    find ${OTC_BACKUPS_DIR} -name "*.ldiff.*" -type f -exec rm -rf {} \;
+    log_message "Deleted LDAP backups in ${OTC_BACKUPS_DIR}"
+fi
+
+cleanup_directory "${JDK_CACHE_DIR}"
+cleanup_directory "${DHCP_DIR}"
+cleanup_directory "${TMP_DIR}"
+
+if [ -f "${UDEV_RULES}" ]; then
+    rm ${UDEV_RULES}
+    log_message "Removed udev network rules ${UDEV_RULES}"
+fi
+
+if [ -f "${OTC_BASH_HISTORY}" ]; then
+    rm ${OTC_BASH_HISTORY}
+    log_message "Deleted openthinclient .bash_history"
+fi
+
+if [ -f "${ROOT_BASH_HISTORY}" ]; then
+    rm ${ROOT_BASH_HISTORY}
+    log_message "Deleted root .bash_history"
+fi
+
+cleanup_logs
+
+log_message "Disk usage after cleanup"
 df -h

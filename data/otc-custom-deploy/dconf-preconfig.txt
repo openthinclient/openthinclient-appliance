@@ -147,7 +147,7 @@ position=0
 object-type='menu-bar'
 
 [org/mate/panel/objects/otc-restart]
-launcher-location='/home/openthinclient/Desktop/otc_service_restart.desktop'
+launcher-location='/home/openthinclient/Desktop/openthinclient_restart.desktop'
 toplevel-id='top'
 position=30
 object-type='launcher'
@@ -176,7 +176,7 @@ position=0
 object-type='applet'
 
 [org/mate/panel/objects/otc-manager]
-launcher-location='/home/openthinclient/Desktop/otc_manager_gui.desktop'
+launcher-location='/home/openthinclient/Desktop/openthinclient_server.desktop'
 toplevel-id='top'
 position=20
 object-type='launcher'

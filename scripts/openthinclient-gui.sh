@@ -140,7 +140,7 @@ echo "==> Reading desktop configuration"
 sudo -u openthinclient dbus-launch dconf dump /
 
 echo "==> Setting preconfigured desktop configuration"
-DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-backup.txt"
+DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-preconfig.txt"
 
 echo "==> Loading preconfigured desktop configuration"
 sudo -u openthinclient dbus-launch dconf load / < ${DCONF_CONFIG}

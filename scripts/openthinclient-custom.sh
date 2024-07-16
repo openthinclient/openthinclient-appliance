@@ -7,6 +7,12 @@ export DEBIAN_FRONTEND="noninteractive"
 # set custom deploy path
 OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
 
+echo "==> Depolying load-snd-dummy service"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/load-snd-dummy.service /etc/systemd/system/load-snd-dummy.service
+echo "==> Enabling/starting load-snd-dummy service"
+sudo systemctl enable load-snd-dummy.service
+sudo systemctl start load-snd-dummy.service
+
 echo "==> Deploying LDAP backup"
 mkdir -p /etc/skel_ldap/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/skel_ldap/ldap_empty.zip /etc/skel_ldap/
@@ -164,8 +170,8 @@ else
 fi
 
 echo "==> Deploying openthinclient grub background image"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/backgrounds/default.png /boot/grub/ 
-echo 'GRUB_BACKGROUND="/boot/grub/default.png"' >> /etc/default/grub 
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/backgrounds/default.png /boot/grub/
+echo 'GRUB_BACKGROUND="/boot/grub/default.png"' >> /etc/default/grub
 
 
 if [ "$PACKER_BUILDER_TYPE" == "hyperv-iso" ]; then

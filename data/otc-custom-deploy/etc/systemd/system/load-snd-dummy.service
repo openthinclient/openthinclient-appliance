@@ -1,0 +1,10 @@
+[Unit]
+Description=Load snd-dummy module if /proc/asound/cards does not exist
+ConditionPathExists=!/proc/asound/cards
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/modprobe snd-dummy
+
+[Install]
+WantedBy=multi-user.target

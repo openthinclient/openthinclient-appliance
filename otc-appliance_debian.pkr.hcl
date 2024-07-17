@@ -235,6 +235,7 @@ source "virtualbox-iso" "vbox" {
   guest_os_type       = "${var.virtualbox_guest_os_type}"
   post_shutdown_delay = "30s"
   vboxmanage          = [
+    ["modifyvm", "{{ .Name }}", "--nat-localhostreachable1", "on"],
     ["modifyvm", "{{ .Name }}", "--vram", "32"],
     ["modifyvm", "{{ .Name }}", "--description", "${var.vm_description}"]
     ]

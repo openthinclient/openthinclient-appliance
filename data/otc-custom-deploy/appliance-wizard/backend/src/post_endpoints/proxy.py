@@ -33,20 +33,20 @@ def do_manual_proxy_configuration(proxy_type, server, data):
         server.respond(
             500,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
         return
     except KeyError:
         server.respond(
             400,
             {"Content-Type": "application/json"},
-            {"successfull": False})
+            {"successful": False})
         return
 
     server.respond(
         200,
         {"Content-Type": "application/json"},
-        {"successfull": True}
+        {"successful": True}
     )
 
 
@@ -66,21 +66,21 @@ def mode(server, data):
         server.respond(
             500,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
         return
     except KeyError:
         server.respond(
             400,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
         return
 
     server.respond(
         200,
         {"Content-Type": "application/json"},
-        {"successfull": True}
+        {"successful": True}
     )
 
 
@@ -100,21 +100,21 @@ def autoconfig_url(server, data):
         server.respond(
             500,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
         return
     except KeyError:
         server.respond(
             400,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
         return
 
     server.respond(
         200,
         {"Content-Type": "application/json"},
-        {"successfull": True}
+        {"successful": True}
     )
 
 
@@ -135,21 +135,21 @@ def ignored(server, data):
         server.respond(
             500,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
         return
     except KeyError:
         server.respond(
             400,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
         return
 
     server.respond(
         200,
         {"Content-Type": "application/json"},
-        {"successfull": True}
+        {"successful": True}
     )
 
 

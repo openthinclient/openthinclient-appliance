@@ -45,7 +45,7 @@ class WebBrowser(object):
         self.window.show_all()
 
 def handle_load_event(window, event):
-    # load successfull
+    # load successful
     if event == 3:
         window.show_all()
 

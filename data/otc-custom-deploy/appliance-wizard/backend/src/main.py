@@ -36,14 +36,14 @@ def term_frontend(server):
         server.respond(
             500,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
         return
 
     server.respond(
         200,
         {"Content-Type": "application/json"},
-        {"successfull": True}
+        {"successful": True}
     )
 
     sys.exit(0)
@@ -57,13 +57,13 @@ def destroy(server):
         server.respond(
             500,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
 
     server.respond(
         200,
         {"Content-Type": "application/json"},
-        {"successfull": True}
+        {"successful": True}
     )
 
 
@@ -77,7 +77,7 @@ def timezones(server):
         server.respond(
             500,
             {"Content-Type": "application/json"},
-            {"successfull": False}
+            {"successful": False}
         )
 
     server.respond(

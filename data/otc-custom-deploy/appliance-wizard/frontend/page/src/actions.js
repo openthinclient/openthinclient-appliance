@@ -22,7 +22,7 @@ export function set_password() {
   do_post("http://localhost:4321/api/v1/password", {"password": pw}).then(res => {
     return res.json();
   }).then(data => {
-    if (data["successfull"] == true) {
+    if (data["successful"] == true) {
       next()
     }
   }).catch(e => {
@@ -37,7 +37,7 @@ export function set_timezone() {
   do_post("http://localhost:4321/api/v1/timezone", {"timezone": zone}).then(res => {
     return res.json();
   }).then(data => {
-    if (data["successfull"] == true) {
+    if (data["successful"] == true) {
       next()
     }
   }).catch(e => {

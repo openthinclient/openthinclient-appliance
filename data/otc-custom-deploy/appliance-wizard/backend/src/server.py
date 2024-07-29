@@ -68,7 +68,7 @@ def needs_data(f):
             server.respond(
                 400,
                 {"Content-Type": "application/json"},
-                {"successfull": False}
+                {"successful": False}
             )
         else:
             f(server, data)

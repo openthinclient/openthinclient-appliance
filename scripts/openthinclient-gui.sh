@@ -17,6 +17,17 @@ apt-get install -y xserver-xorg
 echo "==> Installing lightdm with --no-install-recommends"
 apt-get install -y --no-install-recommends lightdm
 
+echo "==> Setting up PAM autologin for lightdm"
+first_auth_text=`cat /etc/pam.d/lightdm | grep auth | head -n 1`
+nopasswd_auth="auth sufficient pam_succeed_if.so user ingroup nopasswdlogin"
+if [ -n "$first_auth_text" ]; then
+    sed -i "s/$first_auth_text/$nopasswd_auth\n$first_auth_text/g" /etc/pam.d/lightdm
+else
+    echo -e "\n\n$nopasswd_auth" >> /etc/pam.d/lightdm
+fi
+groupadd --system nopasswdlogin
+usermod -aG nopasswdlogin openthinclient
+
 echo "==> Installing network-manager and network-manager-gnome with --no-install-recommends"
 apt-get install -y network-manager network-manager-gnome --no-install-recommends
 

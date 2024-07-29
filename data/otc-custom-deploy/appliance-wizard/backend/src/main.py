@@ -53,6 +53,8 @@ def term_frontend(server):
 def destroy(server):
     try:
         os.remove("/var/appliance-wizard/RUN.FLAG")
+        cmd = "usermod -rG nopasswdlogin openthinclient"
+        subprocess.run(cmd, shell=True)
     except:
         server.respond(
             500,

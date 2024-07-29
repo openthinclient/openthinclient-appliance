@@ -66,12 +66,12 @@ variable "dir" {
 
 variable "iso_checksum" {
   type    = string
-  default = "0262488ce2cec6d95a6c9002cfba8b81ac0d1c29fe7993aa5af30f81cecad3eb66558b9d8689a86b57bf12b8cbeab1e11d128a53356b288d48e339bb003dace5"
+  default = "33c08e56c83d13007e4a5511b9bf2c4926c4aa12fd5dd56d493c0653aecbab380988c5bf1671dbaea75c582827797d98c4a611f7fb2b131fbde2c677d5258ec9"
 }
 
 variable "iso_url" {
   type    = string
-  default = "https://cdimage.debian.org/cdimage/archive/12.4.0/amd64/iso-cd/debian-12.4.0-amd64-netinst.iso"
+  default = "https://cdimage.debian.org/cdimage/archive/12.5.0/amd64/iso-cd/debian-12.5.0-amd64-netinst.iso"
 }
 
 variable "nodejs_checksum" {

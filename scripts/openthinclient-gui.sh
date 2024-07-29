@@ -154,7 +154,9 @@ echo "==> Setting preconfigured desktop configuration"
 DCONF_CONFIG="${OTC_CUSTOM_DEPLOY_PATH}/dconf-preconfig.txt"
 
 echo "==> Loading preconfigured desktop configuration"
-sudo -u openthinclient dbus-launch dconf load / < ${DCONF_CONFIG}
+sudo -u openthinclient dbus-launch bash -c "dconf load / <<EOF
+$(cat ${DCONF_CONFIG})
+EOF"
 
 echo "==> Setting openthinclient appliance desktop background"
 sudo -u openthinclient dbus-launch gsettings writable org.mate.background picture-filename

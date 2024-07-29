@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Exec=chromium %u https://docs.openthinclient.com/books/installation/page/virtual-appliance
+Exec=chromium %u https://docs.openthinclient.com/2024/books/installation/page/virtual-appliance
 Icon=/usr/local/share/openthinclient/icons/openthinclient_readme.png
 Name=README
 Comment=README for openthinclient-Virtual Appliance

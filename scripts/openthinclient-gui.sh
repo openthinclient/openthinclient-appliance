@@ -18,7 +18,7 @@ echo "==> Installing lightdm with --no-install-recommends"
 apt-get install -y --no-install-recommends lightdm
 
 echo "==> Setting up PAM autologin for lightdm"
-first_auth_text=`cat /etc/pam.d/lightdm | grep auth | head -n 1`
+first_auth_text=$(grep auth /etc/pam.d/lightdm | head -n 1)
 nopasswd_auth="auth sufficient pam_succeed_if.so user ingroup nopasswdlogin"
 if [ -n "$first_auth_text" ]; then
     sed -i "s/$first_auth_text/$nopasswd_auth\n$first_auth_text/g" /etc/pam.d/lightdm

@@ -7,6 +7,10 @@ export DEBIAN_FRONTEND="noninteractive"
 # set custom deploy path
 OTC_CUSTOM_DEPLOY_PATH=/tmp/data/otc-custom-deploy
 
+echo "==> Deploying VA_updates source list"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/apt/sources.list.d/VA_updates.list /etc/apt/sources.list.d/VA_updates.list
+chown root:root /etc/apt/sources.list.d/VA_updates.list
+
 echo "==> Depolying load-snd-dummy service"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/load-snd-dummy.service /etc/systemd/system/load-snd-dummy.service
 echo "==> Enabling/starting load-snd-dummy service"

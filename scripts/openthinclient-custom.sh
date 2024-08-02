@@ -12,6 +12,7 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/load-snd-dummy.service /etc/s
 echo "==> Enabling/starting load-snd-dummy service"
 sudo systemctl enable load-snd-dummy.service
 sudo systemctl start load-snd-dummy.service
+chown root:root /etc/systemd/system/load-snd-dummy.service
 
 echo "==> Deploying LDAP backup"
 mkdir -p /etc/skel_ldap/

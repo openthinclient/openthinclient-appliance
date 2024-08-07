@@ -85,23 +85,26 @@ echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
 chmod +x /home/openthinclient/Desktop/*.desktop
 
-echo "==> Deploying appliance wizard [0/4]:"
-echo "==> Appliance wizard: Download nodejs [1/4]"
+echo "==> Deploying appliance wizard [0/5]:"
+echo "==> Appliance wizard: Download nodejs [1/5]"
 wget -q -O ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz "${NODEJS_URL}"
 
-echo "==> Appliance wizard: Unpack nodejs [2/4]"
+echo "==> Appliance wizard: Unpack nodejs [2/5]"
 tar -xf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz -C ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard
 NODE_DIR=$(tar -tf ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz | head -n 1)
 PATH=$PATH:${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/${NODE_DIR}bin
 
-echo "==> Appliance wizard: Build frontend [3/4]"
+echo "==> Appliance wizard: Build frontend [3/5]"
 cd ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/frontend/page || exit
 npm config set update-notifier false
 npm audit fix
 npm install
 npm run build
 
-echo "==> Appliance wizard: Deploy wizard [4/4]"
+echo "==> Appliance wizard: Install dependencies [4/5]"
+apt-get install -y python3-ldap3
+
+echo "==> Appliance wizard: Deploy wizard [5/5]"
 mkdir -p /usr/local/share/appliance-wizard
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/backend /usr/local/share/appliance-wizard
 mv /usr/local/share/appliance-wizard/backend/wizard-server.service /etc/systemd/system/wizard-server.service

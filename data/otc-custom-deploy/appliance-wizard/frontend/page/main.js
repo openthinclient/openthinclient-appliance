@@ -2,7 +2,7 @@ import './style.scss'
 
 import { next, back, goto } from './src/navigation.js'
 import { quit } from './src/quit.js'
-import { set_password, set_timezone, set_proxy, clear_errors } from './src/actions.js'
+import { set_appliance_password, set_management_password, set_timezone, set_proxy, clear_errors } from './src/actions.js'
 import { inject_logo } from './src/inject_logo.js'
 import { inject_timezones } from './src/inject_timezones.js'
 import { setup_handlers } from './src/setup_handlers.js'
@@ -19,7 +19,7 @@ if(import.meta.env.DEV) {
     "goto": goto,
     "quit": quit,
     "actions": {
-      "set_password": set_password,
+      "set_password": set_appliance_password,
       "set_timezone": set_timezone,
       "clear_errors": clear_errors
     },
@@ -36,5 +36,5 @@ document.getElementById("lang").value = lang
 set_lang(lang)
 translate_all()
 
-setup_handlers(next, back, quit, set_password, set_timezone, set_proxy, set_lang, update_proxy_form)
+setup_handlers(next, back, quit, set_appliance_password, set_management_password, set_timezone, set_proxy, set_lang, update_proxy_form)
 set_default_mode()

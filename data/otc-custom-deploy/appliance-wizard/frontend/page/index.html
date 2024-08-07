@@ -16,22 +16,44 @@
           </button>
         </div>
       </div>
-      <div id="password-container" class="center page">
-        <div id="password">
-          <span class="headline" i18n="password.headline">Passwort für die Appliance festlegen</span>
+      <div id="appliance-password-container" class="center page">
+        <div id="appliance-password">
+          <span class="headline" i18n="password.appliance.headline">Passwort für die Appliance festlegen</span>
           <span class="note">
-            <span class="note-line1" i18n="password.note.1"></span>
+            <span class="note-line1" i18n="password.appliance.note.1"></span>
             <br>
-            <span class="note-line1" i18n="password.note.2"></span>
+            <span class="note-line1" i18n="password.appliance.note.2"></span>
           </span>
-          <form action="set_password">
-            <label for="pass" i18n="password.new_password">Neues Passwort</label>
-            <input id="pass" type="password" class="pw-entry" />
+          <form action="set_appliance_password">
+            <label for="appliance-pass" i18n="password.new_password">Neues Passwort</label>
+            <input id="appliance-pass" type="password" class="pw-entry" />
             <p id="pass_length_note" i18n="password.min_length_note">Mindestens 8 Zeichen</p>
-            <label for="pass_check" i18n="password.repeat">Passwort wiederholen</label>
-            <input id="pass_check" type="password" class="pw-entry" />
+            <label for="appliance-pass_check" i18n="password.repeat">Passwort wiederholen</label>
+            <input id="appliance-pass_check" type="password" class="pw-entry" />
             <button type="submit" class="nav-button" i18n="password.save">Passwort setzen ➜</button>
-            <span class="err" id="pass-err"></span>
+            <span class="err" id="appliance-pass-err"></span>
+          </form>
+        </div>
+      </div>
+      <div id="management-password-container" class="center page">
+        <div id="management-password">
+          <span class="headline" i18n="password.management.headline">Passwort für die Appliance festlegen</span>
+          <span class="note">
+            <span class="note-line1" i18n="password.management.note.1"></span>
+            <br>
+            <span class="note-line1" i18n="password.management.note.2"></span>
+          </span>
+          <form action="set_management_password">
+            <label for="management-pass" i18n="password.new_password">Neues Passwort</label>
+            <input id="management-pass" type="password" class="pw-entry" />
+            <p id="pass_length_note" i18n="password.min_length_note">Mindestens 8 Zeichen</p>
+            <label for="management-pass_check" i18n="password.repeat">Passwort wiederholen</label>
+            <input id="management-pass_check" type="password" class="pw-entry" />
+            <div class="nav-button-container">
+              <button class="nav-button" type="button" action="back"><span class="left-arrow">➜</span></button>
+              <button id="management-password-submit" type="submit" class="nav-button" i18n="password.save">Passwort setzen ➜</button>
+            </div>
+            <span class="err" id="management-pass-err"></span>
           </form>
         </div>
       </div>

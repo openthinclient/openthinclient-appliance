@@ -1,4 +1,4 @@
-export function setup_handlers(next, back, quit, set_password, set_timezone, set_proxy, set_lang, update_proxy_form) {
+export function setup_handlers(next, back, quit, set_appliance_password, set_management_password, set_timezone, set_proxy, set_lang, update_proxy_form) {
   document.querySelectorAll('[action="next"]').forEach((item, i) => {
     item.onclick = next;
   });
@@ -12,9 +12,22 @@ export function setup_handlers(next, back, quit, set_password, set_timezone, set
   });
 
 
-  document.querySelectorAll('[action="set_password"]').forEach((item, i) => {
+  document.querySelectorAll('[action="set_appliance_password"]').forEach((item, i) => {
     let f = () => {
-      set_password();
+      set_appliance_password();
+      return false;
+    };
+
+    if(item.tagName == "FORM") {
+      item.onsubmit = f;
+    } else {
+      item.onclick = f;
+    }
+  });
+
+  document.querySelectorAll('[action="set_management_password"]').forEach((item, i) => {
+    let f = () => {
+      set_management_password();
       return false;
     };
 

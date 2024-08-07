@@ -1,21 +1,21 @@
 import { next } from './navigation.js';
 import { t } from './translation.js';
 
-export function set_password() {
-  const pw = document.getElementById("pass").value;
-  const pw_check = document.getElementById("pass_check").value;
+export function set_appliance_password() {
+  const pw = document.getElementById("appliance-pass").value;
+  const pw_check = document.getElementById("appliance-pass_check").value;
 
-  document.getElementById("pass-err").innerText = "";
+  document.getElementById("appliance-pass-err").innerText = "";
 
   if (pw.length < 8) {
-    document.getElementById("pass-err").innerText = t("err.password_too_short");
-    document.getElementById("pass_check").value = "";
+    document.getElementById("appliance-pass-err").innerText = t("err.password_too_short");
+    document.getElementById("appliance-pass_check").value = "";
     return;
   }
 
   if (pw != pw_check) {
-    document.getElementById("pass-err").innerText = t("err.password_unequal");
-    document.getElementById("pass_check").value = "";
+    document.getElementById("appliance-pass-err").innerText = t("err.password_unequal");
+    document.getElementById("appliance-pass_check").value = "";
     return;
   }
 
@@ -27,7 +27,44 @@ export function set_password() {
     }
   }).catch(e => {
     console.log(e);
-    document.getElementById("pass-err").innerHTML = t("err.password_unable_to_set");
+    document.getElementById("appliance-pass-err").innerHTML = t("err.password_unable_to_set");
+  });
+}
+
+export function set_management_password() {
+  const pw = document.getElementById("management-pass").value;
+  const pw_check = document.getElementById("management-pass_check").value;
+
+  document.getElementById("management-pass-err").innerText = "";
+
+  if (pw.length < 8) {
+    document.getElementById("management-pass-err").innerText = t("err.password_too_short");
+    document.getElementById("management-pass_check").value = "";
+    return;
+  }
+
+  if (pw != pw_check) {
+    document.getElementById("management-pass-err").innerText = t("err.password_unequal");
+    document.getElementById("management-pass_check").value = "";
+    return;
+  }
+
+  const submit_button = document.getElementById("management-password-submit")
+  submit_button.disabled = true;
+
+  do_post("http://localhost:4321/api/v1/password_management", {"password": pw}).then(res => {
+    submit_button.disabled = false;
+    return res.json();
+  }).then(data => {
+    if (data["successful"] == true) {
+      next()
+    } else {
+      document.getElementById("management-pass-err").innerHTML = t("err.password_unable_to_set");
+    }
+  }).catch(e => {
+    submit_button.disabled = false;
+    console.log(e);
+    document.getElementById("management-pass-err").innerHTML = t("err.password_unable_to_set");
   });
 }
 

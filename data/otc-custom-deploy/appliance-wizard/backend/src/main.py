@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 from server import WizardServer
-from post_endpoints.password import password
+from post_endpoints.password import password, password_management
 from post_endpoints.proxy import (
     mode,
     autoconfig_url,
@@ -144,6 +144,7 @@ def get_resource(path):
 
 def setup_post_endpoints():
     WizardServer.endpoint("api/v1/password", methods=["POST"])(password)
+    WizardServer.endpoint("api/v1/password_management", methods=["POST"])(password_management)
 
     WizardServer.endpoint("api/v1/proxy/mode", methods=["POST"])(mode)
     WizardServer.endpoint("api/v1/proxy/autoconfig", methods=["POST"])(autoconfig_url)

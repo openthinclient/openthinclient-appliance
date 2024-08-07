@@ -26,7 +26,7 @@ export function t(key) {
 export function translate_all() {
   clear_errors();
   document.querySelectorAll("[i18n]").forEach((item, i) => {
-    item.innerText = t(item.getAttribute("i18n"))
+    item.innerHTML = t(item.getAttribute("i18n"))
   });
 
   document.querySelectorAll("[i18n-placeholder]").forEach((item, i) => {

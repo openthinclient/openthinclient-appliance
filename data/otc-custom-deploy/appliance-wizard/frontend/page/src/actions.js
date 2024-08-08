@@ -24,6 +24,8 @@ export function set_appliance_password() {
   }).then(data => {
     if (data["successful"] == true) {
       next()
+    } else {
+      document.getElementById("appliance-pass-err").innerHTML = t("err.password_unable_to_set");
     }
   }).catch(e => {
     console.log(e);
@@ -76,6 +78,8 @@ export function set_timezone() {
   }).then(data => {
     if (data["successful"] == true) {
       next()
+    } else {
+      document.getElementById("zone-err").innerHTML = t("err.timezone_unable_to_set");
     }
   }).catch(e => {
     console.log(e);

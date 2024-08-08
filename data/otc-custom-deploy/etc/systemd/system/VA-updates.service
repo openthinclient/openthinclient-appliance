@@ -1,0 +1,11 @@
+[Unit]
+Description=VA-updates triggered by unattended-upgrades
+Wants=unattended-upgrades.service
+After=unattended-upgrades.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/VA-updates
+
+[Install]
+WantedBy=multi-user.target

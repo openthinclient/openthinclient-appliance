@@ -1,0 +1,8 @@
+[Unit]
+Description=Path watcher for unattended-upgrades
+
+[Path]
+PathChanged=/var/log/unattended-upgrades/unattended-upgrades.log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,61 @@
+#!/usr/bin/python3
+
+import requests
+import subprocess
+import logging
+from systemd.journal import JournalHandler
+
+repository_url = "https://archive.openthinclient.org/openthinclient/VA_updates/v2024.1/"
+
+# Set up logging to systemd journal
+logger = logging.getLogger('VA-updates')
+logger.setLevel(logging.INFO)
+journal_handler = JournalHandler(SYSLOG_IDENTIFIER='VA-updates')
+journal_handler.setFormatter(logging.Formatter('%(message)s'))
+logger.addHandler(journal_handler)
+
+
+def parse_packages_file(content):
+    # Use a set to avoid duplicates
+    package_names = set()
+    for line in content.splitlines():
+        if line.startswith("Package: "):
+            package_name = line.split("Package: ")[1].strip()
+            package_names.add(package_name)
+    return package_names
+
+
+def update_and_install_packages():
+    # Construct URL for the packages file
+    packages_url = f"{repository_url}/Packages"
+
+    try:
+        # Download the packages file
+        logger.info(f"Downloading Packages file from {packages_url}...")
+        response = requests.get(packages_url, timeout=10)
+        response.raise_for_status()
+        packages_content = response.text
+
+        # Get package names
+        package_names = parse_packages_file(packages_content)
+        logger.info(f"Packages to install or upgrade: {package_names}")
+
+        # Update package list
+        logger.info("Updating package list...")
+        subprocess.run(["sudo", "apt-get", "update"], check=True)
+
+        # Install or upgrade each package
+        for package_name in package_names:
+            logger.info(f"Ensuring {package_name} is installed and up to date...")
+            subprocess.run(["sudo", "apt-get", "install", package_name, "-y"], check=True)
+
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Failed to download Packages file: {e}")
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Failed to update or install packages: {e}")
+    except Exception:
+        logger.exception("An unexpected error occurred:")
+
+
+if __name__ == "__main__":
+    update_and_install_packages()

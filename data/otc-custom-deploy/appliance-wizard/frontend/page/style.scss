@@ -148,9 +148,13 @@ $nav-button-margin: 0.5em;
 
   transition: color 200ms, background-color 200ms;
 
-  &:hover {
+  &:not(:disabled):hover {
     color: var(--nav-button-inverse-color, black);
     background-color: var(--nav-button-inverse-background-color, white);
+  }
+
+  &:disabled {
+    opacity: 0.4;
   }
 
   &:first-child {

@@ -185,12 +185,6 @@ echo "==> Deploying chromium web browser master preferences file"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/chromium/master_preferences /etc/chromium/
 chown root:root /etc/chromium/ -R
 
-# Validity: [from: Aug 17 00:00:00 UTC 2022 to: 15 Aug 23:59:59 2025]
-echo "==> Deploying openthinclient-Livesupport trusted certificate"
-mkdir -p /home/openthinclient/.config/icedtea-web/security/
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/live-support-cert/trusted.certs /home/openthinclient/.config/icedtea-web/security/
-chmod 600 /home/openthinclient/.config/icedtea-web/security/trusted.certs
-
 echo "==> Installing tigervnc-viewer with --no-install-recommends"
 apt-get install -y --no-install-recommends tigervnc-viewer
 

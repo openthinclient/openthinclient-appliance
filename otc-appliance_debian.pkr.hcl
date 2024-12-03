@@ -66,12 +66,15 @@ variable "dir" {
 
 variable "iso_checksum" {
   type    = string
-  default = "e0bd9ba03084a6fd42413b425a2d20e3731678a31fe5fb2cc84f79332129afca2ad4ec897b4224d6a833afaf28a5d938b0fe5d680983182944162c6825b135ce"
+  default = "f4f7de1665cdcd00b2e526da6876f3e06a37da3549e9f880602f64407f602983a571c142eb0de0eacfc9c1d0f534e9339cdce04eb9daddc6ddfa8cf34853beed"
 }
 
-variable "iso_url" {
-  type    = string
-  default = "https://cdimage.debian.org/cdimage/archive/12.7.0/amd64/iso-cd/debian-12.7.0-amd64-netinst.iso"
+variable "iso_urls" {
+  type    = list(string)
+  default = [
+    "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.8.0-amd64-netinst.iso",
+    "https://cdimage.debian.org/cdimage/archive/12.8.0/amd64/iso-cd/debian-12.8.0-amd64-netinst.iso"
+  ]
 }
 
 variable "nodejs_checksum" {
@@ -187,7 +190,7 @@ source "hyperv-iso" "hyperv" {
   memory             = "${var.memory}"
   disk_size          = "${var.disk_size}"
   iso_checksum       = "${var.iso_checksum}"
-  iso_url            = "${var.iso_url}"
+  iso_urls            = "${var.iso_urls}"
   http_directory     = "${var.dir}"
   http_port_max      = "${var.port_max}"
   http_port_min      = "${var.port_min}"
@@ -222,7 +225,7 @@ source "virtualbox-iso" "vbox" {
   memory              = "${var.memory}"
   disk_size           = "${var.disk_size}"
   iso_checksum        = "${var.iso_checksum}"
-  iso_url             = "${var.iso_url}"
+  iso_urls             = "${var.iso_urls}"
   http_directory      = "${var.dir}"
   http_port_max       = "${var.port_max}"
   http_port_min       = "${var.port_min}"
@@ -268,7 +271,7 @@ source "vmware-iso" "vmware" {
   memory           = "${var.memory}"
   disk_size        = "${var.disk_size}"
   iso_checksum     = "${var.iso_checksum}"
-  iso_url          = "${var.iso_url}"
+  iso_urls          = "${var.iso_urls}"
   http_directory   = "${var.dir}"
   http_port_max    = "${var.port_max}"
   http_port_min    = "${var.port_min}"

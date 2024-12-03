@@ -1,11 +1,11 @@
 {
-    "AutoOpenFileTypes": ["jnlp"],
+    "AutoOpenFileTypes": [],
     "BookmarkBarEnabled": false,
     "ComponentUpdatesEnabled": false,
     "DefaultBrowserSettingEnabled": false,
     "MetricsReportingEnabled": false,
     "PasswordManagerEnabled": true,
     "SafeBrowsingExtendedReportingEnabled": false,
-    "SyncDisabled": true,    
+    "SyncDisabled": true,
     "UserFeedbackAllowed": false
 }

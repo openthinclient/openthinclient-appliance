@@ -66,14 +66,14 @@ variable "dir" {
 
 variable "iso_checksum" {
   type    = string
-  default = "f4f7de1665cdcd00b2e526da6876f3e06a37da3549e9f880602f64407f602983a571c142eb0de0eacfc9c1d0f534e9339cdce04eb9daddc6ddfa8cf34853beed"
+  default = "9ebe405c3404a005ce926e483bc6c6841b405c4d85e0c8a7b1707a7fe4957c617ae44bd807a57ec3e5c2d3e99f2101dfb26ef36b3720896906bdc3aaeec4cd80"
 }
 
 variable "iso_urls" {
   type    = list(string)
   default = [
-    "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.8.0-amd64-netinst.iso",
-    "https://cdimage.debian.org/cdimage/archive/12.8.0/amd64/iso-cd/debian-12.8.0-amd64-netinst.iso"
+    "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.9.0-amd64-netinst.iso",
+    "https://cdimage.debian.org/cdimage/archive/12.9.0/amd64/iso-cd/debian-12.9.0-amd64-netinst.iso"
   ]
 }
 
@@ -190,7 +190,7 @@ source "hyperv-iso" "hyperv" {
   memory             = "${var.memory}"
   disk_size          = "${var.disk_size}"
   iso_checksum       = "${var.iso_checksum}"
-  iso_urls            = "${var.iso_urls}"
+  iso_urls           = "${var.iso_urls}"
   http_directory     = "${var.dir}"
   http_port_max      = "${var.port_max}"
   http_port_min      = "${var.port_min}"

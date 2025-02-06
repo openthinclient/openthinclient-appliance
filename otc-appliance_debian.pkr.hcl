@@ -1,7 +1,7 @@
 
 variable "appliance_version" {
   type    = string
-  default = "2024.1.3-BETA"
+  default = "2025.1"
 }
 
 variable "vm_description" {
@@ -11,7 +11,7 @@ variable "vm_description" {
 
 variable "vm_name" {
   type    = string
-  default = "openthinclient-Appliance-2024.1.3-BETA"
+  default = "openthinclient-Appliance-2025.1"
 }
 
 variable "headless" {
@@ -31,7 +31,7 @@ variable "memory" {
 
 variable "disk_size" {
   type    = string
-  default = "20480"
+  default = "80480"
 }
 
 variable "hostname" {
@@ -70,7 +70,7 @@ variable "iso_checksum" {
 }
 
 variable "iso_urls" {
-  type    = list(string)
+  type = list(string)
   default = [
     "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.9.0-amd64-netinst.iso",
     "https://cdimage.debian.org/cdimage/archive/12.9.0/amd64/iso-cd/debian-12.9.0-amd64-netinst.iso"
@@ -168,102 +168,21 @@ variable "vmx_post_connectiontype" {
 }
 
 source "hyperv-iso" "hyperv" {
-  boot_command       = [
-  "c",
-  "linux /install.amd/vmlinuz ",
-  "auto ",
-  "locale=en_US.UTF-8 ",
-  "country=US ",
-  "language=en ",
-  "keymap=us ",
-  "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_hypv.cfg ",
-  "hostname=${var.hostname} ",
-  "domain=${var.hostname} ",
-  "interface=auto ",
-  "vga=788 noprompt ---<enter>",
-  "initrd /install.amd/initrd.gz<enter>",
-  "boot<enter>"
-  ]
-  vm_name            = "${var.vm_name}"
-  headless           = "${var.headless}"
-  cpus               = "${var.cpus}"
-  memory             = "${var.memory}"
-  disk_size          = "${var.disk_size}"
-  iso_checksum       = "${var.iso_checksum}"
-  iso_urls           = "${var.iso_urls}"
-  http_directory     = "${var.dir}"
-  http_port_max      = "${var.port_max}"
-  http_port_min      = "${var.port_min}"
-  ssh_username       = "${var.ssh_name}"
-  ssh_password       = "${var.ssh_pass}"
-  ssh_timeout        = "${var.ssh_timeout}"
-  shutdown_command   = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
-  output_directory   = "builds/${var.vm_name}-hyperv"
-
-  enable_secure_boot = false
-  generation         = 2
-  disk_block_size    = 1
-}
-
-source "virtualbox-iso" "vbox" {
-  boot_command        = [
-  "<esc><wait>",
-  "install <wait>",
-  "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_vmbx.cfg ",
-  "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-  "keyboard-configuration/xkb-keymap=us <wait>",
-  "netcfg/get_hostname=${var.hostname} <wait>",
-  "netcfg/get_domain=${var.hostname} <wait>",
-  "fb=false debconf/frontend=noninteractive ",
-  "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
-  "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
-  "<enter><wait>"
-  ]
-  vm_name             = "${var.vm_name}"
-  headless            = "${var.headless}"
-  cpus                = "${var.cpus}"
-  memory              = "${var.memory}"
-  disk_size           = "${var.disk_size}"
-  iso_checksum        = "${var.iso_checksum}"
-  iso_urls             = "${var.iso_urls}"
-  http_directory      = "${var.dir}"
-  http_port_max       = "${var.port_max}"
-  http_port_min       = "${var.port_min}"
-  ssh_password        = "${var.ssh_pass}"
-  ssh_username        = "${var.ssh_name}"
-  ssh_wait_timeout    = "${var.ssh_timeout}"
-  shutdown_command    = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
-  output_directory    = "builds/${var.vm_name}-virtualbox"
-
-  guest_os_type       = "${var.virtualbox_guest_os_type}"
-  post_shutdown_delay = "30s"
-  vboxmanage          = [
-    ["modifyvm", "{{ .Name }}", "--nat-localhostreachable1", "on"],
-    ["modifyvm", "{{ .Name }}", "--vram", "32"],
-    ["modifyvm", "{{ .Name }}", "--description", "${var.vm_description}"]
-    ]
-  vboxmanage_post     = [
-    ["modifyvm", "{{ .Name }}", "--vram", "32"],
-    ["modifyvm", "{{ .Name }}", "--rtcuseutc", "${var.virtualbox_hardware_clock}"],
-    ["modifyvm", "{{ .Name }}", "--graphicscontroller", "${var.virtualbox_gpu_controller}"],
-    ["modifyvm", "{{ .Name }}", "--nic1", "${var.virtualbox_network_type}"],
-    ["modifyvm", "{{ .Name }}", "--bridgeadapter1", "${var.virtualbox_bridge_adapter}"]
-    ]
-}
-
-source "vmware-iso" "vmware" {
-  boot_command     = [
-  "<esc><wait>",
-  "install <wait>",
-  "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_vmbx.cfg ",
-  "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-  "keyboard-configuration/xkb-keymap=us <wait>",
-  "netcfg/get_hostname=${var.hostname} <wait>",
-  "netcfg/get_domain=${var.hostname} <wait>",
-  "fb=false debconf/frontend=noninteractive ",
-  "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
-  "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
-  "<enter><wait>"
+  boot_command = [
+    "c",
+    "linux /install.amd/vmlinuz ",
+    "auto ",
+    "locale=en_US.UTF-8 ",
+    "country=US ",
+    "language=en ",
+    "keymap=us ",
+    "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_hypv.cfg ",
+    "hostname=${var.hostname} ",
+    "domain=${var.hostname} ",
+    "interface=auto ",
+    "vga=788 noprompt ---<enter>",
+    "initrd /install.amd/initrd.gz<enter>",
+    "boot<enter>"
   ]
   vm_name          = "${var.vm_name}"
   headless         = "${var.headless}"
@@ -271,7 +190,88 @@ source "vmware-iso" "vmware" {
   memory           = "${var.memory}"
   disk_size        = "${var.disk_size}"
   iso_checksum     = "${var.iso_checksum}"
-  iso_urls          = "${var.iso_urls}"
+  iso_urls         = "${var.iso_urls}"
+  http_directory   = "${var.dir}"
+  http_port_max    = "${var.port_max}"
+  http_port_min    = "${var.port_min}"
+  ssh_username     = "${var.ssh_name}"
+  ssh_password     = "${var.ssh_pass}"
+  ssh_timeout      = "${var.ssh_timeout}"
+  shutdown_command = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
+  output_directory = "builds/${var.vm_name}-hyperv"
+
+  enable_secure_boot = false
+  generation         = 2
+  disk_block_size    = 1
+}
+
+source "virtualbox-iso" "vbox" {
+  boot_command = [
+    "<esc><wait>",
+    "install <wait>",
+    "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_vmbx.cfg ",
+    "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+    "keyboard-configuration/xkb-keymap=us <wait>",
+    "netcfg/get_hostname=${var.hostname} <wait>",
+    "netcfg/get_domain=${var.hostname} <wait>",
+    "fb=false debconf/frontend=noninteractive ",
+    "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+    "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+    "<enter><wait>"
+  ]
+  vm_name          = "${var.vm_name}"
+  headless         = "${var.headless}"
+  cpus             = "${var.cpus}"
+  memory           = "${var.memory}"
+  disk_size        = "${var.disk_size}"
+  iso_checksum     = "${var.iso_checksum}"
+  iso_urls         = "${var.iso_urls}"
+  http_directory   = "${var.dir}"
+  http_port_max    = "${var.port_max}"
+  http_port_min    = "${var.port_min}"
+  ssh_password     = "${var.ssh_pass}"
+  ssh_username     = "${var.ssh_name}"
+  ssh_wait_timeout = "${var.ssh_timeout}"
+  shutdown_command = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
+  output_directory = "builds/${var.vm_name}-virtualbox"
+
+  guest_os_type       = "${var.virtualbox_guest_os_type}"
+  post_shutdown_delay = "30s"
+  vboxmanage = [
+    ["modifyvm", "{{ .Name }}", "--nat-localhostreachable1", "on"],
+    ["modifyvm", "{{ .Name }}", "--vram", "32"],
+    ["modifyvm", "{{ .Name }}", "--description", "${var.vm_description}"]
+  ]
+  vboxmanage_post = [
+    ["modifyvm", "{{ .Name }}", "--vram", "32"],
+    ["modifyvm", "{{ .Name }}", "--rtcuseutc", "${var.virtualbox_hardware_clock}"],
+    ["modifyvm", "{{ .Name }}", "--graphicscontroller", "${var.virtualbox_gpu_controller}"],
+    ["modifyvm", "{{ .Name }}", "--nic1", "${var.virtualbox_network_type}"],
+    ["modifyvm", "{{ .Name }}", "--bridgeadapter1", "${var.virtualbox_bridge_adapter}"]
+  ]
+}
+
+source "vmware-iso" "vmware" {
+  boot_command = [
+    "<esc><wait>",
+    "install <wait>",
+    "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed_vmbx.cfg ",
+    "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+    "keyboard-configuration/xkb-keymap=us <wait>",
+    "netcfg/get_hostname=${var.hostname} <wait>",
+    "netcfg/get_domain=${var.hostname} <wait>",
+    "fb=false debconf/frontend=noninteractive ",
+    "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+    "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+    "<enter><wait>"
+  ]
+  vm_name          = "${var.vm_name}"
+  headless         = "${var.headless}"
+  cpus             = "${var.cpus}"
+  memory           = "${var.memory}"
+  disk_size        = "${var.disk_size}"
+  iso_checksum     = "${var.iso_checksum}"
+  iso_urls         = "${var.iso_urls}"
   http_directory   = "${var.dir}"
   http_port_max    = "${var.port_max}"
   http_port_min    = "${var.port_min}"
@@ -281,7 +281,7 @@ source "vmware-iso" "vmware" {
   shutdown_command = "echo ${var.ssh_pass} | sudo -S shutdown -P now"
   output_directory = "builds/${var.vm_name}-vmware"
 
-  guest_os_type    = "${var.vmware_guest_os_type}"
+  guest_os_type = "${var.vmware_guest_os_type}"
   vmx_data_post = {
     "ethernet0.connectiontype" = "${var.vmx_post_connectiontype}"
   }
@@ -319,8 +319,8 @@ build {
       "https_proxy=${var.https_proxy}",
       "no_proxy=${var.no_proxy}"
     ]
-    execute_command  = "echo ${var.ssh_pass} | {{ .Vars }} sudo -S -E bash '{{ .Path }}'"
-    scripts          = [
+    execute_command = "echo ${var.ssh_pass} | {{ .Vars }} sudo -S -E bash '{{ .Path }}'"
+    scripts = [
       "scripts/networking.sh",
       "scripts/openthinclient-installer.sh",
       "scripts/openthinclient-custom.sh",

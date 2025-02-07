@@ -5,7 +5,7 @@ import subprocess
 import logging
 from systemd.journal import JournalHandler
 
-repository_url = "https://archive.openthinclient.org/openthinclient/VA_updates/v2024.1/"
+repository_url = "https://archive.openthinclient.org/openthinclient/VA_updates/v2025.1/"
 
 # Set up logging to systemd journal
 logger = logging.getLogger('VA-updates')

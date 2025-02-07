@@ -29,7 +29,7 @@ if [ -f "$OTC_INSTALLER_FULLPATH" ]; then
 	    $OTC_INSTALL_PATH/bin/managerctl prepare-home \
 	    --admin-password "$OTC_DEFAULT_PASS" \
 	    --home $OTC_INSTALL_HOME \
-	    --dist-source http://archive.openthinclient.org/openthinclient/v2024/first-start-profiles/distributions.xml
+	    --dist-source http://archive.openthinclient.org/openthinclient/v2025/first-start-profiles/distributions.xml
 
         echo "==> Removing rpcbind package"
         apt-get remove -y --purge rpcbind nfs-common

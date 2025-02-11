@@ -1,3 +1,23 @@
+packer {
+  required_plugins {
+    hyperv-iso = {
+      version = "~> 1"
+      source  = "github.com/hashicorp/hyperv"
+    }
+    virtualbox-iso = {
+      version = "~> 1"
+      source  = "github.com/hashicorp/virtualbox"
+    }
+    vmware-iso = {
+      version = "~> 1"
+      source  = "github.com/hashicorp/vmware"
+    }
+    vagrant = {
+      version = "~> 1"
+      source  = "github.com/hashicorp/vagrant"
+    }
+  }
+}
 
 variable "appliance_version" {
   type    = string

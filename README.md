@@ -7,7 +7,7 @@
 
 ```
 ⁖ packer version
-Packer v1.8.4
+Packer v1.12.0
 ```
 
 ### Requirements

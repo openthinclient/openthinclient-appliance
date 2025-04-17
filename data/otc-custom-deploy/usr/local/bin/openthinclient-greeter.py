@@ -39,6 +39,7 @@ translation = {
     "manager_states.STARTING": ["is starting", "startet"],
     "manager_states.RESTARTING": ["is restarting", "startet neu"],
     "manager_states.UPDATING": ["is being updated", "wird aktualisiert"],
+    "manager_states.UPDATING_OS": ["is updating the OS", "aktualisiert OS"],
     "manager_states.INACTIVE": ["is not running", "läuft nicht"],
     "search": ["Search", "Suchen"]
 }

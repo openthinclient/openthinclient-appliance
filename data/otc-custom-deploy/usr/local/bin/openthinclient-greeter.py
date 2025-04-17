@@ -35,13 +35,11 @@ translation = {
         "openthinclient-Management server",
         "openthinclient-Management Server"
     ],
-    "manager_states": {
-        "ACTIVE": "AKTIV",
-        "STARTING": "STARTET",
-        "RESTARTING": "NEUSTART",
-        "UPDATING": "AKTUALISIERT",
-        "INACTIVE": "INAKTIV"
-    },
+    "manager_states.ACTIVE": ["is running", "läuft"],
+    "manager_states.STARTING": ["is starting", "startet"],
+    "manager_states.RESTARTING": ["is restarting", "startet neu"],
+    "manager_states.UPDATING": ["is being updated", "wird aktualisiert"],
+    "manager_states.INACTIVE": ["is not running", "läuft nicht"],
     "search": ["Search", "Suchen"]
 }
 
@@ -140,23 +138,9 @@ def get_translation_text(key, lang, default=None):
 def translate_manager_state():
     if manager_state is None: return
 
-    try:
-        if current_lang == "de":
-            manager_state_text = translation["manager_states"][manager_state]
-            builder.get_object("manager_state_label").set_text(manager_state_text)
-        else:
-            builder.get_object("manager_state_label").set_text(manager_state)
-
-            in_keys = manager_state in translation["manager_states"].keys()
-            in_values = manager_state in translation["manager_states"].values()
-
-            if not in_keys and not in_values:
-                raise KeyError
-    except KeyError:
-        if current_lang == "de":
-            builder.get_object("manager_state_label").set_text("UNBEKANNT")
-        else:
-            builder.get_object("manager_state_label").set_text("UNKNOWN")
+    manager_state_text = get_translation_text(
+            f'manager_states.{manager_state}', current_lang, manager_state)
+    builder.get_object("manager_state_label").set_text(manager_state_text)
 
 
 def update_clock():

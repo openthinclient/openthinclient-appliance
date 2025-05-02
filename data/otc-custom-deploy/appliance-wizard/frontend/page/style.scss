@@ -60,15 +60,18 @@ select {
 
 #pages {
   position: relative;
-  width: 100vw;
+  margin: auto;
+  max-width: 60ch;
   height: 100vh;
   overflow: hidden;
 }
 
 .page {
   position: absolute;
-  min-width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  padding: 1%;
+  box-sizing: border-box;
 
   transition: 200ms transform, 200ms visibility;
 
@@ -192,6 +195,7 @@ $nav-button-margin: 0.5em;
     color: grey;
     font-size: 0.8em;
     text-align: center;
+    line-height: 1.5;
 
     margin-bottom: 2em;
     display: block;
@@ -341,6 +345,7 @@ $nav-button-margin: 0.5em;
 
 #finished {
   font-size: 2.5em;
+  text-align: center;
   color: black;
 }
 

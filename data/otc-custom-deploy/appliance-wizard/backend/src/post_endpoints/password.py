@@ -22,8 +22,11 @@ LDAP_ADMINISTRATOR_USER_DN = "cn=administrator,ou=users,ou=openthinclient,dc=ope
 @needs_data
 def password(server, data):
     try:
-        cmd = f"echo openthinclient:{data['password']} | sudo chpasswd"
-        process = subprocess.run(cmd, shell=True).check_returncode()
+        subprocess.run(
+            ('chpasswd',),
+            input=f"openthinclient:{data['password']}",
+            encoding='utf-8',
+        ).check_returncode()
     except subprocess.CalledProcessError:
         server.respond(
             500,

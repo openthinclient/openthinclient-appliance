@@ -35,6 +35,8 @@ translation = {
         "openthinclient-Management server",
         "openthinclient-Management Server"
     ],
+    'status.login': ['Logging in', 'Anmeldung wird durchgeführt'],
+    'status.login_failed': ['Login failed', 'Anmeldung gescheitert'],
     "manager_states.ACTIVE": ["is running", "läuft"],
     "manager_states.STARTING": ["is starting", "startet"],
     "manager_states.RESTARTING": ["is restarting", "startet neu"],
@@ -52,7 +54,8 @@ greeter = None
 login_clicked = False
 password_entry = None
 password_label = None
-errorLabel = None
+status_label = None
+status_spinner = None
 reboot_label = None
 manager_label = None
 manager_icon = None
@@ -230,8 +233,9 @@ def user_change_handler(widget, data=None):
 
 
 def login_click_handler(widget, data=None):
-    global login_clicked
+    global login_clicked, login_no
     login_clicked = True
+    login_no += 1
 
     if greeter.get_is_authenticated():
         start_session()
@@ -239,9 +243,13 @@ def login_click_handler(widget, data=None):
     if greeter.get_in_authentication():
         greeter.cancel_authentication()
 
-    username = user_cb.get_active_text()
+    status_label.set_text(
+        get_translation_text("status.login", current_lang)
+    )
+    status_spinner.show()
+    status_spinner.start()
 
-    errorLabel.set_text("")
+    username = user_cb.get_active_text()
     greeter.authenticate(username)
 
 
@@ -283,17 +291,15 @@ def start_session():
 
 
 def show_message(greeter, text, message_type=None, **kwargs):
-    errorLabel.set_text(text)
+    status_label.set_text(text)
 
 
 def display_error_message(text, duration=5000):
-    if current_lang == "de":
-        errorLabel.set_text("Login fehlgeschlagen")
-    else:
-        errorLabel.set_text("Login failed")
+    status_label.set_text(
+        get_translation_text("status.login_failed", current_lang)
+    )
+    status_spinner.hide()
 
-    global login_no
-    login_no += 1
     local_login_no = login_no
 
     def inner():
@@ -301,7 +307,7 @@ def display_error_message(text, duration=5000):
         if local_login_no != login_no:
             return False
 
-        errorLabel.set_text("")
+        status_label.set_text("")
         return False
 
     GLib.timeout_add(duration, inner)
@@ -471,7 +477,8 @@ if __name__ == "__main__":
     password_entry.connect("activate", login_click_handler)
     password_label = builder.get_object("password_label")
 
-    errorLabel = builder.get_object("error_label")
+    status_label = builder.get_object("status_label")
+    status_spinner = builder.get_object("status_spinner")
 
     loginButton = builder.get_object("login_button")
     loginButton.connect("clicked", login_click_handler)

@@ -4,7 +4,7 @@
     "welcome.info": "Nachfolgend können Sie ein Benutzerpasswort, die Zeitzone und Proxy-Einstellungen festlegen.",
     "welcome.button_text": "Einrichtung beginnen  ➜",
     "password.appliance.headline": "Passwort für die Appliance festlegen",
-    "password.appliance.note": "Dies ist das Passwort für den Benutzer \"<b>openthinclient</b>\". <br> Beachten Sie, dass der openthinclient Management Server in eigenes Passwort hat.",
+    "password.appliance.note": "Dies ist das Passwort für den Benutzer \"<b>openthinclient</b>\". <br> Beachten Sie, dass der openthinclient Management Server ein eigenes Passwort hat.",
     "password.management.headline": "Passwort für das<br>openthinclient-Management festlegen",
     "password.management.note": "Dies ist das Passwort für den Benutzer \"<b>administrator</b>\" zur Anmeldung im Web-Interface des openthinclient Management Servers.",
     "password.new_password": "Neues Passwort",

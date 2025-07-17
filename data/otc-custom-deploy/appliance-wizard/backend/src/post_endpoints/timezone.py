@@ -6,8 +6,9 @@ from server import needs_data
 @needs_data
 def timezone(server, data):
     try:
-        cmd = f"sudo timedatectl set-timezone {data['timezone']}"
-        process = subprocess.run(cmd, shell=True).check_returncode()
+        subprocess.run(
+            ('sudo', 'timedatectl', 'set-timezone', f'{data["timezone"]}')
+        ).check_returncode()
     except subprocess.CalledProcessError:
         server.respond(
             500,

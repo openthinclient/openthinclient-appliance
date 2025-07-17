@@ -7,10 +7,13 @@ def do_manual_proxy_configuration(proxy_type, server, data):
     try:
         if data.get('reset', False) == True:
             for key in data["keys"]:
-                cmd = "sudo -u openthinclient DBUS_SESSION_BUS_ADDRESS="\
-                    "\"unix:path=/run/user/1000/bus\" "\
-                    f"gsettings reset org.gnome.system.proxy.{proxy_type} {key}"
-                process = subprocess.run(cmd, shell=True).check_returncode()
+                cmd = (
+                    'sudo', '-u', 'openthinclient',
+                    'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus',
+                    'gsettings', 'reset', f'org.gnome.system.proxy.{proxy_type}',
+                    str(key)
+                )
+                subprocess.run(cmd).check_returncode()
         else:
             for key in data.keys():
                 if proxy_type == "http":
@@ -25,10 +28,13 @@ def do_manual_proxy_configuration(proxy_type, server, data):
                 if key not in option_keys:
                     continue
 
-                cmd = "sudo -u openthinclient DBUS_SESSION_BUS_ADDRESS="\
-                    "\"unix:path=/run/user/1000/bus\" gsettings set "\
-                    f"org.gnome.system.proxy.{proxy_type} {key} {data[key]}"
-                process = subprocess.run(cmd, shell=True).check_returncode()
+                cmd = (
+                    'sudo', '-u', 'openthinclient',
+                    'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus',
+                    'gsettings', 'set', f'org.gnome.system.proxy.{proxy_type}',
+                    str(key), str(data[key])
+                )
+                subprocess.run(cmd).check_returncode()
     except subprocess.CalledProcessError:
         server.respond(
             500,
@@ -54,14 +60,19 @@ def do_manual_proxy_configuration(proxy_type, server, data):
 def mode(server, data):
     try:
         if data.get("reset", False) == True:
-            cmd = "sudo -u openthinclient DBUS_SESSION_BUS_ADDRESS="\
-                "\"unix:path=/run/user/1000/bus\" gsettings reset "\
-                "org.gnome.system.proxy mode"
+            cmd = (
+                'sudo', '-u', 'openthinclient',
+                'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus',
+                'gsettings', 'reset', 'org.gnome.system.proxy', 'mode'
+            )
         else:
-            cmd = f"sudo -u openthinclient DBUS_SESSION_BUS_ADDRESS="\
-                "\"unix:path=/run/user/1000/bus\" gsettings set "\
-                f"org.gnome.system.proxy mode {data['mode']}"
-        process = subprocess.run(cmd, shell=True).check_returncode()
+            cmd = (
+                'sudo', '-u', 'openthinclient',
+                'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus',
+                'gsettings', 'set',
+                'org.gnome.system.proxy', 'mode', f'{data["mode"]}'
+            )
+        subprocess.run(cmd).check_returncode()
     except subprocess.CalledProcessError:
         server.respond(
             500,
@@ -88,14 +99,19 @@ def mode(server, data):
 def autoconfig_url(server, data):
     try:
         if data.get("reset", False) == True:
-            cmd = "sudo -u openthinclient DBUS_SESSION_BUS_ADDRESS="\
-                "\"unix:path=/run/user/1000/bus\" gsettings reset "\
-                "org.gnome.system.proxy autoconfig-url"
+            cmd = (
+                'sudo', '-u', 'openthinclient',
+                'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus',
+                'gsettings', 'reset', 'org.gnome.system.proxy', 'autoconfig-url'
+            )
         else:
-            cmd = f"sudo -u openthinclient DBUS_SESSION_BUS_ADDRESS="\
-                "\"unix:path=/run/user/1000/bus\" gsettings set "\
-                f"org.gnome.system.proxy autoconfig-url {data['autoconfig']}"
-        process = subprocess.run(cmd, shell=True).check_returncode()
+            cmd = (
+                'sudo', '-u', 'openthinclient',
+                'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus',
+                'gsettings', 'set', 'org.gnome.system.proxy',
+                'autoconfig-url', f'{data["autoconfig"]}'
+            )
+        subprocess.run(cmd).check_returncode()
     except subprocess.CalledProcessError:
         server.respond(
             500,
@@ -122,15 +138,20 @@ def autoconfig_url(server, data):
 def ignored(server, data):
     try:
         if data.get("reset", False) == True:
-            cmd = "sudo -u openthinclient DBUS_SESSION_BUS_ADDRESS="\
-                "\"unix:path=/run/user/1000/bus\" gsettings reset "\
-                "org.gnome.system.proxy ignore-hosts"
+            cmd = (
+                'sudo', '-u', 'openthinclient',
+                'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus',
+                'gsettings', 'reset', 'org.gnome.system.proxy', 'ignore-hosts'
+            )
         else:
             hosts = str(data['hosts']).replace("'", '"')
-            cmd = f"sudo -u openthinclient DBUS_SESSION_BUS_ADDRESS="\
-                "\"unix:path=/run/user/1000/bus\" gsettings set "\
-                f"org.gnome.system.proxy ignore-hosts '{hosts}'"
-        process = subprocess.run(cmd, shell=True).check_returncode()
+            cmd = (
+                'sudo', '-u', 'openthinclient',
+                'DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus',
+                'gsettings', 'set', 'org.gnome.system.proxy', 'ignore-hosts',
+                f'\'{hosts}\''
+            )
+        subprocess.run(cmd).check_returncode()
     except subprocess.CalledProcessError:
         server.respond(
             500,

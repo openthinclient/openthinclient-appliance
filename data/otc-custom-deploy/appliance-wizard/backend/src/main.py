@@ -30,8 +30,7 @@ def term_frontend(server):
             return
         with open(PID_FILE_PATH, 'r') as f:
             pid = f.read().strip()
-        cmd = f"kill -15 {pid}"
-        process = subprocess.run(cmd, shell=True)
+        subprocess.run(('kill', '-15', str(pid)))
     except Exception as e:
         server.respond(
             500,
@@ -53,8 +52,7 @@ def term_frontend(server):
 def destroy(server):
     try:
         os.remove("/var/appliance-wizard/RUN.FLAG")
-        cmd = "usermod -rG nopasswdlogin openthinclient"
-        subprocess.run(cmd, shell=True)
+        subprocess.run(('usermod', '-rG', 'nopasswdlogin', 'openthinclient'))
     except:
         server.respond(
             500,
@@ -72,8 +70,9 @@ def destroy(server):
 @WizardServer.endpoint("api/v1/timezones")
 def timezones(server):
     try:
-        cmd = "timedatectl list-timezones"
-        process = subprocess.run(cmd, shell=True, capture_output=True)
+        process = subprocess.run(
+            ('timedatectl', 'list-timezones'), capture_output=True
+        )
         timezones = process.stdout.decode().strip().split('\n')
     except:
         server.respond(

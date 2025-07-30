@@ -113,6 +113,7 @@
             <property name="orientation">vertical</property>
             <child type="center">
               <object class="GtkBox">
+                <property name="name">center_box</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
@@ -120,6 +121,7 @@
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="margin-bottom">20</property>
                     <child>
                       <object class="GtkImage" id="manager_icon">
                         <property name="visible">True</property>
@@ -251,8 +253,7 @@
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="margin-top">10</property>
-                    <property name="margin-bottom">20</property>
+                    <property name="margin-bottom">10</property>
                     <child type="center">
                       <object class="GtkBox">
                         <property name="visible">True</property>

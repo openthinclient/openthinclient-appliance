@@ -15,7 +15,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("python3", ""),
     ("zerofree", ""),
     ("openssh-server", ""),
-    ("ntp", ""),
+    ("ntpsec", ""),
     ("acpid", ""),
     ("aptitude", ""),
     ("sudo", ""),
@@ -33,7 +33,7 @@ otc_manager_install_home = "/home/openthinclient/otc-manager-home/"
     ("network-manager", ""),
     ("virt-what", ""),
     ("dos2unix", ""),
-    ("dnsutils", ""),
+    ("bind9-dnsutils", ""),
     ("unattended-upgrades", ""),
 ])
 def test_basic_packages_installed(host, name, version):
@@ -55,7 +55,7 @@ def test_basic_packages_installed(host, name, version):
     ("network-manager-gnome", ""),
     ("arandr", ""),
     ("liblightdm-gobject-dev", ""),
-    ("gir1.2-webkit2-4.0", ""),
+    ("gir1.2-webkit2-4.1", ""),
     ("icedtea-netx", ""),
 ])
 def test_gui_packages_installed(host, name, version):

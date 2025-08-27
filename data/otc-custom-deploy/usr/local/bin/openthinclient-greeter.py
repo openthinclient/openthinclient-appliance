@@ -120,7 +120,6 @@ def set_language(lang="en"):
 
     translate_manager_state()
 
-    current_layout = cache.get("greeter", "last-layout", fallback="English (US)")
     layout_choose.set_label(str(layout_short))
     layout_choose.set_tooltip_text(str(layout_text))
 
@@ -179,19 +178,14 @@ def fill_with_users(user_cb):
 
 
 def fill_layout_store():
-    layout_id = 0
-    last_layout = cache.get("greeter", "last-layout", fallback="English (US)")
-
     layouts = []
 
-    for id, layout in enumerate(LightDM.get_layouts()):
+    for layout in LightDM.get_layouts():
         layouts.append(layout.get_description())
 
     layouts.sort()
-    for id, layout in enumerate(layouts):
+    for layout in layouts:
         layoutStore.append([layout])
-        if layout == last_layout:
-            layout_id = id
 
 
 def set_layout(layout_text_):

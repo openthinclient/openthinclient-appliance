@@ -7,7 +7,7 @@
 
 ```
 ⁖ packer version
-Packer v1.12.0
+Packer v1.14.1
 ```
 
 ### Requirements
@@ -17,8 +17,8 @@ You need to place a openthinclient software installer in the following folder to
 ```
 <path to virtual appliance>/installers
 ```
-   
-   
+
+
 ### Usage
 
 ℹ Before starting the build process change to the directory of the Virtual Appliance.
@@ -64,19 +64,19 @@ packer validate otc-appliance_debian.pkr.hcl
 #### VirtualBox
 
 ```
-packer build -only=virtualbox-iso.vbox otc-appliance_debian.pkr.hcl 
+packer build -only=virtualbox-iso.vbox otc-appliance_debian.pkr.hcl
 ```
 
 #### VMware
 
 ```
-packer build -only=vmware-iso.vmware otc-appliance_debian.pkr.hcl 
+packer build -only=vmware-iso.vmware otc-appliance_debian.pkr.hcl
 ```
 
 #### Hyper-V
 
 ```
-packer build -only=hyperv-iso.hyperv otc-appliance_debian.pkr.hcl 
+packer build -only=hyperv-iso.hyperv otc-appliance_debian.pkr.hcl
 ```
 
 #### VirtualBox and VMware

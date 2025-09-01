@@ -182,12 +182,15 @@ position=20
 object-type='launcher'
 panel-right-stick=false
 
+[org/mate/terminal/global]
+default-profile='default'
+
 [org/mate/terminal/profiles/default]
-background-color='#FFFFFFFFDDDD'
-palette='#2E2D34333635:#CCCC00000000:#4E4E9A990605:#C4C4A09F0000:#34336564A4A4:#7574504F7B7B:#0605981F9A99:#D3D2D7D7CFCF:#555457575353:#EFEF29292929:#8A89E2E13433:#FCFCE9E84F4F:#72729F9FCFCF:#ADAD7F7FA8A7:#3433E2E1E2E1:#EEEEEEEEECEC'
-bold-color='#000000000000'
-foreground-color='#000000000000'
-visible-name='Default'
+use-theme-colors=false
+foreground-color='#FFFFFFFFFFFF'
+background-color='#000000000000'
+use-system-font=false
+font='monospace 11'
 
 [org/mate/desktop/accessibility/keyboard]
 slowkeys-beep-press=true

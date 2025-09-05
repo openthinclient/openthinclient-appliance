@@ -292,7 +292,7 @@ def test_package_cleanup(host, name):
 def test_basic_system_information(host):
     assert host.system_info.type == "linux"
     assert host.system_info.distribution == "debian"
-    assert host.system_info.codename == "bookworm"
+    assert host.system_info.codename == "trixie"
 
 
 @pytest.mark.parametrize("executable,expected_output", [

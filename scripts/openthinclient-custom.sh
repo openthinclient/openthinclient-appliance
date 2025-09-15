@@ -47,6 +47,30 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/sudoers.d/90-openthinclient-appliance /etc/s
 chown root:root /etc/sudoers.d/90-openthinclient-appliance
 chmod 0440 /etc/sudoers.d/90-openthinclient-appliance
 
+echo "==> Deploying Common UNIX Printing System >>CUPS<<"
+
+echo "==> Installing cups packages"
+apt-get -y install cups cups-client cups-bsd
+
+echo "==> Installing cups driver packages"
+apt-get -y install printer-driver-gutenprint printer-driver-hpijs
+
+echo "==> Installing cups pdf printer driver package"
+apt-get -y install printer-driver-cups-pdf
+
+echo "==> Stopping cups service before config changes are applied"
+systemctl stop cups
+sleep 2
+
+echo "==> Copying custom cups configuration file"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/cups/cupsd.conf /etc/cups/cupsd.conf
+
+echo "==> Setting correct permissions for custom cupsd.conf configuration"
+chown root:lp /etc/cups/cupsd.conf
+
+echo "==> Adding user openthinclient to lpadmin group"
+usermod -a -G lpadmin openthinclient
+
 echo "==> Deploying custom otc vimrc "
 cp -a  ${OTC_CUSTOM_DEPLOY_PATH}/etc/vim/vimrc /etc/vim/vimrc
 
@@ -56,7 +80,7 @@ ROOT_ALIASES_FILE=/root/.bash_aliases
 ROOT_BASHRC_FILE=/root/.bashrc
 
 read -r -d '' ALIASES << EOF
-alias ll='ls -alF'
+alias ll='ls -halF'
 #alias la='ls -A'
 #alias l='ls -CF'
 EOF

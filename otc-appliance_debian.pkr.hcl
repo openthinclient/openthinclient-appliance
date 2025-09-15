@@ -347,7 +347,6 @@ build {
       "scripts/openthinclient-gui.sh",
       "scripts/vmtools.sh",
       "scripts/motd.sh",
-      "scripts/print-server.sh",
       "scripts/openthinclient-cleaner.sh",
       "scripts/minimize.sh"
     ]

@@ -183,6 +183,17 @@ chown root:root /etc/cron.d/openthinclient_ldap_backup
 chmod +x /etc/cron.d/openthinclient_ldap_backup
 dos2unix /etc/cron.d/openthinclient_ldap_backup
 
+echo "==> Installing openthinclient remote support client"
+mkdir -p /opt/openthinclient-remote-support/
+wget -q -O /opt/openthinclient-remote-support/openthinclient-support-x86_64.AppImage \
+    https://archive.openthinclient.org/supporttools/openthinclient-support-x86_64.AppImage
+chmod +x /opt/openthinclient-remote-support/openthinclient-support-x86_64.AppImage
+if [ -x /opt/openthinclient-remote-support/openthinclient-support-x86_64.AppImage ]; then
+    echo "openthinclient remote support client deployed successfully."
+else
+    echo "Deployment failed: AppImage not found or not executable."
+fi
+
 echo "==> Creating openthinclient vm version information"
 VERSION_FILE="/usr/local/share/openthinclient/openthinclient-vm-version"
 touch $VERSION_FILE

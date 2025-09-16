@@ -1,15 +1,14 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
-Categories=Network;WebBrowser;
+Categories=Network;RemoteAccess;
 Icon=/usr/local/share/openthinclient/icons/openthinclient_support.png
-Exec=chromium %u https://livesupport.levigo.de/
-Name=openthinclient-Livesupport
-Comment=powered by levigo
-GenericName=openthinclient-Livesupport
-X-GNOME-FullName=openthinclient-Livesupport
+Exec=/opt/openthinclient-remote-support/openthinclient-support-x86_64.AppImage
+Name=openthinclient-RemoteSupport
+Comment=Remote Support powered by RustDesk
+GenericName=openthinclient-RemoteSupport
+X-GNOME-FullName=openthinclient-RemoteSupport
 X-MultipleArgs=false
-MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
-StartupWMClass=chromium
+StartupWMClass=openthinclient-support
 StartupNotify=true
 Terminal=false

@@ -186,11 +186,6 @@ echo "==> Deploying chromium web browser managed policies"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/chromium/policies/managed/*.json /etc/chromium/policies/managed/
 chown root:root /etc/chromium/policies/managed/ -R
 
-echo "==> Deploying preconfiguration for livesupport"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/home/openthinclient/livesupport.tar.gz /home/openthinclient/
-tar -xzf /home/openthinclient/livesupport.tar.gz -C /home/openthinclient/
-rm /home/openthinclient/livesupport.tar.gz
-
 echo "==> Deploying chromium web browser master preferences file"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/chromium/master_preferences /etc/chromium/
 chown root:root /etc/chromium/ -R

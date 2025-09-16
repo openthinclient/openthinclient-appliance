@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=CUPS
+Comment=Manage printers and print jobs
+Exec=xdg-open http://localhost:631/admin
+Icon=printer-network
+Terminal=false
+Type=Application
+Categories=Settings;HardwareSettings;X-MATE-Settings-Panels;GTK;
+OnlyShowIn=MATE;

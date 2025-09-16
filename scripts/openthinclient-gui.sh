@@ -85,6 +85,11 @@ echo "==> Deploying desktop icons for openthinclient user desktop"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
 chmod +x /home/openthinclient/Desktop/*.desktop
 
+echo "==> Deploying CUPS desktop file for MATE system menu entry"
+mkdir -p /usr/local/share/applications/
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/share/applications/cups.desktop /usr/share/applications/
+chown root:root /usr/share/applications/cups.desktop
+
 echo "==> Deploying appliance wizard [0/5]:"
 echo "==> Appliance wizard: Download nodejs [1/5]"
 wget -q -O ${OTC_CUSTOM_DEPLOY_PATH}/appliance-wizard/nodejs.tar.xz "${NODEJS_URL}"

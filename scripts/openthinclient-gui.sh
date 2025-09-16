@@ -81,8 +81,8 @@ rm /lib/systemd/system/ctrl-alt-del.target
 ln -s /dev/null /lib/systemd/system/ctrl-alt-del.target
 systemctl daemon-reload
 
-echo "==> Deploying desktop icons for openthinclient user desktop"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-icons/ /home/openthinclient/Desktop/
+echo "==> Deploying desktop links for user openthinclient"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-links/ /home/openthinclient/Desktop/
 chmod +x /home/openthinclient/Desktop/*.desktop
 
 echo "==> Deploying CUPS desktop file for MATE system menu entry"

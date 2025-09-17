@@ -244,6 +244,9 @@ source "virtualbox-iso" "vbox" {
   cpus             = "${var.cpus}"
   memory           = "${var.memory}"
   disk_size        = "${var.disk_size}"
+  hard_drive_interface     = "sata"
+  hard_drive_nonrotational = true
+  hard_drive_discard       = true
   iso_checksum     = "${var.iso_checksum}"
   iso_urls         = "${var.iso_urls}"
   http_directory   = "${var.dir}"
@@ -341,14 +344,12 @@ build {
     ]
     execute_command = "echo ${var.ssh_pass} | {{ .Vars }} sudo -S -E bash '{{ .Path }}'"
     scripts = [
-      "scripts/networking.sh",
-      "scripts/openthinclient-installer.sh",
+      "scripts/openthinclient-network-config.sh",
+      "scripts/openthinclient-install-manager.sh",
       "scripts/openthinclient-custom.sh",
       "scripts/openthinclient-gui.sh",
-      "scripts/vmtools.sh",
-      "scripts/motd.sh",
-      "scripts/openthinclient-cleaner.sh",
-      "scripts/minimize.sh"
+      "scripts/openthinclient-vmtools.sh",
+      "scripts/openthinclient-clean-shrink.sh",
     ]
   }
 

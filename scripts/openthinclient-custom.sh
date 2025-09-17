@@ -1,5 +1,4 @@
 #!/bin/bash
-# Filename:     openthinclient-custom.sh
 # Purpose:      install openthinclient custom scripts and needed packages
 #------------------------------------------------------------------------------
 export DEBIAN_FRONTEND="noninteractive"
@@ -198,22 +197,40 @@ echo "==> Creating openthinclient vm version information"
 VERSION_FILE="/usr/local/share/openthinclient/openthinclient-vm-version"
 touch $VERSION_FILE
 
-echo "==> Populating openthinclient vm version information"
-if [ -f ${VERSION_FILE} ]; then
-    echo "==> Populating already existing openthinclient vm version ${VERSION_FILE}"
-    PLATFORM_MSG=$(printf 'openthinclient %s' "$OTC_APPLIANCE_VERSION")
+echo "==> Populating openthinclient VM version information"
+
+if [ -f "${VERSION_FILE}" ]; then
+    echo "==> Appending openthinclient VM version info to ${VERSION_FILE}"
+    PLATFORM_MSG=$(printf 'openthinclient-Management Server %s' "$OTC_APPLIANCE_VERSION")
     BUILT_MSG=$(printf 'built %s' "$(date +%Y-%m-%d)")
     {
-        echo "==================="
-        printf '%s%-30s%10s\n' " " "${PLATFORM_MSG}" "${BUILT_MSG}"
-        echo "==================="
+        echo "================================================================"
+        printf '   %-35s %s\n' "${PLATFORM_MSG}" "${BUILT_MSG}"
+        echo "================================================================"
         echo "Operating system:"
         lsb_release -d -s
-        echo "==================="
-    } >>  ${VERSION_FILE}
+        echo "================================================================"
+    } >> "${VERSION_FILE}"
 else
     echo "==> Populating openthinclient VM information failed. File not found"
 fi
+
+echo "==> Creating message of the day"
+MOTD_FILE=/etc/motd
+echo "==> Updating motd"
+{
+  printf '%.0s=' {1..75}; printf '\n'
+  if [[ -f "$VERSION_FILE" ]]; then
+    cat "$VERSION_FILE"
+  else
+    printf 'openthinclient-Management Server %s\n' "${OTC_APPLIANCE_VERSION:-unknown}"
+    printf 'built %s\n' "$(date +%Y-%m-%d)"
+    echo "Operating system:"
+    lsb_release -d -s
+    echo "================================================================"
+  fi
+  printf '%.0s=' {1..75}; printf '\n'
+} > "$MOTD_FILE"
 
 echo "==> Deploying openthinclient grub background image"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/share/openthinclient/backgrounds/default.png /boot/grub/

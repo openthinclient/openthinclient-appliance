@@ -1,5 +1,4 @@
 #!/bin/bash -eux
-# Filename:     vmtools.sh
 # Purpose:      install specific vm tools dependent on packer build type
 #------------------------------------------------------------------------------
 export DEBIAN_FRONTEND="noninteractive"
@@ -46,9 +45,9 @@ function install_virtualbox_tools {
     rm -rf /tmp/vbox;
     rm -f "$HOME_DIR"/*.iso;
     apt-get remove -y build-essential
-    
+
     echo "==> Adding user openthinclient to vboxsf group"
-    usermod -a -G vboxsf openthinclient    
+    usermod -a -G vboxsf openthinclient
 }
 
 echo "$PACKER_BUILDER_TYPE"

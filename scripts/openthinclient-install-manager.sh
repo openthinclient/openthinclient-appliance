@@ -1,6 +1,5 @@
 #!/bin/bash -eux
-# Filename:     openthinclient-installer.sh
-# Purpose:      install new version of the openthinclient software package
+# Purpose:      install new version of the openthinclient-management server
 #------------------------------------------------------------------------------
 
 OTC_INSTALLER_FULLPATH=$(find /tmp/installers/ -name 'openthin*.sh' -type f)

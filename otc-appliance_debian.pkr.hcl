@@ -149,7 +149,7 @@ variable "ssh_pass" {
 
 variable "ssh_timeout" {
   type    = string
-  default = "60m"
+  default = "120m"
 }
 
 variable "virtualbox_guest_os_type" {

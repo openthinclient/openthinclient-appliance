@@ -244,9 +244,7 @@ source "virtualbox-iso" "vbox" {
   cpus             = "${var.cpus}"
   memory           = "${var.memory}"
   disk_size        = "${var.disk_size}"
-  hard_drive_interface     = "sata"
-  hard_drive_nonrotational = true
-  hard_drive_discard       = true
+  hard_drive_interface     = "nvme"
   iso_checksum     = "${var.iso_checksum}"
   iso_urls         = "${var.iso_urls}"
   http_directory   = "${var.dir}"

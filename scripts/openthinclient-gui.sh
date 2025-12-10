@@ -86,7 +86,6 @@ cp -a ${OTC_CUSTOM_DEPLOY_PATH}/desktop-links/ /home/openthinclient/Desktop/
 chmod +x /home/openthinclient/Desktop/*.desktop
 
 echo "==> Deploying CUPS desktop file for MATE system menu entry"
-mkdir -p /usr/local/share/applications/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/share/applications/cups.desktop /usr/share/applications/
 chown root:root /usr/share/applications/cups.desktop
 

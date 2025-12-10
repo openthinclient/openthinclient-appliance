@@ -1,0 +1,75 @@
+#!/bin/bash
+
+_L=${LANG%%_*}
+_L=${_L^^}
+err() {
+    ERR_TI="An error occured." ; ERR_TXTP="The operation has been canceled.\n\nPlease inform your Administrator"
+    [ "$_L" == "DE" ] && ERR_TI="Ein Fehler ist aufgetreten." && ERR_TXTP="Die Operation wurde abgebrochen.\n\nBitte informieren sie ihren Administrator"
+    zenity --error --title="$ERR_TI" --text="$1\n\n$ERR_TXTP"
+    exit 1
+}
+clearall() {
+    ERR_TXT="Error resetting server ID information"
+    [ "$_L" = "DE" ] && ERR_TXT="Fehler beim Zurücksetzen der Server-ID"
+    sudo systemctl stop openthinclient-manager
+    [ $? != 0 ] && err "$ERR_TXT"
+    # those unavoidable java-exceptions here go to STDOUT, real errors to STDERR
+    # retval on ok is 0, regardless of exceptions
+    sudo /opt/openthinclient/bin/managerctl rm-license --home ~/otc-manager-home/ 1>/dev/null
+    [ $? != 0 ] && err "$ERR_TXT"
+    sudo /opt/openthinclient/bin/managerctl rm-server-id --home ~/otc-manager-home/ 1>/dev/null
+    [ $? != 0 ] && err "$ERR_TXT"
+    sudo systemctl start openthinclient-manager
+    [ $? != 0 ] && err "$ERR_TXT"
+}
+abort() {
+    ABORT_TI="Operation aborted"
+    [ "$_L" = "DE" ] && ABORT_TI="Operation abgebrochen"
+    zenity --warning --title="$ABORT_TI" --text="$ABORT_TI"
+    exit 1
+}
+RND=$(($(date +%s)%10))
+if [ "$_L" == "DE" ] ; then
+    ENTRY_TI="Zurücksetzen der openthinclient-Management Server-ID"
+    ENTRY_TXT=$(cat << EOF
+Hiermit wird die aktuelle openthinclient-Management Server-ID zurückgesetzt.
+Damit wird die Nutzungsberechtigung ungültig!
+
+Warnung: Diese Operation kann nicht rückgängig gemacht werden!
+Bitte sorgen Sie für entsprechende Sicherung.
+
+Sicherheitsabfrage: Bitte geben Sie die Ziffer ${RND} ein
+EOF
+)
+else
+    ENTRY_TI="Resetting the openthinclient-Management server ID"
+    ENTRY_TXT=$(cat << EOF
+This will reset the current openthinclient-Management server ID.
+This invalidates the usage authorization!
+
+Warning: This operation cannot be undone!
+Please ensure that you have the appropriate backups.
+
+Security Check: Please enter the digit ${RND}
+EOF
+)
+fi
+ENTRY=$(zenity --entry --text="$ENTRY_TXT" --title="$ENTRY_TI")
+RET=$?
+if [ "$RET" = 1 ] ; then
+    abort
+elif [ "$RET" != 0 ] ; then
+    printf "zenity error %s\n" "$RET"
+    exit $RET
+fi
+if [ "$ENTRY" = "$RND" ] ; then
+    CLEAR_TXT="Server ID reset in progress" ; CLEAR_TI="Please wait"
+    [ "$_L" = "DE" ] && CLEAR_TXT="Server-ID wird zurückgesetzt" && CLEAR_TI="Bitte warten"
+    clearall | zenity --progress --pulsate --no-cancel --auto-close --title="$CLEAR_TI" --text="$CLEAR_TXT"
+    DONE_TI="Operation completed" ; DONE_TXT="New server ID created"
+    [ "$_L" = "DE" ] && DONE_TI="Operation fertiggestellt" && DONE_TXT="Neue Server-ID erstellt"
+    zenity --info --title="$DONE_TI" --text="$DONE_TXT"
+
+else
+    abort
+fi

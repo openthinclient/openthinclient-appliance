@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=openthinclient server ID reset
+Comment=Resets the server ID of the openthinclient-Management server
+Name[de]=openthinclient Server-ID zurücksetzen
+Comment[de]=Setzt die Server-ID des openthinclient-Management Servers zurück
+Exec=/usr/local/sbin/openthinclient-server-ID-reset
+Icon=edit-clear
+Terminal=false
+
+Categories=System;X-openthinclient;

@@ -1,0 +1,22 @@
+{
+	local_certs
+	skip_install_trust
+}
+
+:8080 {
+	redir /ui/* https://{host}{uri} permanent
+	reverse_proxy localhost:8081
+}
+
+http:// {
+	redir /ui/* https://{host}{uri} permanent
+	reverse_proxy localhost:8081
+}
+
+https:// {
+	reverse_proxy localhost:8081
+
+	tls internal {
+		on_demand
+	}
+}

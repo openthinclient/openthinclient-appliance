@@ -244,6 +244,18 @@ else
   echo "Using default kernel grub configuration for virtualbox/VMware builds"
 fi
 
+echo "==> Deploying caddy configuration"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/caddy/Caddyfile /etc/caddy/Caddyfile
+chown root:root /etc/caddy/Caddyfile
+chmod 755 /etc/caddy/Caddyfile
+dos2unix /etc/caddy/Caddyfile
+
+echo "==> Deploying openthinclient manager application.properties"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/opt/otc-manager/bin/application.properties /opt/otc-manager/bin/application.properties
+chown root:root /opt/otc-manager/bin/application.properties
+chmod 755 /opt/otc-manager/bin/application.properties
+dos2unix /opt/otc-manager/bin/application.properties
+
 echo "==> Deploying openthinclient grub color configuration"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/grub.d/05_debian_theme /etc/grub.d/05_debian_theme
 chown root:root /etc/grub.d/05_debian_theme

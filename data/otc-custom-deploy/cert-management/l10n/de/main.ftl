@@ -1,0 +1,13 @@
+cert_status_header = Zurzeit verwendetes Zertifikat
+upload_cert_header = Zertifikat hochladen
+upload_cert_help_text = Laden sie ein Zertifikat sowie den Zertifikatsschlüssel hoch. Das Zertifikat muss für die URL, unter der sie den Openthinclient-Manager erreichen wollen, gültig sein.
+certificate_label = Zertifikat
+key_label = Zertifikatsschlüssel
+submit_label = Hochladen
+internal_cert = Serverinternes Zertifikat wird verwendet. Dieses Zertifikat kann in den Browser eingepflegt werden um die Authentizität der Verbindung zu sichern.
+download = Herunterladen
+provided_cert = Hochgeladenes Zertifikat wird verwendet.
+delete = Löschen
+page_title = Openthinclient Zertifikatsmanagement
+confirm_cert_deletion = Hochgeladenes Zertifikat wirklich löschen?
+login_hint = Die Zugangsdaten zum hochladen eines Zertifikats sind die Zugangsdaten der openthinclient-Appliance.

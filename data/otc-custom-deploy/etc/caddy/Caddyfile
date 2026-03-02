@@ -13,10 +13,14 @@ http:// {
 	reverse_proxy localhost:8081
 }
 
+# Manager https
 https:// {
+    import ./ssl_config
 	reverse_proxy localhost:8081
+}
 
-	tls internal {
-		on_demand
-	}
+# Cert management
+https://:8443 {
+    import ./ssl_config
+    reverse_proxy localhost:8082
 }

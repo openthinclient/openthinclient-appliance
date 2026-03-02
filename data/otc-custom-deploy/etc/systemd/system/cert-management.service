@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the cert management
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/cert-management
+ExecStart=/usr/bin/gunicorn -b 127.0.0.1:8082 main:app
+
+[Install]
+WantedBy=multi-user.target

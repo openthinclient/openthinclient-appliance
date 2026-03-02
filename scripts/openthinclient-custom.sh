@@ -245,10 +245,16 @@ else
 fi
 
 echo "==> Deploying caddy configuration"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/caddy/Caddyfile /etc/caddy/Caddyfile
-chown root:root /etc/caddy/Caddyfile
-chmod 755 /etc/caddy/Caddyfile
-dos2unix /etc/caddy/Caddyfile
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/caddy/* /etc/caddy/
+chown root:root /etc/caddy/*
+chmod 755 /etc/caddy/*
+dos2unix /etc/caddy/*
+
+pip install fluent_runtime --break-system-packages
+sudo cp -ar ${OTC_CUSTOM_DEPLOY_PATH}/cert-management /opt/
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/cert-management.service /etc/systemd/system/cert-management.service
+echo "==> Enabling cert-management service"
+sudo systemctl enable cert-management.service
 
 echo "==> Deploying openthinclient manager application.properties"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/opt/otc-manager/bin/application.properties /opt/otc-manager/bin/application.properties

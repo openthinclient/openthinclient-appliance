@@ -1,0 +1,13 @@
+cert_status_header = Currently used certificate
+upload_cert_header = Upload certificate
+upload_cert_help_text = Upload a certificate and the certificate key. The certificate must be valid for the URL at which you want to access the Openthinclient Manager.
+certificate_label = Certificate
+key_label = Certificate key
+submit_label = Upload
+internal_cert = Internal server certificate is in use.
+download = Download
+provided_cert = Uploaded certificate is in use.
+delete = Delete
+page_title = Openthinclient Certificate Management
+confirm_cert_deletion = Are you sure you want to delete the uploaded certificate?
+login_hint = The login details for uploading a certificate are the login details for the openthinclient appliance.

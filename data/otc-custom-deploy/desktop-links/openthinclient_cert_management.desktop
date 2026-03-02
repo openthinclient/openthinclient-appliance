@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=chromium %u https://localhost:8443
+Icon=/usr/local/share/openthinclient/icons/openthinclient_readme.png
+Name[de_DE]=openthinclient Zertifikatsmanagement
+Name[en_US]=openthinclient Certificate Management
+Terminal=false

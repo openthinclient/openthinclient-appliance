@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+  <title>{{ tr('page_title') }}</title>
+</head>
+
+<script>
+function confirm_deletion() {
+  if (confirm('{{ tr('confirm_cert_deletion')}}')) {
+    window.location = "delete_cert";
+  }
+}
+</script>
+
+<div class="container">
+  <h3>{{ tr('cert_status_header') }}</h3>
+
+  {% if using_internal_cert %}
+  <p>{{ tr('internal_cert') }}</p>
+  <div class="rightalign">
+    <a href="/download_cert">
+      <button>{{ tr('download') }}</button>
+    </a>
+  </div>
+  {% else %}
+  <p>{{ tr('provided_cert') }}</p>
+  <div class="rightalign">
+    <button class="destructive" onclick="confirm_deletion()">
+      {{ tr('delete') }}
+    </button>
+  </div>
+  {% endif %}
+
+</div>
+<div class="container">
+  <h3>{{ tr('upload_cert_header') }}</h3>
+  <p>{{ tr('upload_cert_help_text') }}</p>
+  <form action="/upload_cert" method="post" enctype="multipart/form-data">
+    <label for="cert">{{ tr('certificate_label') }}</label>
+    <input type="file" id="cert" name="cert">
+    <label for="key">{{ tr('key_label') }}</label>
+    <input type="file" id="key" name="key">
+    <p>{{ tr('login_hint') }}</p>
+    <div class="rightalign">
+      <input type="submit" value="{{ tr('submit_label') }}">
+    </div>
+  </form>
+</div>
+
+<style>
+  body {
+    font-family: 'Sans-Serif', Arial, sans-serif;
+  }
+  h3 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    margin-top: 0;
+  }
+
+  label, p {
+    font-size: 16px;
+    color: #34495E;
+    margin-bottom: 12px;
+  }
+
+  input[type="file"] {
+    display: block;
+    margin-bottom: 16px;
+    padding: 8px;
+    border: 1px solid #BDC3C7;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    font-size: 14px;
+  }
+
+
+  button, input[type="submit"] {
+    background-color: #0064a2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    margin-right: 0px;
+    margin-left: auto;
+  }
+
+  button:hover, input[type="submit"]:hover {
+    background-color: #008fe8;
+  }
+
+  .container {
+    max-width: 624px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #F8F9FA;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .rightalign {
+    display: flex;
+    justify-content: right;
+  }
+
+  .destructive {
+    background-color: #e0061e;
+  }
+
+  .destructive:hover {
+    background-color: #f9253c;
+  }
+</style>

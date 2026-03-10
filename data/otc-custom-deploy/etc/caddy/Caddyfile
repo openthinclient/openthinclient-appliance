@@ -8,6 +8,7 @@
 
 :8080 {
 	redir /ui/* https://{host}{uri} permanent
+	reverse_proxy /download_cert localhost:8082
 	reverse_proxy localhost:8081
 }
 

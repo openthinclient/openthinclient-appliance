@@ -1,6 +1,9 @@
 {
 	local_certs
 	skip_install_trust
+    on_demand_tls {
+        ask http://localhost:8082/is_domain_allowed
+    }
 }
 
 :8080 {

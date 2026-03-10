@@ -1,5 +1,7 @@
 [Unit]
 Description=Run the cert management
+Before=caddy.service
+After=network-online.target
 
 [Service]
 Type=simple

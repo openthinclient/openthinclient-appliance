@@ -16,6 +16,14 @@ TEMP_KEY_PATH = Path("/var/lib/caddy/temp.key")
 
 SSL_CONFIG_PATH = Path("/etc/caddy/ssl_config")
 
+ALLOWED_SSL_HOSTS = (
+    ['localhost', '172.0.0.1', '::1', '::'] +
+    subprocess.run(['hostname', '-I'],
+                   capture_output=True).stdout.decode().split() +
+    subprocess.run(['hostname', '-A'],
+                   capture_output=True).stdout.decode().split()
+)
+
 app = Flask(__name__)
 loader = FluentResourceLoader("l10n/{locale}")
 
@@ -114,3 +122,9 @@ tls internal {
 """)
     Popen(['/usr/bin/sh', '-c', 'sleep 1; systemctl reload caddy'])
     return redirect("/")
+
+@app.route(rule="/is_domain_allowed")
+def is_domain_allowed():
+    if request.args.get('domain') in ALLOWED_SSL_HOSTS:
+        return "yes"
+    return ('Forbidden', 403, {})

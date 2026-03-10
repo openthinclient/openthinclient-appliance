@@ -1,5 +1,7 @@
+import os
 from pathlib import Path
 from subprocess import Popen
+import subprocess
 import pam
 from functools import wraps
 from flask import Flask, redirect, render_template, request, send_file
@@ -9,10 +11,17 @@ CADDY_PKI_DIR = Path("/var/lib/caddy/.local/share/caddy/pki/authorities/local/")
 USER_CERT_PATH = Path("/var/lib/caddy/user.crt")
 USER_KEY_PATH = Path("/var/lib/caddy/user.key")
 
+TEMP_CERT_PATH = Path("/var/lib/caddy/temp.crt")
+TEMP_KEY_PATH = Path("/var/lib/caddy/temp.key")
+
 SSL_CONFIG_PATH = Path("/etc/caddy/ssl_config")
 
 app = Flask(__name__)
 loader = FluentResourceLoader("l10n/{locale}")
+
+class InvalidCertError(Exception):
+    pass
+
 
 def login_required(f):
     @wraps(f)
@@ -26,13 +35,18 @@ def login_required(f):
         return f(**kwargs)
     return wrapped_view
 
-@app.route("/")
-def main_page():
-    langs = [lang for lang,_weight in request.accept_languages]
-    langs.append("en")
-    l10n = FluentLocalization(langs, ["main.ftl"], loader)
+def translated_view(f):
+    @wraps(f)
+    def wrapped_view(**kwargs):
+        langs = [lang for lang,_weight in request.accept_languages]
+        langs.append("en")
+        l10n = FluentLocalization(langs, ["main.ftl"], loader)
+        return f(l10n=l10n, **kwargs)
+    return wrapped_view
 
-    print(USER_CERT_PATH.exists())
+@app.route("/")
+@translated_view
+def main_page(l10n):
     return render_template("index.html", tr=l10n.format_value,
                            using_internal_cert=not USER_CERT_PATH.exists())
 
@@ -40,25 +54,52 @@ def main_page():
 def download_cert():
     return send_file(CADDY_PKI_DIR / "root.crt")
 
+def check_cert_key():
+    cert_process = subprocess.run(['openssl', 'x509', '-in',
+                                  TEMP_CERT_PATH, '-modulus', '-noout'],
+                                  capture_output=True)
+    key_process = subprocess.run(['openssl', 'rsa', '-noout', '-modulus', '-in',
+                                 TEMP_KEY_PATH], capture_output=True)
+
+    if cert_process.returncode:
+        raise InvalidCertError('cert_wrong_format')
+    if key_process.returncode:
+        raise InvalidCertError('key_wrong_format')
+
+    if str(key_process.stdout) != str(cert_process.stdout):
+        raise InvalidCertError('cert_key_missmatch')
+
 @app.route("/upload_cert", methods=['POST'])
 @login_required
-def upload_cert():
+@translated_view
+def upload_cert(l10n):
+    def render_error_page(error):
+        return render_template('error.html', error=l10n.format_value(error),
+                               tr=l10n.format_value)
+
     if 'cert' not in request.files or 'key' not in request.files:
-        return "required files not uploaded"
+        return render_error_page('files_not_uploaded')
     cert = request.files['cert']
     key = request.files['key']
     if cert.filename == '' or key.filename == '':
-        return "required files not selected"
+        return render_error_page('files_not_uploaded')
 
-    cert.save(USER_CERT_PATH)
-    key.save(USER_KEY_PATH)
+    cert.save(TEMP_CERT_PATH)
+    key.save(TEMP_KEY_PATH)
+
+    try:
+        check_cert_key()
+    except InvalidCertError as e:
+        return render_error_page(e.args[0])
+
+    os.rename(TEMP_CERT_PATH, USER_CERT_PATH)
+    os.rename(TEMP_KEY_PATH, USER_KEY_PATH)
 
     SSL_CONFIG_PATH.open('w').write(f"""\
 tls {USER_CERT_PATH} {USER_KEY_PATH}
 """)
     Popen(['/usr/bin/sh', '-c', 'sleep 1; systemctl reload caddy'])
     return redirect("/")
-
 
 @app.route(rule="/delete_cert")
 @login_required

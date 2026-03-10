@@ -11,3 +11,9 @@ delete = Löschen
 page_title = Openthinclient Zertifikatsmanagement
 confirm_cert_deletion = Hochgeladenes Zertifikat wirklich löschen?
 login_hint = Die Zugangsdaten zum hochladen eines Zertifikats sind die Zugangsdaten der openthinclient-Appliance.
+
+files_not_uploaded = Bitte laden sie Zertifikat und Schlüssel hoch.
+cert_wrong_format = Das hochgeladene Zertifikat hat nicht das richtige format. Bitte laden sie ein SSL-Zertifikat im PEM-Format hoch.
+key_wrong_format = Der hochgeladene Schlüssel hat nicht das richtige format. Bitte laden sie einen openssl private key hoch.
+cert_key_missmatch = Der hochgeladene Schlüssel und das Zertifikat passen nicht zusammen.
+back_to_main_page = Zurück

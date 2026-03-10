@@ -11,3 +11,9 @@ delete = Delete
 page_title = Openthinclient Certificate Management
 confirm_cert_deletion = Are you sure you want to delete the uploaded certificate?
 login_hint = The login details for uploading a certificate are the login details for the openthinclient appliance.
+
+files_not_uploaded = Please upload certificate and key.
+cert_wrong_format = The uploaded certificate is not in the correct format. Please upload an SSL certificate in PEM format.
+key_wrong_format = The uploaded key is not in the correct format. Please upload an openssl private key.
+cert_key_missmatch = The uploaded key and certificate do not match.
+back_to_main_page = Back

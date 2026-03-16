@@ -86,14 +86,14 @@ variable "dir" {
 
 variable "iso_checksum" {
   type    = string
-  default = "891d7936a2e21df1d752e5d4c877bb7ca2759c902b0bfbf5527098464623bedaa17260e8bd4acf1331580ae56a6a87a08cc2f497102daa991d5e4e4018fee82b"
+  default = "3e02de4ed744799350bd4039b137053835238ff9f9f29eee812309cd7eebdb5127b0f2b54d167b76d324530aa16939b41ae2d2f2d1995a2801e19938acdc927f"
 }
 
 variable "iso_urls" {
   type = list(string)
   default = [
-    "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.2.0-amd64-netinst.iso",
-    "https://cdimage.debian.org/cdimage/archive/13.0.0/amd64/iso-cd/debian-13.2.0-amd64-netinst.iso"
+    "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.4.0-amd64-netinst.iso",
+    "https://cdimage.debian.org/cdimage/archive/13.0.0/amd64/iso-cd/debian-13.4.0-amd64-netinst.iso"
   ]
 }
 

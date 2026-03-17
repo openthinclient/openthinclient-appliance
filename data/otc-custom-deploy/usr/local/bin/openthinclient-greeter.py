@@ -124,7 +124,8 @@ def set_language(lang="en"):
     layout_choose.set_tooltip_text(str(layout_text))
 
     load_reboot_required()
-    load_ip()
+    if load_ip():
+        GLib.timeout_add(200, load_ip)
 
 
 def get_translation_text(key, lang, default=None):
@@ -439,6 +440,7 @@ def load_ip():
     process = subprocess.run(cmd, capture_output=True, shell=True)
     ip = process.stdout.decode().strip()
     ip_label.set_text(ip)
+    return process.returncode != 0
 
 
 if __name__ == "__main__":

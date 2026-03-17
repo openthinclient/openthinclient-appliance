@@ -10,6 +10,7 @@ then
     else
         echo -e "\\U26D4 no IP"
     fi
+    exit 1
 else
     echo "IP: $ip"
 fi

@@ -430,7 +430,7 @@ def load_reboot_required():
     process = subprocess.run(cmd, capture_output=True, shell=True)
     message = process.stdout.decode().strip()
     reboot_label.set_text(message)
-        
+
 
 def load_ip():
     if current_lang == "de":

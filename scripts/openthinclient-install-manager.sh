@@ -50,6 +50,7 @@ if [ -f "$OTC_INSTALLER_FULLPATH" ]; then
 
         echo "==> Create a symlink between the new install path and the legacy installation dir"
         ln -s "${OTC_INSTALL_PATH%/}" /opt/openthinclient
+        ln -s "${OTC_INSTALL_HOME%/}" /var/openthinclient
 
     else
 	    echo "==> $OTC_INSTALL_PATH doesn't exist. Installation was not successful"

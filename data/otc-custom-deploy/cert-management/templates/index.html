@@ -36,9 +36,9 @@ function confirm_deletion() {
   <p>{{ tr('upload_cert_help_text') }}</p>
   <form action="/upload_cert" method="post" enctype="multipart/form-data">
     <label for="cert">{{ tr('certificate_label') }}</label>
-    <input type="file" id="cert" name="cert" accept=".crt">
+    <input type="file" id="cert" name="cert" accept=".crt, .der, .pem">
     <label for="key">{{ tr('key_label') }}</label>
-    <input type="file" id="key" name="key" accept=".key">
+    <input type="file" id="key" name="key" accept=".key, .der, .pem">
     <p>{{ tr('login_hint') }}</p>
     <div class="rightalign">
       <input type="submit" value="{{ tr('submit_label') }}">

@@ -3,14 +3,6 @@
   <title>{{ tr('page_title') }}</title>
 </head>
 
-<script>
-function confirm_deletion() {
-  if (confirm('{{ tr('confirm_cert_deletion')}}')) {
-    window.location = "delete_cert";
-  }
-}
-</script>
-
 <div class="container">
   <h3>{{ tr('cert_status_header') }}</h3>
 
@@ -34,17 +26,55 @@ function confirm_deletion() {
 <div class="container">
   <h3>{{ tr('upload_cert_header') }}</h3>
   <p>{{ tr('upload_cert_help_text') }}</p>
-  <form action="/upload_cert" method="post" enctype="multipart/form-data">
+  <form id="cert-form">
     <label for="cert">{{ tr('certificate_label') }}</label>
     <input type="file" id="cert" name="cert" accept=".crt, .der, .pem">
     <label for="key">{{ tr('key_label') }}</label>
     <input type="file" id="key" name="key" accept=".key, .der, .pem">
     <p>{{ tr('login_hint') }}</p>
+
+    <div id="form-alert" class="alert alert-danger" style="display: none"></div>
     <div class="rightalign">
       <input type="submit" value="{{ tr('submit_label') }}">
     </div>
   </form>
 </div>
+
+<script>
+function confirm_deletion() {
+  if (confirm('{{ tr('confirm_cert_deletion')}}')) {
+    window.location = "delete_cert";
+  }
+}
+
+const form = document.getElementById("cert-form");
+const alert = document.getElementById("form-alert");
+async function submitForm() {
+  const formData = new FormData(form);
+  try {
+    const response = await fetch("/upload_cert", {
+      method: "POST",
+      body: formData,
+    });
+    if (response.ok) {
+      window.location = '/';
+      return;
+    }
+
+    const json = await response.json();
+    alert.style = '';
+    alert.innerText = json['error'];
+  } catch (e) {
+    alert.style = '';
+    alert.innerText = '{{ tr('communication_failed') }}';
+  }
+}
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  submitForm();
+});
+</script>
 
 <style>
   body {
@@ -111,5 +141,18 @@ function confirm_deletion() {
 
   .destructive:hover {
     background-color: #f9253c;
+  }
+
+  .alert {
+  	padding: 15px;
+  	margin-bottom: 20px;
+  	border: 1px solid transparent;
+  	border-radius: 4px;
+  }
+
+  .alert-danger {
+  	color: #a94442;
+  	background-color: #f2dede;
+  	border-color: #ebccd1;
   }
 </style>

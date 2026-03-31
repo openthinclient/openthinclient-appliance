@@ -2,9 +2,10 @@ import os
 from pathlib import Path
 from subprocess import Popen
 import subprocess
+from flask.json import jsonify
 import pam
 from functools import wraps
-from flask import Flask, redirect, render_template, request, send_file
+from flask import Flask, Response, redirect, render_template, request, send_file
 from fluent.runtime import FluentLocalization, FluentResourceLoader
 
 CADDY_PKI_DIR = Path("/var/lib/caddy/.local/share/caddy/pki/authorities/local/")
@@ -84,8 +85,9 @@ def check_cert_key():
 @translated_view
 def upload_cert(l10n):
     def render_error_page(error):
-        return render_template('error.html', error=l10n.format_value(error),
-                               tr=l10n.format_value)
+        response = jsonify(error=l10n.format_value(error))
+        response.status_code = 400
+        return response
 
     if 'cert' not in request.files or 'key' not in request.files:
         return render_error_page('files_not_uploaded')
@@ -109,7 +111,7 @@ def upload_cert(l10n):
 tls {USER_CERT_PATH} {USER_KEY_PATH}
 """)
     Popen(['/usr/bin/sh', '-c', 'sleep 1; systemctl reload caddy'])
-    return redirect("/")
+    return Response(status=204)
 
 @app.route(rule="/delete_cert")
 @login_required

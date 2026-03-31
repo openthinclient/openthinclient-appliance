@@ -4,6 +4,11 @@
     on_demand_tls {
         ask http://localhost:8082/is_domain_allowed
     }
+    pki {
+        ca local {
+            name "Openthinclient Management Server"
+        }
+    }
 }
 
 :8080 {

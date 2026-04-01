@@ -110,7 +110,7 @@ def upload_cert(l10n):
     SSL_CONFIG_PATH.open('w').write(f"""\
 tls {USER_CERT_PATH} {USER_KEY_PATH}
 """)
-    Popen(['/usr/bin/sh', '-c', 'sleep 1; systemctl reload caddy'])
+    Popen(['systemctl', 'reload', 'caddy'])
     return Response(status=204)
 
 @app.route(rule="/delete_cert")
@@ -124,7 +124,7 @@ tls internal {
     on_demand
 }
 """)
-    Popen(['/usr/bin/sh', '-c', 'sleep 1; systemctl reload caddy'])
+    Popen(['systemctl', 'reload', 'caddy'])
     return redirect("/")
 
 @app.route(rule="/is_domain_allowed")

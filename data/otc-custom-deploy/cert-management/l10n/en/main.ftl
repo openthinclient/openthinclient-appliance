@@ -1,6 +1,6 @@
 cert_status_header = Currently used certificate
 upload_cert_header = Upload certificate
-upload_cert_help_text = Upload a certificate and the certificate key. The certificate must be valid for the URL at which you want to access the Openthinclient Manager.
+upload_cert_help_text = Upload a certificate and the certificate key. The certificate must be valid for the URL at which you want to access the openthinclient Manager.
 certificate_label = Certificate
 key_label = Certificate key
 submit_label = Upload
@@ -8,12 +8,12 @@ internal_cert = Internal server certificate is in use.
 download = Download
 provided_cert = Uploaded certificate is in use.
 delete = Delete
-page_title = Openthinclient Certificate Management
+page_title = openthinclient Certificate Management
 confirm_cert_deletion = Are you sure you want to delete the uploaded certificate?
 login_hint = The login details for uploading a certificate are the login details for the openthinclient appliance.
 
 files_not_uploaded = Error: Please upload certificate and key.
 cert_wrong_format = Error: The uploaded certificate is not in the correct format. Please upload an SSL certificate in PEM format.
-key_wrong_format = Error: The uploaded key is not in the correct format. Please upload an openssl private key.
+key_wrong_format = Error: The uploaded key is not in the correct format. Please upload an OpenSSL private key.
 cert_key_missmatch = Error: The uploaded key and certificate do not match.
 communication_failed = Error: Could not contact the backend. Please reload this page.

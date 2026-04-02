@@ -31,11 +31,11 @@
   <form id="cert-form">
     <label>
       {{ tr('certificate_label') }}
-      <input type="file" name="cert" accept=".crt, .der, .pem">
+      <input type="file" name="cert" accept=".crt, .der, .pem" required>
     </label>
     <label>
       {{ tr('key_label') }}
-      <input type="file" name="key" accept=".key, .der, .pem">
+      <input type="file" name="key" accept=".key, .der, .pem" required>
     </label>
     <p>{{ tr('login_hint') }}</p>
 

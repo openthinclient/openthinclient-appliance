@@ -1,0 +1,4 @@
+https://:8443 {
+    import ./ssl_config
+    reverse_proxy localhost:8082
+}

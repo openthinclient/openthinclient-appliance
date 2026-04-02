@@ -29,7 +29,4 @@ https:// {
 }
 
 # Cert management
-https://:8443 {
-    import ./ssl_config
-    reverse_proxy localhost:8082
-}
+import ./cert_management

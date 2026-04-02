@@ -16,7 +16,8 @@
   {% else %}
   <p>{{ tr('provided_cert') }}</p>
   <div class="rightalign">
-    <button class="destructive" onclick="confirm_deletion()">
+    <button class="destructive" onclick="
+      confirm_redirect('{{ tr('confirm_cert_deletion') }}', 'delete_cert')">
       {{ tr('delete') }}
     </button>
   </div>
@@ -44,10 +45,36 @@
   </form>
 </div>
 
+<div class="container" style="margin-top: auto">
+  {% if externally_reachable %}
+    {% set reachability_status = tr('management_externally_reachable') %}
+    {% set reachability_status_details =
+       tr('management_externally_reachable_details') %}
+    {% set reachability_action = tr('set_locally_reachable') %}
+    {% set reachability_action_confirm = tr('set_locally_reachable_confirm') %}
+    {% set reachability_action_url = '/set_reachability_local' %}
+  {% else %}
+    {% set reachability_status = tr('management_locally_reachable') %}
+    {% set reachability_status_details =
+       tr('management_locally_reachable_details') %}
+    {% set reachability_action = tr('set_externally_reachable') %}
+    {% set reachability_action_confirm = tr('set_externally_reachable_confirm') %}
+    {% set reachability_action_url = '/set_reachability_external' %}
+  {% endif %}
+  <h1>{{ reachability_status }}</h1>
+  <p>{{ reachability_status_details }}</p>
+  <div class="rightalign">
+    <button onclick="
+      confirm_redirect(
+        `{{ reachability_action_confirm }}`, '{{ reachability_action_url }}'
+      )">{{ reachability_action }}</button>
+  </div>
+</div>
+
 <script>
-function confirm_deletion() {
-  if (confirm('{{ tr('confirm_cert_deletion')}}')) {
-    window.location = "delete_cert";
+function confirm_redirect(confirm_text, location) {
+  if (confirm(confirm_text)) {
+    window.location = location;
   }
 }
 

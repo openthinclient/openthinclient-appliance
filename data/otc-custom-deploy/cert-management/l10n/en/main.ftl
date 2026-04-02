@@ -17,3 +17,15 @@ cert_wrong_format = Error: The uploaded certificate is not in the correct format
 key_wrong_format = Error: The uploaded key is not in the correct format. Please upload an OpenSSL private key.
 cert_key_missmatch = Error: The uploaded key and certificate do not match.
 communication_failed = Error: Could not contact the backend. Please reload this page.
+
+management_locally_reachable = Certificate management accessible locally
+management_locally_reachable_details = Certificate management is only accessible locally on the openthinclient appliance. Other devices on the network cannot access this page.
+set_externally_reachable = Make accessible from outside
+set_externally_reachable_confirm = Are you sure you want to make certificate management accessible from outside?
+
+management_externally_reachable = Certificate management accessible externally
+management_externally_reachable_details = Certificate management is accessible from devices on the network. Changing settings is password-protected.
+set_locally_reachable = Allow only internal connections
+set_locally_reachable_confirm = Do you want to make certificate management accessible only locally?
+
+    If you are currently accessing this website from outside, you will no longer be able to view it afterward.

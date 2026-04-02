@@ -40,7 +40,8 @@ def login_required(view_fn):
         auth = request.authorization
         if not (auth and pam.authenticate(auth.username, auth.password)):
             return ('Unauthorized', 401, {
-                'WWW-Authenticate': 'Basic realm="Login Required"'
+                'WWW-Authenticate':
+                'Basic realm="Login using openthinclient-Appliance credentials"'
             })
 
         return view_fn(**kwargs)

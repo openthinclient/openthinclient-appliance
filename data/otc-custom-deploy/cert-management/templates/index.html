@@ -3,8 +3,9 @@
   <title>{{ tr('page_title') }}</title>
 </head>
 
+<h1>{{ tr('page_title') }}</h1>
 <div class="container">
-  <h1>{{ tr('cert_status_header') }}</h1>
+  <h2>{{ tr('cert_status_header') }}</h2>
 
   {% if using_internal_cert %}
   <p>{{ tr('internal_cert') }}</p>
@@ -25,7 +26,7 @@
 </div>
 
 <div class="container">
-  <h1>{{ tr('upload_cert_header') }}</h1>
+  <h2>{{ tr('upload_cert_header') }}</h2>
   <p>{{ tr('upload_cert_help_text') }}</p>
   <form id="cert-form">
     <label>
@@ -45,7 +46,7 @@
   </form>
 </div>
 
-<div class="container" style="margin-top: auto">
+<div class="container">
   {% if externally_reachable %}
     {% set reachability_status = tr('management_externally_reachable') %}
     {% set reachability_status_details =
@@ -61,7 +62,7 @@
     {% set reachability_action_confirm = tr('set_externally_reachable_confirm') %}
     {% set reachability_action_url = '/set_reachability_external' %}
   {% endif %}
-  <h1>{{ reachability_status }}</h1>
+  <h2>{{ reachability_status }}</h2>
   <p>{{ reachability_status_details }}</p>
   <div class="rightalign">
     <button onclick="
@@ -112,8 +113,22 @@ form.addEventListener("submit", (event) => {
     font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
     font-size: 16px;
   }
+
+  .container {
+    max-width: 39em;
+    margin: 10px auto;
+    padding: 20px;
+    background-color: #F8F9FA;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
   h1 {
-    font-size: 2em;
+    font-size: 2.2em;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.8em;
     font-weight: bold;
     margin-bottom: 16px;
     margin-top: 0;
@@ -150,15 +165,6 @@ form.addEventListener("submit", (event) => {
 
   button:hover, input[type="submit"]:hover {
     background-color: #008fe8;
-  }
-
-  .container {
-    max-width: 39em;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #F8F9FA;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .rightalign {

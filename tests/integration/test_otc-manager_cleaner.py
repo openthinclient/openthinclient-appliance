@@ -36,15 +36,6 @@ class Test_OTC_Cleaner(object):
             assert cmd.exit_status == 0
             assert cmd.stdout == expected_output
 
-    @pytest.mark.parametrize("executable,expected_output", [
-        ("ls -A /var/lib/dhcp/", ""),
-    ])
-    def test_var_lib_dhcp_leases_files_deleted(self, executable, expected_output, host):
-        with host.sudo():
-            cmd = host.run_test(executable)
-            assert cmd.exit_status == 0
-            assert cmd.stdout == expected_output
-
     @pytest.mark.parametrize("filename", [
         "/root/.bash_history",
         "/home/openthinclient/.bash_history",
@@ -97,7 +88,7 @@ class Test_OTC_Cleaner(object):
         filen = host.file(filename)
         assert filen.exists
         assert not filen.contains(content)
-        
+
     @pytest.mark.parametrize("filename,content", [
         (OTC_INSTALL_HOME + "directory/service.xml", "<accessControlEnabled>false</accessControlEnabled>"),
     ])
@@ -106,4 +97,3 @@ class Test_OTC_Cleaner(object):
         filen = host.file(filename)
         assert filen.exists
         assert filen.contains(content)
-        

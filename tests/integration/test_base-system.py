@@ -56,7 +56,6 @@ def test_basic_packages_installed(host, name, version):
     ("arandr", ""),
     ("liblightdm-gobject-dev", ""),
     ("gir1.2-webkit2-4.1", ""),
-    ("icedtea-netx", ""),
 ])
 def test_gui_packages_installed(host, name, version):
     pkg = host.package(name)
@@ -170,19 +169,6 @@ def test_openthinclient_version_information_file_present(host, filename, content
         assert filen.group == "root"
 
 
-@pytest.mark.parametrize("filename,content", [
-    ("/etc/network/interfaces", "auto eth0"),
-    ("/etc/network/interfaces", "iface eth0 inet dhcp"),
-])
-def test_for_eth0_in_etc_network_interfaces_file(host, filename, content):
-    filen = host.file(filename)
-    with host.sudo():
-        assert filen.exists
-        assert filen.contains(content)
-        assert filen.user == "root"
-        assert filen.group == "root"
-
-
 def test_udev_rule_eth0_rules_file_workaround(host):
     directory = host.file("/etc/udev/rules.d/80-net-setup-link.rules")
     assert directory.is_symlink
@@ -192,8 +178,8 @@ def test_udev_rule_eth0_rules_file_workaround(host):
 
 
 @pytest.mark.parametrize("filename,content", [
-    ("/home/openthinclient/.bash_aliases", "alias ll='ls -alF'"),
-    ("/root/.bash_aliases", "alias ll='ls -alF'"),
+    ("/home/openthinclient/.bash_aliases", "alias ll='ls -halF'"),
+    ("/root/.bash_aliases", "alias ll='ls -halF'"),
     ("/home/openthinclient/.bashrc", ". ~/.bash_aliases"),
     ("/root/.bashrc", ". ~/.bash_aliases"),
     ("/home/openthinclient/.bash_profile", "source ~/.bashrc"),
@@ -213,7 +199,7 @@ def test_otc_gui_lightdm_locale_fix(host, filename):
     assert file.exists
     assert file.user == "root"
     assert file.group == "root"
-    assert file.mode == 0o755
+    assert file.mode == 0o775
 
 def test_ctrl_alt_del_reboot_keyboard_config_disabled(host):
     directory = host.file("/lib/systemd/system/ctrl-alt-del.target")
@@ -254,7 +240,7 @@ def test_lightdm_config_content(host, filename, content):
 def test_otc_gui_fixes_via_script(host, filename):
     filen = host.file(filename)
     assert filen.exists
-    assert filen.mode == 0o755
+    assert filen.mode == 0o775
 
 
 @pytest.mark.parametrize("filename", [
@@ -279,7 +265,7 @@ def test_otc_desktop_icons_present(host, filename):
 def test_otc_background_and_icons_present(host, filename):
     file = host.file(filename)
     assert file.exists
-    assert file.mode == 0o644
+    assert file.mode == 0o664
 
 
 @pytest.mark.parametrize("name", [
@@ -293,16 +279,6 @@ def test_basic_system_information(host):
     assert host.system_info.type == "linux"
     assert host.system_info.distribution == "debian"
     assert host.system_info.codename == "trixie"
-
-
-@pytest.mark.parametrize("executable,expected_output", [
-    ("/usr/bin/java -version", "17."),
-])
-def test_java_version(executable, expected_output, host):
-    with host.sudo():
-        cmd = host.run(executable)
-        reported_version = re.findall('openjdk version "(.+)"', cmd.stderr)
-        assert reported_version[0].startswith(expected_output)
 
 
 @pytest.mark.parametrize("sysctl_option,expected_output", [

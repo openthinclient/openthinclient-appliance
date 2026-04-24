@@ -4,7 +4,6 @@ upload_cert_help_text = Upload a certificate and the certificate key. The certif
 certificate_label = Certificate
 key_label = Certificate key
 submit_label = Upload
-internal_cert = Internal server certificate is in use.
 download = Download
 provided_cert = Uploaded certificate is in use.
 delete = Delete
@@ -29,3 +28,13 @@ set_locally_reachable = Allow only internal connections
 set_locally_reachable_confirm = Do you want to make certificate management accessible only locally?
 
     If you are currently accessing this website from outside, you will no longer be able to view it afterward.
+
+
+internal_cert_header = Generated certificate in use
+provided_cert_header = Uploaded certificate in use
+issued_certs = Issued certificates
+issued_certs_explainer = Certificates are issued automatically when you access the openthinclient manager website or the certificate management interface. They are only issued for the IP address of the openthinclient appliance.
+confirm_cert_deletion = Are you sure you want to delete certificate?
+cert_subject = Subject
+cert_name = Host
+cert_fingerprint = SHA256-Fingerprint

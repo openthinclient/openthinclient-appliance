@@ -4,7 +4,6 @@ upload_cert_help_text = Laden sie ein Zertifikat sowie den Zertifikatsschlüssel
 certificate_label = Zertifikat
 key_label = Zertifikatsschlüssel
 submit_label = Hochladen
-internal_cert = Serverinternes Zertifikat wird verwendet. Dieses Zertifikat kann in den Browser eingepflegt werden um die Authentizität der Verbindung zu sichern.
 download = Herunterladen
 provided_cert = Hochgeladenes Zertifikat wird verwendet.
 delete = Löschen
@@ -29,3 +28,13 @@ set_locally_reachable = Nur interne Verbindungen zulassen
 set_locally_reachable_confirm = Soll das Zertifikatsmanagement nur noch lokal erreichbar gemacht werden?
 
     Wenn sie diese Webseite gerade von außen bedienen, sehen sie diese danach nicht mehr.
+
+
+internal_cert_header = Erzeugtes Zertifikat wird verwendet
+provided_cert_header = Hochgeladenes Zertifikat wird verwendet
+issued_certs = Ausgestellte Zertifikate
+issued_certs_explainer = Zertifikate werden automatisch ausgestellt, wenn sie die openthinclient Manager Website oder das Zertifikatsmanagement aufrufen. Sie werden allerdings nur für die IP-Adresse der openthinclient Appliance vergeben.
+confirm_issued_cert_deletion = Zertifikat wirklich löschen?
+cert_subject = Betreff
+cert_name = Host
+cert_fingerprint = SHA256-Fingerabdruck

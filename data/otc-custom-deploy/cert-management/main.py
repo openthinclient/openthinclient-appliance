@@ -1,3 +1,4 @@
+import shutil
 import pam
 import subprocess
 from flask.json import jsonify
@@ -6,7 +7,9 @@ from fluent.runtime import FluentLocalization, FluentResourceLoader
 from functools import wraps
 from pathlib import Path
 
-CADDY_PKI_DIR = Path("/var/lib/caddy/.local/share/caddy/pki/authorities/local/")
+CADDY_DATA = Path("/var/lib/caddy/.local/share/caddy/")
+CADDY_PKI_DIR = CADDY_DATA / 'pki' / 'authorities' / 'local'
+CADDY_CERTS_DIR = CADDY_DATA / 'certificates' / 'local'
 USER_CERT_PATH = Path("/var/lib/caddy/user.crt")
 USER_KEY_PATH = Path("/var/lib/caddy/user.key")
 
@@ -56,17 +59,62 @@ def translated_view(view_fn):
         return view_fn(l10n=l10n, **kwargs)
     return wrapped_view
 
+def get_cert_info(cert_path):
+    try:
+        openssl_out = subprocess.run(
+            ['openssl', 'x509', '-in', cert_path, '-noout', '-subject',
+                                '-fingerprint', '-sha256'],
+            capture_output=True
+        )
+        subject, fingerprint, *_ = openssl_out.stdout.decode().splitlines()
+        openssl_out = subprocess.run(
+            ['openssl', 'x509',  '-in', cert_path, '-noout',
+                                 '-ext', 'subjectAltName'],
+            capture_output=True
+        )
+        openssl_out = openssl_out.stdout.decode()
+        name = None
+        if "Subject Alternative Name" in openssl_out:
+            name = openssl_out.splitlines()[1].split(":", 1)[1]
+
+        return (
+            subject.split('=', 1)[1],
+            fingerprint.split('=')[1].replace(":", ":<wbr>"),
+            name
+        )
+    except Exception as e:
+        print(e)
+        return None
+
 @app.route("/")
 @translated_view
 def main_page(l10n):
-    if ((CADDY_CONFIG_DIR / 'cert_management')
-        .readlink().name.endswith('extern')):
+    if ((CADDY_CONFIG_DIR / 'cert_management').readlink()
+        .name.endswith('extern')):
         externally_reachable = True
     else:
         externally_reachable = False
+    using_user_cert = USER_CERT_PATH.exists()
+    cert_path = (USER_CERT_PATH if using_user_cert else
+                 CADDY_PKI_DIR / 'root.crt')
+    cert_subject, cert_fingerprint, cert_name = (get_cert_info(cert_path)
+                                                 or ("cert not found", "", ""))
+    generated_cert_infos = []
+    if not using_user_cert:
+        for cert_dir in CADDY_CERTS_DIR.iterdir():
+            cert_path = cert_dir / f"{cert_dir.name}.crt"
+            if not cert_path.exists():
+                return
+            if cert_info := get_cert_info(cert_path):
+                generated_cert_infos.append((cert_dir.name, *cert_info[1:]))
+
     return render_template("index.html", tr=l10n.format_value,
-                           using_internal_cert=not USER_CERT_PATH.exists(),
-                           externally_reachable=externally_reachable)
+                           externally_reachable=externally_reachable,
+                           cert_subject=cert_subject,
+                           cert_fingerprint=cert_fingerprint,
+                           cert_name=cert_name,
+                           using_internal_cert=not using_user_cert,
+                           generated_cert_infos=generated_cert_infos)
 
 @app.route("/download_cert")
 def download_cert():
@@ -130,6 +178,12 @@ def delete_cert():
     reload_caddy()
     return redirect("/")
 
+@app.route(rule="/delete_issued_cert/<string:cert_name>")
+def delete_issued_cert(cert_name: str):
+    shutil.rmtree(CADDY_CERTS_DIR / cert_name)
+    reload_caddy()
+    return redirect("/")
+
 @app.route(rule="/set_reachability_external")
 @login_required
 def set_reachability_external():
@@ -150,6 +204,25 @@ def set_reachability_local():
     reload_caddy()
     return redirect("/")
 
+@app.route(rule='/enable_https')
+@login_required
+def enable_https():
+    (CADDY_CONFIG_DIR / 'Caddyfile').unlink(True)
+    (CADDY_CONFIG_DIR / 'Caddyfile').symlink_to(
+        CADDY_CONFIG_DIR / 'blocks' / 'Caddyfile_https'
+    )
+    reload_caddy()
+    return redirect('/')
+
+@app.route(rule='/disable_https')
+@login_required
+def disable_https():
+    (CADDY_CONFIG_DIR / 'Caddyfile').unlink(True)
+    (CADDY_CONFIG_DIR / 'Caddyfile').symlink_to(
+        CADDY_CONFIG_DIR / 'blocks' / 'Caddyfile_http'
+    )
+    reload_caddy()
+    return redirect('/')
 
 @app.route(rule="/is_domain_allowed")
 def is_domain_allowed():

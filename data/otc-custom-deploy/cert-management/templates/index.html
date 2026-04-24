@@ -5,23 +5,65 @@
 
 <h1>{{ tr('page_title') }}</h1>
 <div class="container">
-  <h2>{{ tr('cert_status_header') }}</h2>
+
 
   {% if using_internal_cert %}
-  <p>{{ tr('internal_cert') }}</p>
-  <div class="rightalign">
-    <a href="/download_cert">
-      <button>{{ tr('download') }}</button>
-    </a>
-  </div>
+    <h2>{{ tr('internal_cert_header') }}</h2>
+
+    <h3>{{ tr('cert_subject') }}</h3>
+    <p>{{ cert_subject }}</p>
+    <h3>{{ tr('cert_fingerprint') }}</h3>
+    <p>{{ cert_fingerprint | safe }}</p>
+
+    <div class="rightalign">
+      <a href="/download_cert">
+        <button>{{ tr('download') }}</button>
+      </a>
+    </div>
+
+    <h2>{{ tr('issued_certs') }}</h2>
+    <p>{{ tr('issued_certs_explainer') }}</p>
+
+    {% for generated_cert in generated_cert_infos %}
+      <div class="container-2">
+        <details>
+          <summary>{{ generated_cert[2] }}</summary>
+          <div class="cert-details">
+            <div>
+              <h3>{{ tr('cert_name') }}</h3>
+              <div>{{ generated_cert[2] }}</div>
+              <h3>{{ tr('cert_fingerprint') }}</h3>
+              <div>{{ generated_cert[1] | safe }}</div>
+            </div>
+            <div>
+              <button class="destructive" onclick="
+                  confirm_redirect('{{ tr('confirm_issued_cert_deletion') }}',
+                                   'delete_issued_cert/{{ generated_cert[0] }}')
+                ">
+                {{ tr('delete') }}
+              </button>
+            </div>
+          </div>
+        </details>
+      </div>
+    {% endfor %}
+
   {% else %}
-  <p>{{ tr('provided_cert') }}</p>
-  <div class="rightalign">
-    <button class="destructive" onclick="
-      confirm_redirect('{{ tr('confirm_cert_deletion') }}', 'delete_cert')">
-      {{ tr('delete') }}
-    </button>
-  </div>
+    <h2>{{ tr('provided_cert_header') }}</h2>
+
+    <h3>{{ tr('cert_subject') }}</h3>
+    <p>{{ cert_subject }}</p>
+    <h3>{{ tr('cert_fingerprint') }}</h3>
+    <p>{{ cert_fingerprint | safe }}</p>
+    <h3>{{ tr('cert_name') }}</h3>
+    <p>{{ cert_name }}</p>
+
+    <div class="rightalign">
+      <button class="destructive" onclick="
+        confirm_redirect('{{ tr('confirm_cert_deletion') }}', 'delete_cert')">
+        {{ tr('delete') }}
+      </button>
+    </div>
   {% endif %}
 </div>
 
@@ -57,9 +99,10 @@
   {% else %}
     {% set reachability_status = tr('management_locally_reachable') %}
     {% set reachability_status_details =
-       tr('management_locally_reachable_details') %}
+        tr('management_locally_reachable_details') %}
     {% set reachability_action = tr('set_externally_reachable') %}
-    {% set reachability_action_confirm = tr('set_externally_reachable_confirm') %}
+    {% set reachability_action_confirm =
+        tr('set_externally_reachable_confirm') %}
     {% set reachability_action_url = '/set_reachability_external' %}
   {% endif %}
   <h2>{{ reachability_status }}</h2>
@@ -115,13 +158,22 @@ form.addEventListener("submit", (event) => {
   }
 
   .container {
-    max-width: 39em;
+    max-width: 46em;
     margin: 10px auto;
     padding: 20px;
+    background-color: #eaedf1;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .container-2 {
+    margin: 10px auto;
+    padding: 15px;
     background-color: #F8F9FA;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
   h1 {
     font-size: 2.2em;
     text-align: center;
@@ -132,6 +184,12 @@ form.addEventListener("submit", (event) => {
     font-weight: bold;
     margin-bottom: 16px;
     margin-top: 0;
+  }
+  h3 {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 4px;
+    margin-top: 6px;
   }
 
   label, p {
@@ -191,5 +249,17 @@ form.addEventListener("submit", (event) => {
   	color: #a94442;
   	background-color: #f2dede;
   	border-color: #ebccd1;
+  }
+
+  details[open] summary {
+    padding-bottom: .4em;
+    border-block-end: 1px solid #000;
+    margin-bottom: .3em;
+  }
+
+  .cert-details {
+    display: flex;
+    align-items: end;
+    gap: 2em;
   }
 </style>

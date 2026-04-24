@@ -159,7 +159,7 @@ def setup_post_endpoints():
 if __name__ == "__main__":
     print(f"Server running at http://{HOST}:{PORT}")
     print(f"User id: {os.getuid()}")
-    
+
     setup_post_endpoints()
 
     try:

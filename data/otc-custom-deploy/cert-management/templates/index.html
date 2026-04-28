@@ -28,7 +28,7 @@
       <div class="container-2">
         <details>
           <summary>{{ generated_cert[2] }}</summary>
-          <div class="cert-details">
+          <div class="flex-card">
             <div>
               <h3>{{ tr('cert_name') }}</h3>
               <div>{{ generated_cert[2] }}</div>
@@ -71,17 +71,18 @@
   <h2>{{ tr('upload_cert_header') }}</h2>
   <p>{{ tr('upload_cert_help_text') }}</p>
   <form id="cert-form">
-    <label>
+    <label class="gray-text">
       {{ tr('certificate_label') }}
       <input type="file" name="cert" accept=".crt, .der, .pem" required>
     </label>
-    <label>
+    <label class="gray-text">
       {{ tr('key_label') }}
       <input type="file" name="key" accept=".key, .der, .pem" required>
     </label>
     <p>{{ tr('login_hint') }}</p>
 
-    <div id="form-alert" class="alert alert-danger" style="display: none"></div>
+    <div id="cert-form-alert" class="alert alert-danger" style="display: none">
+    </div>
     <div class="rightalign">
       <input type="submit" value="{{ tr('submit_label') }}">
     </div>
@@ -89,30 +90,38 @@
 </div>
 
 <div class="container">
-  {% if externally_reachable %}
-    {% set reachability_status = tr('management_externally_reachable') %}
-    {% set reachability_status_details =
-       tr('management_externally_reachable_details') %}
-    {% set reachability_action = tr('set_locally_reachable') %}
-    {% set reachability_action_confirm = tr('set_locally_reachable_confirm') %}
-    {% set reachability_action_url = '/set_reachability_local' %}
-  {% else %}
-    {% set reachability_status = tr('management_locally_reachable') %}
-    {% set reachability_status_details =
-        tr('management_locally_reachable_details') %}
-    {% set reachability_action = tr('set_externally_reachable') %}
-    {% set reachability_action_confirm =
-        tr('set_externally_reachable_confirm') %}
-    {% set reachability_action_url = '/set_reachability_external' %}
-  {% endif %}
-  <h2>{{ reachability_status }}</h2>
-  <p>{{ reachability_status_details }}</p>
-  <div class="rightalign">
-    <button onclick="
-      confirm_redirect(
-        `{{ reachability_action_confirm }}`, '{{ reachability_action_url }}'
-      )">{{ reachability_action }}</button>
-  </div>
+  <h2>{{ tr('cert_management_settings') }}</h2>
+  <form id="settings-form">
+    <div class="setting-row container-2 flex-card">
+        <label for="reachability_checkbox">
+          <h3>{{ tr('reachability_setting') }}</h3>
+          <div class="gray-text">{{ tr('reachability_setting_explainer') }}
+          </div>
+        </label>
+        <label class="settings-checkbox-container">
+          <input type="checkbox" id="reachability_checkbox"
+            name="locally_reachable"
+            {% if locally_reachable %} checked {% endif %}>
+          <span class="checkmark"></span>
+        </label>
+    </div>
+    <div class="setting-row container-2 flex-card">
+      <label for="https_checkbox">
+        <h3>{{ tr('https_setting') }}</h3>
+        <div class="gray-text">{{ tr('https_setting_explainer') }}</div>
+      </label>
+      <label class="settings-checkbox-container">
+        <input type="checkbox" id="https_checkbox" name="https_enabled"
+          {% if https_enabled %} checked {% endif %}>
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div id="settings-form-alert" class="alert alert-danger"
+      style="display: none"></div>
+    <div class="rightalign">
+      <input type="submit" value="{{ tr('settings_save_label') }}">
+    </div>
+  </form>
 </div>
 
 <script>
@@ -122,10 +131,10 @@ function confirm_redirect(confirm_text, location) {
   }
 }
 
-const form = document.getElementById("cert-form");
-const alert = document.getElementById("form-alert");
-async function submitForm() {
-  const formData = new FormData(form);
+const certForm = document.getElementById("cert-form");
+const certAlert = document.getElementById("cert-form-alert");
+async function submitCertForm() {
+  const formData = new FormData(certForm);
   try {
     const response = await fetch("/upload_cert", {
       method: "POST",
@@ -137,17 +146,46 @@ async function submitForm() {
     }
 
     const json = await response.json();
-    alert.style = '';
-    alert.innerText = json['error'];
+    certAlert.style = '';
+    certAlert.innerText = json['error'];
   } catch (e) {
-    alert.style = '';
-    alert.innerText = '{{ tr('communication_failed') }}';
+    certAlert.style = '';
+    certAlert.innerText = '{{ tr('communication_failed') }}';
+  }
+}
+certForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  submitCertForm();
+});
+
+const settingsForm = document.getElementById("settings-form");
+const settingsAlert = document.getElementById("settings-form-alert");
+async function submitSettingsForm() {
+  const formData = new FormData(settingsForm);
+  try {
+    const response = await fetch("/change_settings", {
+      method: "POST",
+      body: formData,
+    });
+    if (response.ok) {
+      window.location = '/';
+      return;
+    }
+
+    const json = await response.json();
+    settingsAlert.style = '';
+    settingsAlert.innerText = json['error'];
+  } catch (e) {
+    settingsAlert.style = '';
+    settingsAlert.innerText = '{{ tr('communication_failed') }}';
   }
 }
 
-form.addEventListener("submit", (event) => {
+settingsForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  submitForm();
+  if (confirm('{{ tr('confirm_set_settings') }}')) {
+    submitSettingsForm();
+  }
 });
 </script>
 
@@ -158,7 +196,7 @@ form.addEventListener("submit", (event) => {
   }
 
   .container {
-    max-width: 46em;
+    max-width: 48em;
     margin: 10px auto;
     padding: 20px;
     background-color: #eaedf1;
@@ -192,9 +230,8 @@ form.addEventListener("submit", (event) => {
     margin-top: 6px;
   }
 
-  label, p {
+  .gray-text, p {
     color: #34495E;
-    margin-bottom: 12px;
   }
 
   input[type="file"] {
@@ -206,7 +243,6 @@ form.addEventListener("submit", (event) => {
     background-color: #FFFFFF;
     font-size: 14px;
   }
-
 
   button, input[type="submit"] {
     background-color: #0064a2;
@@ -257,9 +293,67 @@ form.addEventListener("submit", (event) => {
     margin-bottom: .3em;
   }
 
-  .cert-details {
+  .flex-card {
     display: flex;
+    justify-content: space-between;
     align-items: end;
     gap: 2em;
   }
+
+  input[type="checkbox"] {
+    display: block;
+  }
+
+ .settings-checkbox-container {
+   display: block;
+   position: relative;
+   cursor: pointer;
+ }
+
+ .settings-checkbox-container input {
+   opacity: 0;
+   cursor: pointer;
+   height: 0;
+   width: 0;
+ }
+
+ .checkmark {
+   display: block;
+   box-sizing: border-box;
+   height: 3ex;
+   width: 3ex;
+   border-radius: 4px;
+   border: 3px solid #0064a2;
+   background-color: #ddd;
+ }
+
+ .settings-checkbox-container:hover input ~ .checkmark {
+   background-color: #ccc;
+ }
+
+ .settings-checkbox-container input:checked ~ .checkmark {
+   background-color: #0064a2;
+   border: none;
+ }
+
+ .checkmark:after {
+   content: "";
+   position: absolute;
+   display: none;
+ }
+
+ .settings-checkbox-container input:checked ~ .checkmark:after {
+   display: block;
+ }
+
+ .settings-checkbox-container .checkmark:after {
+   left: 8px;
+   top: 9px;
+   width: 6px;
+   height: 12px;
+   border: solid white;
+   border-width: 0 3px 3px 0;
+   transform: rotate(45deg);
+ }
+
 </style>

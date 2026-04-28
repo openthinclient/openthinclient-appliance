@@ -17,19 +17,6 @@ key_wrong_format = Fehler: Der hochgeladene Schlüssel hat nicht das richtige fo
 cert_key_missmatch = Fehler: Der hochgeladene Schlüssel und das Zertifikat passen nicht zusammen.
 communication_failed = Fehler: Die Kommunikation mit dem Backend ist fehlgeschlagen. Bitte laden sie diese Seite neu.
 
-management_locally_reachable = Zertifikatsmanagement lokal erreichbar
-management_locally_reachable_details = Das Zertifikatsmanagement ist nur lokal auf der openthinclient-Appliance erreichbar. Andere Geräte im Netzwerk können diese Seite nicht erreichen.
-set_externally_reachable = Von außen erreichbar machen
-set_externally_reachable_confirm = Soll das Zertifikatsmanagement wirklich von außen erreichbar gemacht werden?
-
-management_externally_reachable = Zertifikatsmanagement extern erreichbar
-management_externally_reachable_details = Das Zertifikatsmanagement ist von Geräten im Netzwerk erreichbar. Das Anpassen von Einstellungen ist passwortgeschützt.
-set_locally_reachable = Nur interne Verbindungen zulassen
-set_locally_reachable_confirm = Soll das Zertifikatsmanagement nur noch lokal erreichbar gemacht werden?
-
-    Wenn sie diese Webseite gerade von außen bedienen, sehen sie diese danach nicht mehr.
-
-
 internal_cert_header = Erzeugtes Zertifikat wird verwendet
 provided_cert_header = Hochgeladenes Zertifikat wird verwendet
 issued_certs = Ausgestellte Zertifikate
@@ -38,3 +25,11 @@ confirm_issued_cert_deletion = Zertifikat wirklich löschen?
 cert_subject = Betreff
 cert_name = Host
 cert_fingerprint = SHA256-Fingerabdruck
+
+cert_management_settings = Einstellungen
+reachability_setting = Zertifikatsmanagement nur auf der Appliance erreichbar
+reachability_setting_explainer = Wenn aktiviert ist das Zertifikatsmanagement nur auf der Appliance erreichbar.
+https_setting = HTTPS aktiviert
+https_setting_explainer = Wenn aktiviert werden verbindungen zum openthinclient Manager mit HTTPS gesichert.
+settings_save_label = Anwenden
+confirm_set_settings = Einstellungen anwenden?\n\nWenn sie von Außen auf das Zertifikatsmanagement zugreifen und die Erreichbarkeit von Außen deaktiviert haben können sie danach nicht mehr auf das Zertifikatsmanagement zugreifen.

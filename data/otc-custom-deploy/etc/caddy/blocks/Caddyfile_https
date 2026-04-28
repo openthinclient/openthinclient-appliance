@@ -1,0 +1,17 @@
+import ./base_config
+
+:8080 {
+	redir /ui/* https://{host}{uri} permanent
+	reverse_proxy /download_cert localhost:8082
+	reverse_proxy localhost:8081
+}
+
+http:// {
+	redir /ui/* https://{host}{uri} permanent
+	reverse_proxy localhost:8081
+}
+
+https:// {
+    import ./ssl_config
+	reverse_proxy localhost:8081
+}

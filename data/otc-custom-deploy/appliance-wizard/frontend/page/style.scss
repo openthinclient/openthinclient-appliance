@@ -357,3 +357,42 @@ $nav-button-margin: 0.5em;
   color: var(--lang-button-color, black);
   border-color: var(--lang-button-border-color, #111);
 }
+
+.https-explainer {
+    text-align: justify;
+    font-size: 0.9em;
+    color: gray;
+}
+
+.https-radio {
+    margin: 0 1em;
+}
+
+.https-radio input[type="radio"] {
+  display: none;
+}
+
+.https-radio label {
+  display: inline-block;
+  padding: {
+    left: 0.7em;
+    right: 0.7em;
+  }
+
+  font: {
+    size: .9em;
+    weight: bold;
+  }
+
+  border: var(--nav-button-border-width, 1px) solid #777;
+
+  color: #777;
+  background-color: var(--nav-button-inverse-background-color, white);
+
+  transition: color 200ms, background-color 200ms;
+}
+
+.https-radio input[type="radio"]:checked+label {
+  background-color: var(--nav-button-background-color, black);
+  color: var(--nav-button-color, white);
+}

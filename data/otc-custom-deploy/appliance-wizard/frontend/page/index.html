@@ -106,6 +106,27 @@
           </div>
         </div>
       </div>
+      <div id="https-container" class="center page">
+        <div>
+          <span class="headline" i18n="https.headline">HTTPS-Einstellungen</span>
+          <div i18n="https.explainer" class="https-explainer"></div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span i18n="https.enabled">HTTPS aktiviert</span>
+            <div class="https-radio">
+              <input type="radio" id="https_radio_yes" name="https_radio">
+              <label for="https_radio_yes" i18n="https.enabled.yes">Ja</label>
+
+              <input type="radio" id="https_radio_no" name="https_radio" checked>
+              <label for="https_radio_no" i18n="https.enabled.no">Nein</label>
+            </div>
+          </div>
+          <div class="nav-button-container">
+            <button class="nav-button" type="button" action="back"><span class="left-arrow">➜</span></button>
+            <button class="nav-button" type="button" action="set_https_status" i18n="https.save">Festlegen ➜</button>
+          </div>
+          <span class="err" id="management-https-err"></span>
+        </div>
+      </div>
       <div id="finished-container" class="center page">
         <span id="finished" i18n="finished.headline">Die Einrichtung ist abgeschlossen!</span>
         <div class="nav-button-container">

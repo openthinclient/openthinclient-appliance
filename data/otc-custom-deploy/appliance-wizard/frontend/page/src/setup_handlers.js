@@ -1,4 +1,4 @@
-export function setup_handlers(next, back, quit, set_appliance_password, set_management_password, set_timezone, set_proxy, set_lang, update_proxy_form) {
+export function setup_handlers(next, back, quit, set_appliance_password, set_management_password, set_timezone, set_proxy, set_lang, update_proxy_form, set_https_status) {
   document.querySelectorAll('[action="next"]').forEach((item, i) => {
     item.onclick = next;
   });
@@ -72,5 +72,9 @@ export function setup_handlers(next, back, quit, set_appliance_password, set_man
 
   document.querySelectorAll('[action="update_proxy_form"]').forEach((item, i) => {
     item.onchange = update_proxy_form;
+  });
+
+  document.querySelectorAll('[action="set_https_status"]').forEach((item, i) => {
+    item.onclick = set_https_status;
   });
 }

@@ -15,6 +15,7 @@ from post_endpoints.proxy import (
     socks
 )
 from post_endpoints.timezone import timezone
+from post_endpoints.https import set_https_status
 
 from constants import *
 
@@ -154,6 +155,8 @@ def setup_post_endpoints():
     WizardServer.endpoint("api/v1/proxy/manual/socks", methods=["POST"])(socks)
 
     WizardServer.endpoint("api/v1/timezone", methods=["POST"])(timezone)
+
+    WizardServer.endpoint("api/v1/https", methods=["POST"])(set_https_status)
 
 
 if __name__ == "__main__":

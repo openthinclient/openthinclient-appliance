@@ -1,0 +1,10 @@
+import ./base_config
+
+:8080 {
+	reverse_proxy /download_cert localhost:8082
+	reverse_proxy localhost:8081
+}
+
+http:// {
+	reverse_proxy localhost:8081
+}

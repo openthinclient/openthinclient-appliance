@@ -148,6 +148,24 @@ export function set_proxy() {
   console.log(mode);
 }
 
+export function set_https_status() {
+  let enable_https = document.getElementById("https_radio_yes").checked;
+
+  do_post("http://localhost:4321/api/v1/https", {"enable_https": enable_https})
+  .then(res => {
+    return res.json();
+  }).then(data => {
+    if (data["successful"] == true) {
+      next()
+    } else {
+      document.getElementById("management-https-err").innerHTML = t("err.https_unable_to_set");
+    }
+  }).catch(e => {
+    console.log(e);
+    document.getElementById("management-https-err").innerHTML = t("err.https_unable_to_set");
+  });
+}
+
 export function clear_errors() {
   document.querySelectorAll(".err").forEach((item, i) => {
     item.innerText = "";

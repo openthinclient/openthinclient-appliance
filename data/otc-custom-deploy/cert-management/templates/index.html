@@ -124,11 +124,25 @@
   </form>
 </div>
 
+<dialog id="confirm-dialog" class="container" popover>
+  <h2 id="confirm-dialog-title">{{ tr('confirm_title') }}</h2>
+  <p id="confirm-dialog-text"></p>
+  <div class="rightalign">
+    <button class="destructive" popovertarget="confirm-dialog"
+      popovertargetaction="hide">Cancel</button>
+    <button id="confirm-dialog-submit">Submit</button>
+  </div>
+</dialog>
+
 <script>
+
+const confirmDialog = document.getElementById("confirm-dialog");
+const confirmDialogText = document.getElementById("confirm-dialog-text");
+const confirmDialogSubmit = document.getElementById("confirm-dialog-submit");
 function confirm_redirect(confirm_text, location) {
-  if (confirm(confirm_text)) {
-    window.location = location;
-  }
+  confirmDialogText.innerText = confirm_text;
+  confirmDialogSubmit.onclick = () => { window.location = location };
+  confirmDialog.showPopover();
 }
 
 const certForm = document.getElementById("cert-form");
@@ -183,9 +197,9 @@ async function submitSettingsForm() {
 
 settingsForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  if (confirm('{{ tr('confirm_set_settings') }}')) {
-    submitSettingsForm();
-  }
+  confirmDialogText.innerText = '{{ tr('confirm_set_settings') }}';
+  confirmDialogSubmit.onclick = submitSettingsForm;
+  confirmDialog.showPopover();
 });
 </script>
 
@@ -254,7 +268,7 @@ settingsForm.addEventListener("submit", (event) => {
     transition: background-color 0.3s;
     font-weight: bold;
     margin-right: 0px;
-    margin-left: auto;
+    margin-left: 1ex;
   }
 
   button:hover, input[type="submit"]:hover {
@@ -356,4 +370,13 @@ settingsForm.addEventListener("submit", (event) => {
    transform: rotate(45deg);
  }
 
+ /* Dialog backdrop */
+ ::backdrop {
+   background: #000;
+   opacity: 0.66;
+ }
+
+ #confirm-dialog {
+   min-width: 28em;
+ }
 </style>

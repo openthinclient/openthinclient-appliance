@@ -32,4 +32,6 @@ reachability_setting_explainer = When enabled, certificate management is accessi
 https_setting = HTTPS Enabled
 https_setting_explainer = When enabled, connections to the openthinclient manager are secured by HTTPS.
 settings_save_label = Apply
-confirm_set_settings = Apply settings?\n\nIf you access certificate management from outside the network and have disabled external access, you will no longer be able to access certificate management afterward.
+confirm_set_settings = Apply settings?\n\nIf you have enabled certificate management is only accessible on the appliance, this page will then only be accessible on the openthinclient appliance.
+
+confirm_title = Please confirm

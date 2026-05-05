@@ -32,4 +32,6 @@ reachability_setting_explainer = Wenn aktiviert ist das Zertifikatsmanagement nu
 https_setting = HTTPS aktiviert
 https_setting_explainer = Wenn aktiviert werden verbindungen zum openthinclient Manager mit HTTPS gesichert.
 settings_save_label = Anwenden
-confirm_set_settings = Einstellungen anwenden?\n\nWenn sie von Außen auf das Zertifikatsmanagement zugreifen und die Erreichbarkeit von Außen deaktiviert haben können sie danach nicht mehr auf das Zertifikatsmanagement zugreifen.
+confirm_set_settings = Einstellungen anwenden?\n\nWenn sie die erreichbarkeit nur auf der Appliance aktiviert haben, wird diese Seite dann nur noch auf der openthinclient Appliance erreichbar sein.
+
+confirm_title = Bitte bestätigen

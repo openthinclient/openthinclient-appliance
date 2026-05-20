@@ -23,6 +23,30 @@ chmod +x /usr/local/sbin/VA-updates
 sudo systemctl enable VA-updates.path
 sudo systemctl enable VA-updates.service
 
+echo "==> Deploying caddy configuration"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/caddy/* /etc/caddy/
+unlink /etc/caddy/Caddyfile
+ln -s /etc/caddy/blocks/Caddyfile_http /etc/caddy/Caddyfile
+ln -s /etc/caddy/blocks/cert_management_extern /etc/caddy/cert_management
+chown -R root:root /etc/caddy/*
+find /etc/caddy -type f | xargs dos2unix
+
+echo "==> Deploying caddy certificate trust configuration"
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/caddy-install-trust.service /etc/systemd/system/caddy-install-trust.service
+sudo systemctl enable caddy-install-trust.service
+
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/usr/local/bin/chromium-trust-caddy /usr/local/bin/
+chmod +x /usr/local/bin/chromium-trust-caddy
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/user/chromium-trust-caddy.service /etc/systemd/user/chromium-trust-caddy.service
+sudo systemctl --global enable chromium-trust-caddy.service
+
+echo "==> Deploying openthinclient certificate management"
+pip install fluent_runtime --break-system-packages
+sudo cp -ar ${OTC_CUSTOM_DEPLOY_PATH}/cert-management /opt/
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/cert-management.service /etc/systemd/system/cert-management.service
+echo "==> Enabling cert-management service"
+sudo systemctl enable cert-management.service
+
 echo "==> Deploying LDAP backup"
 mkdir -p /etc/skel_ldap/
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/skel_ldap/ldap_empty.zip /etc/skel_ldap/
@@ -243,18 +267,6 @@ if [ "$PACKER_BUILDER_TYPE" == "hyperv-iso" ]; then
 else
   echo "Using default kernel grub configuration for virtualbox/VMware builds"
 fi
-
-echo "==> Deploying caddy configuration"
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/caddy/* /etc/caddy/
-chown root:root /etc/caddy/*
-chmod 755 /etc/caddy/*
-dos2unix /etc/caddy/*
-
-pip install fluent_runtime --break-system-packages
-sudo cp -ar ${OTC_CUSTOM_DEPLOY_PATH}/cert-management /opt/
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/cert-management.service /etc/systemd/system/cert-management.service
-echo "==> Enabling cert-management service"
-sudo systemctl enable cert-management.service
 
 echo "==> Deploying openthinclient manager application.properties"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/opt/otc-manager/bin/application.properties /opt/otc-manager/bin/application.properties

@@ -1,0 +1,13 @@
+[Unit]
+Description=Make chromium trust the Caddy SSL Certificate
+ConditionUser=openthinclient
+ConditionPathExists=!/home/openthinclient/.pki/nssdb
+
+[Service]
+Type=oneshot
+ExecStartPre=systemctl is-active --wait caddy-install-trust.service
+ExecStart=/usr/local/bin/chromium-trust-caddy
+RemainAfterExit=true
+
+[Install]
+WantedBy=default.target

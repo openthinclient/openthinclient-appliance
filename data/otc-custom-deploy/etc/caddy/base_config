@@ -6,7 +6,7 @@
     }
     pki {
         ca local {
-            name "Openthinclient Management Server"
+            name "openthinclient Management Server"
         }
     }
 }

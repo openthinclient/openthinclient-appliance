@@ -43,6 +43,7 @@ sudo systemctl --global enable chromium-trust-caddy.service
 echo "==> Deploying openthinclient certificate management"
 pip install fluent_runtime --break-system-packages
 sudo cp -ar ${OTC_CUSTOM_DEPLOY_PATH}/cert-management /opt/
+sed -i "s/OTC_APPLIANCE_VERSION_PLACEHOLDER/${OTC_APPLIANCE_VERSION}/g" /opt/cert-management/templates/index.html
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/cert-management.service /etc/systemd/system/cert-management.service
 echo "==> Enabling cert-management service"
 sudo systemctl enable cert-management.service

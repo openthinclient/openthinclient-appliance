@@ -130,8 +130,10 @@ def main_page(l10n):
 @app.route('/download_cert')
 def download_cert():
     if USER_CERT_PATH.exists():
-        return send_file(USER_CERT_PATH)
-    return send_file(CADDY_PKI_DIR / 'root.crt')
+        return send_file(USER_CERT_PATH,
+                         download_name="openthinclient manager user.crt")
+    return send_file(CADDY_PKI_DIR / 'root.crt',
+                     download_name="openthinclient manager root.crt")
 
 
 def check_cert_key():

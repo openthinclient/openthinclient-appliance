@@ -3,10 +3,19 @@
   <title>{{ tr('page_title') }}</title>
 </head>
 
-<h1>{{ tr('page_title') }}</h1>
+<div class="logo-header">
+  <img src="/static/logo_small.svg">
+  <h1>{{ tr('page_title') }}</h1>
+</div>
+
+<div class="center">
+  {{ tr('docs_hint_pre') }}
+  <a href="https://docs.openthinclient.com/OTC_APPLIANCE_VERSION_PLACEHOLDER/key/cert-management">
+    {{ tr('docs_link') }}
+  </a>
+</div>
+
 <div class="container">
-
-
   {% if using_internal_cert %}
     <h2>{{ tr('internal_cert_header') }}</h2>
 
@@ -135,78 +144,87 @@
 </dialog>
 
 <script>
-
-const confirmDialog = document.getElementById("confirm-dialog");
-const confirmDialogText = document.getElementById("confirm-dialog-text");
-const confirmDialogSubmit = document.getElementById("confirm-dialog-submit");
-function confirm_redirect(confirm_text, location) {
-  confirmDialogText.innerText = confirm_text;
-  confirmDialogSubmit.onclick = () => { window.location = location };
-  confirmDialog.showPopover();
-}
-
-const certForm = document.getElementById("cert-form");
-const certAlert = document.getElementById("cert-form-alert");
-async function submitCertForm() {
-  const formData = new FormData(certForm);
-  try {
-    const response = await fetch("/upload_cert", {
-      method: "POST",
-      body: formData,
-    });
-    if (response.ok) {
-      window.location = '/';
-      return;
-    }
-
-    const json = await response.json();
-    certAlert.style = '';
-    certAlert.innerText = json['error'];
-  } catch (e) {
-    certAlert.style = '';
-    certAlert.innerText = '{{ tr('communication_failed') }}';
+  const confirmDialog = document.getElementById("confirm-dialog");
+  const confirmDialogText = document.getElementById("confirm-dialog-text");
+  const confirmDialogSubmit = document.getElementById("confirm-dialog-submit");
+  function confirm_redirect(confirm_text, location) {
+    confirmDialogText.innerText = confirm_text;
+    confirmDialogSubmit.onclick = () => { window.location = location };
+    confirmDialog.showPopover();
   }
-}
-certForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  submitCertForm();
-});
 
-const settingsForm = document.getElementById("settings-form");
-const settingsAlert = document.getElementById("settings-form-alert");
-async function submitSettingsForm() {
-  const formData = new FormData(settingsForm);
-  try {
-    const response = await fetch("/change_settings", {
-      method: "POST",
-      body: formData,
-    });
-    if (response.ok) {
-      window.location = '/';
-      return;
+  const certForm = document.getElementById("cert-form");
+  const certAlert = document.getElementById("cert-form-alert");
+  async function submitCertForm() {
+    const formData = new FormData(certForm);
+    try {
+      const response = await fetch("/upload_cert", {
+        method: "POST",
+        body: formData,
+      });
+      if (response.ok) {
+        window.location = '/';
+        return;
+      }
+
+      const json = await response.json();
+      certAlert.style = '';
+      certAlert.innerText = json['error'];
+    } catch (e) {
+      certAlert.style = '';
+      certAlert.innerText = '{{ tr('communication_failed') }}';
     }
-
-    const json = await response.json();
-    settingsAlert.style = '';
-    settingsAlert.innerText = json['error'];
-  } catch (e) {
-    settingsAlert.style = '';
-    settingsAlert.innerText = '{{ tr('communication_failed') }}';
   }
-}
+  certForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    submitCertForm();
+  });
 
-settingsForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  confirmDialogText.innerText = '{{ tr('confirm_set_settings') }}';
-  confirmDialogSubmit.onclick = submitSettingsForm;
-  confirmDialog.showPopover();
-});
+  const settingsForm = document.getElementById("settings-form");
+  const settingsAlert = document.getElementById("settings-form-alert");
+  async function submitSettingsForm() {
+    const formData = new FormData(settingsForm);
+    try {
+      const response = await fetch("/change_settings", {
+        method: "POST",
+        body: formData,
+      });
+      if (response.ok) {
+        window.location = '/';
+        return;
+      }
+
+      const json = await response.json();
+      settingsAlert.style = '';
+      settingsAlert.innerText = json['error'];
+    } catch (e) {
+      settingsAlert.style = '';
+      settingsAlert.innerText = '{{ tr('communication_failed') }}';
+    }
+  }
+
+  settingsForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    confirmDialogText.innerText = '{{ tr('confirm_set_settings') }}';
+    confirmDialogSubmit.onclick = submitSettingsForm;
+    confirmDialog.showPopover();
+  });
 </script>
 
 <style>
   body {
     font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
     font-size: 16px;
+  }
+
+  .logo-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo-header img {
+    width: 4em;
   }
 
   .container {
@@ -229,6 +247,7 @@ settingsForm.addEventListener("submit", (event) => {
   h1 {
     font-size: 2.2em;
     text-align: center;
+    margin: 0;
   }
 
   h2 {
@@ -378,5 +397,9 @@ settingsForm.addEventListener("submit", (event) => {
 
  #confirm-dialog {
    min-width: 28em;
+ }
+
+ .center {
+   text-align: center;
  }
 </style>

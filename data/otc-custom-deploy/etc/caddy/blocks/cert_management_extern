@@ -1,4 +1,7 @@
 https://:8443 {
     import ./ssl_config
+    file_server /static/* {
+        root /opt/cert-management/static
+    }
     reverse_proxy localhost:8082
 }

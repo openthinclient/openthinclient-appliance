@@ -9,7 +9,7 @@ provided_cert = Uploaded certificate is in use.
 delete = Delete
 page_title = openthinclient Certificate Management
 confirm_cert_deletion = Are you sure you want to delete the uploaded certificate?
-login_hint = The login details for uploading a certificate are the login details for the openthinclient appliance.
+login_hint = To upload a certificate, use the login credentials of the openthinclient appliance.
 
 files_not_uploaded = Error: Please upload certificate and key.
 cert_wrong_format = Error: The uploaded certificate is not in the correct format. Please upload an SSL certificate in PEM format.
@@ -20,7 +20,7 @@ communication_failed = Error: Could not contact the backend. Please reload this 
 internal_cert_header = Generated certificate in use
 provided_cert_header = Uploaded certificate in use
 issued_certs = Issued certificates
-issued_certs_explainer = Certificates are issued automatically when you access the openthinclient manager website or the certificate management interface. They are only issued for the IP address of the openthinclient appliance.
+issued_certs_explainer = Certificates are issued automatically when you access the openthinclient manager or the certificate management. They are only issued for the IP addresses and the hostname of the openthinclient appliance.
 confirm_cert_deletion = Are you sure you want to delete certificate?
 cert_subject = Subject
 cert_name = Host
@@ -28,10 +28,12 @@ cert_fingerprint = SHA256-Fingerprint
 
 cert_management_settings = Settings
 reachability_setting = Certificate management is accessible only on the appliance
-reachability_setting_explainer = When enabled, certificate management is accessible only on the appliance.
+reachability_setting_explainer = When enabled, certificate management is accessible only locally on the appliance. Otherwise, certificate management can also be accessed from the network.
 https_setting = HTTPS Enabled
-https_setting_explainer = When enabled, connections to the openthinclient manager are secured by HTTPS.
+https_setting_explainer = When enabled, connections to the openthinclient Manager are secured using HTTPS. Connections to port 8080 are redirected to port 443.
 settings_save_label = Apply
 confirm_set_settings = Apply settings?\n\nIf you have enabled certificate management is only accessible on the appliance, this page will then only be accessible on the openthinclient appliance.
 
 confirm_title = Please confirm
+docs_hint_pre = For more information, see our
+docs_link = documentation

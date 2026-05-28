@@ -4,7 +4,7 @@ set -euo pipefail
 mkdir -p "$HOME/.pki/nssdb"
 /usr/bin/certutil -N --empty-password -d "$HOME/.pki/nssdb"
 
-certificate="$(find /etc/ssl/certs -name 'Openthinclient_Management_Server*' | head -n 1)"
+certificate="$(find /etc/ssl/certs -name 'openthinclient_Management_Server*' | head -n 1)"
 
 certutil -A \
     -i "$certificate" \

@@ -19,13 +19,13 @@ TEMP_KEY_PATH = Path('/var/lib/caddy/temp.key')
 SSL_CONFIG_PATH = Path('/etc/caddy/ssl_config')
 CADDY_CONFIG_DIR = Path('/etc/caddy')
 
-ALLOWED_SSL_HOSTS = (
-    ['localhost', '172.0.0.1', '::1', '::'] +
-    subprocess.run(['hostname', '-I'],
-                   capture_output=True).stdout.decode().split() +
-    subprocess.run(['hostname', '-A'],
+ALLOWED_SSL_HOSTS = [
+    *['localhost', '172.0.0.1', '::1', '::'],
+    *subprocess.run(['hostname', '-I'],
+                   capture_output=True).stdout.decode().split(),
+    *subprocess.run(['hostname', '-A'],
                    capture_output=True).stdout.decode().split()
-)
+]
 
 app = Flask(__name__)
 loader = FluentResourceLoader('l10n/{locale}')

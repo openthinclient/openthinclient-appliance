@@ -21,7 +21,7 @@ packer {
 
 variable "appliance_version" {
   type    = string
-  default = "2603"
+  default = "2603.1"
 }
 
 variable "vm_description" {
@@ -31,7 +31,7 @@ variable "vm_description" {
 
 variable "vm_name" {
   type    = string
-  default = "openthinclient-Appliance-2603"
+  default = "openthinclient-Appliance-2603.1"
 }
 
 variable "headless" {

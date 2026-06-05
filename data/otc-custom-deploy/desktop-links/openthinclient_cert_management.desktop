@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Exec=chromium %u https://localhost:8443
-Icon=/usr/local/share/openthinclient/icons/openthinclient_cert_management.png
-Name[de_DE]=Zertifikatsmanagement
-Name[en_US]=Certificate Management
-Terminal=false

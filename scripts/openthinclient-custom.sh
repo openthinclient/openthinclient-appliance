@@ -27,7 +27,7 @@ echo "==> Deploying caddy configuration"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/caddy/* /etc/caddy/
 unlink /etc/caddy/Caddyfile
 ln -s /etc/caddy/blocks/Caddyfile_http /etc/caddy/Caddyfile
-ln -s /etc/caddy/blocks/cert_management_extern /etc/caddy/cert_management
+ln -s /etc/caddy/blocks/cert_configuration_extern /etc/caddy/cert_configuration
 chown -R root:root /etc/caddy/*
 find /etc/caddy -type f -exec dos2unix {} +
 
@@ -40,13 +40,13 @@ chmod +x /usr/local/bin/chromium-trust-caddy
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/user/chromium-trust-caddy.service /etc/systemd/user/chromium-trust-caddy.service
 sudo systemctl --global enable chromium-trust-caddy.service
 
-echo "==> Deploying openthinclient certificate management"
-pip install fluent_runtime --break-system-packages
-sudo cp -ar ${OTC_CUSTOM_DEPLOY_PATH}/cert-management /opt/
-sed -i "s/OTC_APPLIANCE_VERSION_PLACEHOLDER/${OTC_APPLIANCE_VERSION}/g" /opt/cert-management/templates/index.html
-cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/cert-management.service /etc/systemd/system/cert-management.service
-echo "==> Enabling cert-management service"
-sudo systemctl enable cert-management.service
+echo "==> Deploying openthinclient certificate configuration"
+pip install fluent_runtime --root-user-action=ignore --break-system-packages
+sudo cp -ar ${OTC_CUSTOM_DEPLOY_PATH}/cert-configuration /opt/
+sed -i "s/OTC_APPLIANCE_VERSION_PLACEHOLDER/${OTC_APPLIANCE_VERSION}/" /opt/cert-configuration/templates/index.html
+cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/cert-configuration.service /etc/systemd/system/cert-configuration.service
+echo "==> Enabling cert-configuration service"
+sudo systemctl enable cert-configuration.service
 
 echo "==> Deploying LDAP backup"
 mkdir -p /etc/skel_ldap/

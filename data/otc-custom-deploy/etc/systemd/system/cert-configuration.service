@@ -1,11 +1,11 @@
 [Unit]
-Description=Run the cert management
+Description=Run the cert configuration
 Before=caddy.service
 After=network-online.target
 
 [Service]
 Type=simple
-WorkingDirectory=/opt/cert-management
+WorkingDirectory=/opt/cert-configuration
 ExecStart=/usr/bin/gunicorn -b 127.0.0.1:8082 main:app
 
 [Install]

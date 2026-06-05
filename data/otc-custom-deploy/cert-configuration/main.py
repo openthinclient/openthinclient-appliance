@@ -96,7 +96,7 @@ def get_cert_info(cert_path):
 def main_page(l10n):
     externally_reachable = False
     https_enabled = False
-    if ((CADDY_CONFIG_DIR / 'cert_management').readlink()
+    if ((CADDY_CONFIG_DIR / 'cert_configuration').readlink()
         .name.endswith('extern')):
         externally_reachable = True
     if ((CADDY_CONFIG_DIR / 'Caddyfile').readlink()
@@ -189,17 +189,17 @@ def upload_cert(l10n):
 def change_settings():
     https_enabled = request.form.get('https_enabled', False)
     externally_reachable = not request.form.get('locally_reachable', False)
-    cert_management_block = 'cert_management_local'
+    cert_configuration_block = 'cert_configuration_local'
     caddyfile = 'Caddyfile_http'
 
     if externally_reachable:
-        cert_management_block = 'cert_management_extern'
+        cert_configuration_block = 'cert_configuration_extern'
     if https_enabled:
         caddyfile = 'Caddyfile_https'
 
-    (CADDY_CONFIG_DIR / 'cert_management').unlink(True)
-    (CADDY_CONFIG_DIR / 'cert_management').symlink_to(
-        CADDY_CONFIG_DIR / 'blocks' / cert_management_block
+    (CADDY_CONFIG_DIR / 'cert_configuration').unlink(True)
+    (CADDY_CONFIG_DIR / 'cert_configuration').symlink_to(
+        CADDY_CONFIG_DIR / 'blocks' / cert_configuration_block
     )
     (CADDY_CONFIG_DIR / 'Caddyfile').unlink(True)
     (CADDY_CONFIG_DIR / 'Caddyfile').symlink_to(

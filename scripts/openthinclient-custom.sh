@@ -29,7 +29,7 @@ unlink /etc/caddy/Caddyfile
 ln -s /etc/caddy/blocks/Caddyfile_http /etc/caddy/Caddyfile
 ln -s /etc/caddy/blocks/cert_management_extern /etc/caddy/cert_management
 chown -R root:root /etc/caddy/*
-find /etc/caddy -type f | xargs dos2unix
+find /etc/caddy -type f -exec dos2unix {} +
 
 echo "==> Deploying caddy certificate trust configuration"
 cp -a ${OTC_CUSTOM_DEPLOY_PATH}/etc/systemd/system/caddy-install-trust.service /etc/systemd/system/caddy-install-trust.service

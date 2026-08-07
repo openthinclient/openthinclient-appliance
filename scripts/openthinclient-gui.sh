@@ -28,6 +28,19 @@ fi
 groupadd --system nopasswdlogin
 usermod -aG nopasswdlogin openthinclient
 
+echo "==> Creating default keyring for openthinclient user"
+sudo -u openthinclient mkdir -p /home/openthinclient/.local/share/keyrings
+cat << EOF > /home/openthinclient/.local/share/keyrings/Default_Keyring.keyring
+[keyring]
+display-name=Default Keyring
+ctime=0
+mtime=0
+lock-on-idle=false
+lock-after=false
+EOF
+echo "Default_Keyring" > /home/openthinclient/.local/share/keyrings/default
+chown openthinclient:openthinclient /home/openthinclient/.local/share/keyrings/*
+
 echo "==> Installing network-manager and network-manager-gnome with --no-install-recommends"
 apt-get install -y network-manager network-manager-gnome --no-install-recommends
 

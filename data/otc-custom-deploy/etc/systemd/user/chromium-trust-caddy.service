@@ -5,7 +5,7 @@ ConditionPathExists=!/home/openthinclient/.pki/nssdb
 
 [Service]
 Type=oneshot
-ExecStartPre=systemctl is-active --wait caddy-install-trust.service
+ExecStartPre=bash -c 'until systemctl is-active caddy-install-trust.service; do sleep 0.5; done'
 ExecStart=/usr/local/bin/chromium-trust-caddy
 RemainAfterExit=true
 

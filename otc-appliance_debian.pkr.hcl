@@ -99,12 +99,12 @@ variable "iso_urls" {
 
 variable "nodejs_checksum" {
   type    = string
-  default = "fae6b7b88242c5a160b04b133aaf61b4ab9dae9af7fdf6bdc5ab4a7c700f56a32e475773117824ba95bc855f281f260453c031901f3f30ab023b9b82b72ad831"
+  default = "fd8e59d5a511510f6a298afb548f18c7d2b1be404d8b4a27d94fbe49f56cb2d6"
 }
 
 variable "nodejs_url" {
   type    = string
-  default = "https://nodejs.org/dist/v18.14.0/node-v18.14.0-linux-x64.tar.xz"
+  default = "https://nodejs.org/dist/v24.21.0/node-v24.21.0-linux-x64.tar.xz"
 }
 
 variable "no_proxy" {

@@ -244,7 +244,6 @@ echo "==> Creating message of the day"
 MOTD_FILE=/etc/motd
 echo "==> Updating motd"
 {
-  printf '%.0s=' {1..75}; printf '\n'
   if [[ -f "$VERSION_FILE" ]]; then
     cat "$VERSION_FILE"
   else
@@ -254,7 +253,6 @@ echo "==> Updating motd"
     lsb_release -d -s
     echo "================================================================"
   fi
-  printf '%.0s=' {1..75}; printf '\n'
 } > "$MOTD_FILE"
 
 echo "==> Deploying openthinclient grub background image"
